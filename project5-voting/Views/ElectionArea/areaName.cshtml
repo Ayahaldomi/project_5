@@ -1,0 +1,57 @@
+﻿@model IEnumerable<project5_voting.Models.electionArea>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    .card-link {
+        text-decoration: none;
+        color: inherit;
+    }
+
+    .custom-card {
+        border-radius: 15px;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        overflow: hidden; /* لضمان عدم تجاوز الصورة لحدود الكارد */
+    }
+
+        .custom-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+    .card-img-top {
+        width: 100%;
+        height: auto; /* لضمان الحفاظ على نسبة العرض إلى الارتفاع */
+    }
+</style>
+
+
+
+<h2 style="text-align:center; margin-top:20px">الدوائر الانتخابية</h2>
+
+
+
+
+@{
+    ViewBag.Title = "Home Page";
+}
+<div class="container">
+    <div class="row">
+        @foreach (var item in Model)
+        {
+            <div class="col-md-4 mb-4">
+                <a href="@Url.Action("listsDetails", new { id = item.areaName })" class="card-link">
+                    <div class="card shadow-sm custom-card">
+                        <img src="/image/@item.imgareaName" class="card-img-top" alt="@item.areaName" style="width: 50vh; height: 50vh;" />
+                        <div class="card-body">
+                            <h5 class="card-title">@Html.DisplayFor(modelItem => item.areaName)</h5>
+
+                        </div>
+                    </div>
+                </a>
+            </div>
+        }
+    </div>
+</div>

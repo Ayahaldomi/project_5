@@ -1,0 +1,65 @@
+﻿@model project5_voting.Models.Contact
+
+@{
+    ViewBag.Title = "ShowResponse";
+    Layout = "~/Views/Shared/_LayoutPage1.cshtml";
+
+}
+
+
+
+
+<main>
+    <div class="card" dir="rtl" style="width: 700px; margin: 20px auto;">
+        <div class="card-body">
+            <h5 class="card-title text-center mb-4">عرض الرد</h5>
+
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <label class="form-label">اسم المستخدم</label>
+                    @Html.EditorFor(model => model.name, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label">بريد المستخدم الإلكتروني</label>
+                    @Html.EditorFor(model => model.email, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                </div>
+            </div>
+
+            <div class="row g-3 mt-3">
+                <div class="col-md-6">
+                    <label class="form-label">تاريخ الرد</label>
+                    @Html.EditorFor(model => model.rsponseDate, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label">وقت الرد</label>
+                    @Html.EditorFor(model => model.rsponseTime, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                </div>
+            </div>
+
+            <div class="row g-3 mt-3">
+                <div class="col-12">
+                    <label class="form-label">اسم المسؤول</label>
+                    @Html.EditorFor(model => model.adminName, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                </div>
+            </div>
+
+            <div class="row g-3 mt-3">
+                <div class="col-12">
+                    <label class="form-label">الموضوع</label>
+                    @Html.EditorFor(model => model.subject, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                </div>
+            </div>
+
+            <div class="row g-3 mt-3">
+                <div class="col-12">
+                    <label class="form-label">نص الرد</label>
+                    @Html.TextAreaFor(model => model.adminResponse, new { @class = "form-control", @id = "floatingTextarea", @style = "height: 100px;", @readonly = "readonly" })
+                </div>
+            </div>
+
+            <div class="text-center mt-4">
+                @Html.ActionLink("العودة", "ContactDetails", new { id = Model.id }, new { @class = "btn btn-secondary mx-2" })
+            </div>
+        </div>
+    </div>
+</main>

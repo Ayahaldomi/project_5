@@ -1,0 +1,123 @@
+﻿@model IEnumerable<project5_voting.Models.ElectionArea>
+@{
+
+    var electionArea = Request.Cookies["electionArea"];
+    var userElectionArea = electionArea.Value; // Extract NationalID from cookie value
+
+
+}
+
+
+
+<style>
+    body {
+        direction: rtl; /* Set text direction to right-to-left */
+        text-align: right; /* Align text to the right */
+    }
+
+    .card-link {
+        text-decoration: none;
+        color: inherit;
+    }
+
+    .custom-card {
+        border-radius: 15px;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        overflow: hidden; /* Prevent image from overflowing */
+    }
+
+        .custom-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+    .card-img-top {
+        width: 100%;
+        height: auto; /* Maintain aspect ratio */
+    }
+
+    .card-deck {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem; /* Adjust gap between cards */
+    }
+
+    .col-md-4 {
+        flex: 1 1 calc(33.333% - 1rem); /* Adjust card width and spacing */
+    }
+</style>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<h2>دائرتك الانتخابية</h2>
+<div class="card-deck">
+   
+
+
+    @foreach (var item in Model)
+    {
+        if (item.areaName == userElectionArea)
+        {
+            if ( item.areaName  == "irbid2" || item.areaName == "اربد الثانية" || item.areaName == "mafraq")
+            {
+                <div class="col-md-4 mb-4">
+                    <a href="@Url.Action("localORparty", new { id = item.id })" class="card-link">
+                        <div class="card shadow-sm custom-card">
+                            <img src="~/image/@item.areaImage" class="card-img-top" alt="@item.areaName" style="width: 50vh; height: 50vh;" />
+                            <div class="card-body">
+                                <h5 class="card-title">@Html.DisplayFor(modelItem => item.areaName)</h5>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            }
+            else
+            {
+                <div class="col-md-4 mb-4">
+                    <div class="card shadow-sm custom-card">
+                        <a href="#" class="card-link" onclick="showAlert(); return false;">
+                            <img src="~/image/@item.areaImage" class="card-img-top" alt="@item.areaName" style="width: 50vh; height: 50vh;" />
+                            <div class="card-body">
+                                <h5 class="card-title">@Html.DisplayFor(modelItem => item.areaName)</h5>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            }
+        }
+    }
+</div>
+
+<br />
+<h2>الدوائر الانتخابية الأخرى</h2>
+<div class="card-deck">
+    @foreach (var item in Model)
+    {
+        if (item.areaName != userElectionArea)
+        {
+            <div class="col-md-4 mb-4">
+                <div class="card shadow-sm custom-card">
+                    <img src="~/image/@item.areaImage" class="card-img-top" alt="@item.areaName" style="width: 50vh; height: 50vh;" />
+                    <div class="card-body">
+                        <h5 class="card-title">@Html.DisplayFor(modelItem => item.areaName)</h5>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+</div>
+
+<script>
+    function showAlert() {
+        Swal.fire({
+            title: "Coming Soon",
+            text: "This feature will be available soon.",
+            icon: "info",
+            confirmButtonText: "OK"
+        });
+    }
+
+</script>
+
+
+

@@ -1,0 +1,68 @@
+﻿@model project5_voting.Models.Date
+
+@{
+    ViewBag.Title = "AddDateAndTime";
+    Layout = "~/Views/Shared/_LayoutPage1.cshtml";
+
+}
+
+
+@{
+    HttpCookie existingCookie = Request.Cookies["startDateTime"];
+    string startdate = "";
+    string enddate = "";
+
+    if (existingCookie != null)
+    {
+        startdate = Request.Cookies["startDateTime"].Value;
+        enddate = Request.Cookies["endDateTime"].Value;
+    }
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="card" dir="rtl" style="width: 700px; margin: 20px auto;">
+        <div class="card-body">
+            <h4 class="card-title text-center mb-4">تحديد التاريخ والوقت</h4>
+            <hr />
+            <div class="row g-3">
+                <div class="col-12">
+                    <label for="StartTime" class="form-label">تحديد تاريخ ووقت البداية</label>
+                    <input type="datetime-local" class="form-control" id="StartTime" name="StartDateTime" />
+                    @Html.ValidationMessageFor(model => model.startTime, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="col-12">
+                    <label for="EndTime" class="form-label">تحديد تاريخ ووقت النهاية</label>
+                    <input type="datetime-local" class="form-control" id="EndTime" name="EndDateTime" />
+                    @Html.ValidationMessageFor(model => model.endTime, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="col-12 text-center mt-4">
+                    <input type="submit" value="إنشاء" class="btn btn-primary" />
+                </div>
+            </div>
+            <hr />
+
+            @if (!string.IsNullOrEmpty(startdate) && !string.IsNullOrEmpty(enddate))
+            {
+                <div class="mt-4">
+                    <div class="row g-3">
+                        <div class="col-12">
+                            <label class="form-label">تاريخ البداية</label>
+                            <p class="form-control-plaintext">@startdate</p>
+                        </div>
+
+                        <div class="col-12">
+                            <label class="form-label">تاريخ النهاية</label>
+                            <p class="form-control-plaintext">@enddate</p>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+}
+

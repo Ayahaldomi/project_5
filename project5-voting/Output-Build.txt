@@ -1,0 +1,5 @@
+﻿Build started at 12:05 AM...
+1>------ Build started: Project: project5-voting, Configuration: Debug Any CPU ------
+1>  project5-voting -> C:\Users\Orange\Desktop\project5_githup\MVC-Project\project5-voting\bin\project5-voting.dll
+========== Build: 1 succeeded, 0 failed, 0 up-to-date, 0 skipped ==========
+========== Build completed at 12:05 AM and took 00.275 seconds ==========

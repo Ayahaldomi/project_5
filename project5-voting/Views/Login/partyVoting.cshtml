@@ -1,0 +1,97 @@
+﻿
+
+@model IEnumerable<project5_voting.Models.PartyList>
+<style>
+    body {
+        direction: rtl;
+        background-color: #f8f9fa;
+        color: #333;
+    }
+
+    .card {
+        border-color: gray; /* Red border color */
+        border-width: 2px;
+        direction: rtl; /* Ensure RTL layout inside card */
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add box shadow */
+    }
+
+    label.form-check-label {
+        padding-right: 20px !important;
+    }
+
+    .card-header {
+        background-color: #007bff; /* Blue header background */
+        color: white;
+        text-align: right; /* Align header text to right */
+    }
+
+    .card-body {
+        background-color: white;
+        text-align: right; /* Align body text to right */
+    }
+
+    .btn-primary {
+        background-color: #dc3545; /* Red button color */
+        border-color: #dc3545;
+    }
+
+        .btn-primary:hover {
+            background-color: #c82333; /* Darker red on hover */
+            border-color: #bd2130;
+        }
+
+    .form-check {
+        margin-bottom: 15px; /* Add bottom margin to each checkbox group */
+    }
+
+    .form-check-input {
+        margin-left: 10px; /* Add left margin to the checkbox */
+    }
+
+    .form-check-label {
+        text-align: right; /* Align checkbox labels to right */
+    }
+
+    .form-check-input:disabled ~ .form-check-label {
+        color: #6c757d; /* Disabled text color */
+    }
+
+    .row {
+        margin-top: 30px;
+    }
+
+    .col-md-4 {
+        margin-bottom: 20px;
+    }
+
+    .btn-primary {
+        display: block;
+        margin: 20px auto; /* Center the button and add vertical spacing */
+    }
+</style>
+
+<h2 class="text-center mt-4">تصويت الحزب</h2>
+
+@using (Html.BeginForm())
+{
+    <div class="row">
+        @foreach (var party in Model)
+        {
+            if (party.status == "1")
+            {
+                <div class="col-md-4">
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            <h5 class="card-title">@party.partyName</h5>
+                            <div class="form-check">
+                                <input type="radio" id="party_@party.id" name="selectedPartyId" value="@party.id" class="form-check-input" />
+                                <label class="form-check-label" for="party_@party.id">تصويت</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+    </div>
+    <button type="submit" class="btn btn-primary">إرسال</button>
+}

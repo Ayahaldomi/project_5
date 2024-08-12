@@ -1,0 +1,78 @@
+﻿@model project5_voting.Models.Contact
+
+@{
+    ViewBag.Title = "ContactDetails";
+    Layout = "~/Views/Shared/_LayoutPage1.cshtml";
+
+}
+
+
+
+<div class="card" dir="rtl" style="width: 700px; margin:20px auto">
+    <div class="card-body">
+
+        <h5 class="card-title text-center mb-4">تفاصيل الاتصال</h5>
+
+        <div class="row g-3">
+            <div class="col-md-6">
+                <label class="form-label">الاسم</label>
+                @Html.EditorFor(model => model.name, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+            </div>
+            <div class="col-md-6">
+                <label class="form-label">البريد الإلكتروني</label>
+                @Html.EditorFor(model => model.email, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+            </div>
+        </div>
+
+        <div class="row g-3 mt-3">
+            <div class="col-md-6">
+                <label class="form-label">التاريخ</label>
+                @Html.EditorFor(model => model.date, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+            </div>
+            <div class="col-md-6">
+                <label class="form-label">الوقت</label>
+                @Html.EditorFor(model => model.time, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+            </div>
+        </div>
+
+        <div class="row g-3 mt-3">
+            <div class="col-12">
+                <label class="form-label">الموضوع</label>
+                @Html.EditorFor(model => model.subject, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+            </div>
+        </div>
+
+        <div class="row g-3 mt-3">
+            <div class="col-12">
+                <label class="form-label">الرسالة</label>
+                @Html.TextAreaFor(model => model.message, new { @class = "form-control", @style = "height: 100px;", @readonly = "readonly" })
+            </div>
+        </div>
+
+        <div class="row g-3 mt-3">
+            <div class="col-12">
+                <label class="form-label">الحالة</label>
+                @{
+                    if (Model.status == null)
+                    {
+                        <p class="text-danger">غير مكتمل</p>
+                    }
+                    else
+                    {
+                        <p class="text-success">مكتمل</p>
+                        @Html.ActionLink("عرض الرد", "ShowResponse", new { id = Model.id }, new { @class = "btn btn-info" })
+                    }
+                }
+            </div>
+        </div>
+
+        <div class="text-center mt-4">
+            @Html.ActionLink("العودة", "AdminContact", new { id = Model.id }, new { @class = "btn btn-secondary mx-2" })
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

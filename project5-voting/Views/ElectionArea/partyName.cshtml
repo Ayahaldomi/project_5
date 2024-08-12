@@ -1,0 +1,118 @@
+﻿@model IEnumerable<project5_voting.Models.PartyList>
+
+
+@{
+    ViewBag.Title = "partyName";
+}
+
+<style>
+
+
+    /* Container Styling */
+    .containerpartyName {
+        width: 80%;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #ffffff;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+        color: #333;
+        margin-bottom: 20px;
+        text-align: center;
+    }
+
+    /* Button Styling */
+    .btn {
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        color: #fff;
+        text-decoration: none;
+        font-weight: bold;
+        display: inline-block;
+    }
+
+    .btn-primary {
+        background-color: #007bff;
+    }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+        }
+
+    .btn-secondary {
+        background-color: #3a74a7;
+        position: relative;
+        left: 302px;
+    }
+
+        .btn-secondary:hover {
+            background-color: #5a6268;
+        }
+
+    /* Table Styling */
+    .styled-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 20px 0;
+        background-color: #fff;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+        .styled-table thead th {
+            background-color: #007bff;
+            color: #fff;
+            padding: 10px;
+            text-align: left;
+        }
+
+        .styled-table tbody tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        .styled-table tbody tr:hover {
+            background-color: #e2e2e2;
+        }
+
+        .styled-table td {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .styled-table th, .styled-table td {
+            text-align: left;
+        }
+</style>
+
+<body>
+    <div class="containerpartyName">
+        <h1>اسماء القوائم الحزبية المترشحة</h1>
+
+        @*<p>
+                @Html.ActionLink("Create New", "Create", new { @class = "btn btn-primary" })
+            </p>*@
+
+        <table class="styled-table">
+            <thead>
+                <tr>
+                    <th>@Html.DisplayNameFor(model => model.partyName)</th>
+                    <th>.</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@Html.DisplayFor(modelItem => item.partyName)</td>
+                        <td>
+                            @Html.ActionLink("اسماء المرشحين", "PatryCandidatesName", new { id = item.id }, new { @class = "btn btn-secondary" })
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</body>

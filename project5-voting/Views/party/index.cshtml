@@ -1,0 +1,96 @@
+﻿@model IEnumerable < project5_voting.Models.PartyCandidate>
+
+@{
+    ViewBag.Title = "قائمة المرشحين";
+}
+
+
+<style>
+        .page-title {
+            border-bottom: 2px solid #007bff;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+
+        .action-buttons {
+            margin-bottom: 20px;
+        }
+
+            .action-buttons a,
+            .action-buttons button {
+                margin-right: 10px;
+            }
+</style>
+
+
+<main>
+    <div class="container mt-4">
+        <div class="page-title">
+            <h2 class="text-center mb-3">قائمة المرشحين</h2>
+            <p class="text-center">
+                <strong>اسم الحزب:</strong> @ViewBag.PartyName
+            </p>
+        </div>
+
+        <div class="action-buttons text-center">
+            @if (Model.Count() == 41)
+            {
+                <button id="goToNextPage" class="btn btn-primary btn-lg">اذهب إلى الصفحة التالية</button>
+            }
+            else
+            {
+                @Html.ActionLink("إدخال ناخب", "Create", new { @class = "btn btn-success btn-lg" })
+            }
+        </div>
+
+        <div class="table-responsive">
+            <table class="table table-bordered table-striped">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>الرقم الوطني</th>
+                        <th>الاسم</th>
+                        <th>الايميل</th>
+                        <th>الهاتف</th>
+                        <th>تاريخ الميلاد</th>
+                        <th>الجنس</th>
+                        <th>نوع المقعد</th>
+                        <th>الديانة</th>
+                        <th>دائرة محلية</th>
+                        <th>الإجراءات</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@Html.DisplayFor(modelItem => item.nationalId)</td>
+                            <td>@Html.DisplayFor(modelItem => item.name)</td>
+                            <td>@Html.DisplayFor(modelItem => item.email)</td>
+                            <td>@Html.DisplayFor(modelItem => item.phone)</td>
+                            <td>@(item.birthDay.HasValue ? item.birthDay.Value.ToString("yyyy-MM-dd") : string.Empty)</td>
+                            <td>@Html.DisplayFor(modelItem => item.gender)</td>
+                            <td>@Html.DisplayFor(modelItem => item.typeOfChair)</td>
+                            <td>@Html.DisplayFor(modelItem => item.religion)</td>
+                            <td>@Html.DisplayFor(modelItem => item.electoralDistrict)</td>
+                            <td>
+                                @Html.ActionLink("حذف", "Delete", new { id = item.id }, new { @class = "btn btn-danger btn-sm" })
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    @section Scripts {
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+        <script type="text/javascript">
+            document.getElementById("goToNextPage").onclick = function () {
+                window.location.href = '@Url.Action("success", "partyCandidates")';
+            };
+        </script>
+    }
+</main>
+

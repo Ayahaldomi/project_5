@@ -1,0 +1,43 @@
+﻿@model IEnumerable<project5_voting.Models.Ad>
+
+@{
+    ViewBag.Title = "Publishs";
+}
+
+
+
+<div class="container mt-5">
+    <h2 class="text-center mb-4">الحملات الانتخابية</h2>
+    <div class="row">
+        @foreach (var ad in Model)
+        {
+            if (ad.status == "تم نشر الاعلان")
+            {
+                <div class="container mt-5">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <div class="card">
+                                <div class="row no-gutters">
+                                    <div class="col-md-4">
+                                        <img src="~/images/@ad.image" class="card-img" alt="Image Description">
+                                    </div>
+                                    <div class="col-md-8">
+                                        <div class="card-body">
+                                            <h5 class="card-title">@ad.nationalId</h5>
+                                            <p class="card-text">@ad.campaignSlagan</p>
+                                            <p class="card-text">@ad.areaName</p>
+                                            <p class="card-text">@ad.description</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <hr />
+            }
+        }
+
+
+    </div>
+</div>

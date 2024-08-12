@@ -1,0 +1,113 @@
+﻿@model IEnumerable<project5_voting.Models.PartyCandidate>
+
+@{
+    ViewBag.Title = "PatryCandidatesName";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    /* Background Styling */
+    body {
+        background-color: #f4f4f9; /* Light grey background for the entire page */
+        font-family: Arial, sans-serif;
+    }
+
+    /* Container Styling */
+    .containerPartyCandidate {
+        width: 90%;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #ffffff;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Heading Styling */
+    h1 {
+        color: #333;
+        margin-bottom: 20px;
+        text-align: center;
+    }
+
+    /* Table Styling */
+    .styled-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 20px 0;
+        background-color: #ffffff;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+        .styled-table thead th {
+            background-color: #007bff;
+            color: #ffffff;
+            padding: 10px;
+            text-align: left;
+        }
+
+        .styled-table tbody tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        .styled-table tbody tr:hover {
+            background-color: #e2e2e2;
+        }
+
+        .styled-table td {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .styled-table th, .styled-table td {
+            text-align: left;
+        }
+
+            /* Add Action Button Styling (Optional) */
+            .styled-table td a {
+                padding: 5px 10px;
+                color: #fff;
+                text-decoration: none;
+                border-radius: 5px;
+                background-color: #007bff;
+            }
+
+                .styled-table td a:hover {
+                    background-color: #0056b3;
+                }
+</style>
+<body>
+    <div class="containerPartyCandidate">
+        <h1>أسماء المترشحين في هذه القائمة</h1>
+
+        <table class="styled-table">
+            <thead>
+                <tr>
+                    <th>@Html.DisplayNameFor(model => model.email)</th>
+                    <th>@Html.DisplayNameFor(model => model.name)</th>
+                    <th>@Html.DisplayNameFor(model => model.gender)</th>
+                    <th>@Html.DisplayNameFor(model => model.birthDay)</th>
+                    <th>@Html.DisplayNameFor(model => model.typeOfChair)</th>
+                    <th>@Html.DisplayNameFor(model => model.religion)</th>
+                    <th>@Html.DisplayNameFor(model => model.partyList.partyName)</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@Html.DisplayFor(modelItem => item.email)</td>
+                        <td>@Html.DisplayFor(modelItem => item.name)</td>
+                        <td>@Html.DisplayFor(modelItem => item.gender)</td>
+                        <td>@Html.DisplayFor(modelItem => item.birthDay)</td>
+                        <td>@Html.DisplayFor(modelItem => item.typeOfChair)</td>
+                        <td>@Html.DisplayFor(modelItem => item.religion)</td>
+                        <td>@Html.DisplayFor(modelItem => item.partyList.partyName)</td>
+                        <td>
+                            <!-- Add action links or buttons here if needed -->
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</body>

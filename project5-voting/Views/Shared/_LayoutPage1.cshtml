@@ -1,0 +1,124 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
+
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f8f9fa; /* Light background color */
+        }
+
+        .nav-link {
+            color: #ffffff; /* White color for the nav links */
+        }
+
+        .sidebar {
+            background-color: #001f3f; /* Navy color for the sidebar */
+            min-height: 100vh; /* Full viewport height */
+        }
+
+        .sidebar-header {
+            background-color: #004080; /* Darker navy color */
+            color: #ffffff; /* White text color */
+            padding: 20px;
+            text-align: center;
+        }
+
+            .sidebar-header h4 {
+                margin-bottom: 0;
+            }
+
+        .content {
+            background-color: #ffffff; /* White background for content */
+            min-height: 100vh; /* Ensure content takes full height */
+            padding: 20px;
+        }
+
+        .nav-item {
+            border-bottom: 1px solid #004080; /* Darker navy border for separation */
+        }
+
+        .nav-link:hover {
+            background-color: #0055a5; /* Lighter navy background on hover */
+            color: #ffffff; /* White text on hover */
+        }
+
+        .user-wrapper img {
+            border: 3px solid #ffffff; /* White border around the profile picture */
+            margin-bottom: 10px;
+        }
+
+        .user-wrapper h4,
+        .user-wrapper small {
+            color: #ffffff; /* White text for user information */
+        }
+
+        .logout-btn {
+            position: absolute;
+            bottom: 20px;
+            width: 100%;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="d-flex flex-column flex-md-row">
+        <nav class="sidebar d-flex flex-column p-3 w-80 w-md-auto mb-3 mb-md-0">
+            <div class="sidebar-header">
+                <div class="user-wrapper d-flex flex-column align-items-center">
+                    <img src="~/images/instructor8.jpg" alt="User" class="rounded-circle" style="width: 100px; height: 100px;" />
+                    <div class="text-center">
+                        <h4>@Session["Admin"]</h4>
+                        <small>Super admin</small>
+                    </div>
+                </div>
+            </div>
+            <ul class="nav flex-column mt-3">
+                <li class="nav-item">
+                    @Html.ActionLink("طلبات الترشح", "IndexAdmin", "party", new { area = "" }, new { @class = "nav-link" })
+                </li>
+                <li class="nav-item">
+                    @Html.ActionLink("طلبات المناظره", "ShowDebates", "Debate", new { area = "" }, new { @class = "nav-link" })
+                </li>
+                <li class="nav-item">
+                    @Html.ActionLink("طلبات الاعلانات", "advertisementAdmin", "Ads", new { area = "" }, new { @class = "nav-link" })
+                </li>
+                <li class="nav-item">
+                    @Html.ActionLink("تواصل", "AdminContact", "Contacts", new { area = "" }, new { @class = "nav-link" })
+                </li>
+                <li class="nav-item">
+                    @Html.ActionLink("معلومات الناخب", "", "", new { area = "" }, new { @class = "nav-link" })
+                </li>
+                <li class="nav-item">
+                    @Html.ActionLink("تاريخ البدايه والنهاية", "AddDateAndTime", "DateAndTimes", new { area = "" }, new { @class = "nav-link" })
+                </li>
+                <li class="nav-item">
+                    @Html.ActionLink("نتائج الانتخابات", "", "", new { area = "" }, new { @class = "nav-link" })
+                </li>
+                <li class="nav-item">
+                    @Html.ActionLink("اضافة ادمن", "addAdmain", "AddAdmin", new { area = "" }, new { @class = "nav-link" })
+                </li>
+
+                <li class="nav-item">
+                    <br />
+                    @Html.ActionLink("تسجيل الخروج", "Logout", "Login", new { area = "" }, new { @class = "btn btn-danger" })
+                </li>
+            </ul>
+        </nav>
+
+        <div class="content flex-grow-1">
+            @RenderBody()
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    @RenderSection("scripts", required: false)
+</body>
+</html>

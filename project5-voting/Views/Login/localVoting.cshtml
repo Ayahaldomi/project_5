@@ -1,0 +1,143 @@
+﻿
+
+@model IEnumerable<project5_voting.Models.LocalCandidatesGroupedViewModel>
+
+<style>
+    body {
+        direction: rtl;
+        background-color: #f8f9fa;
+        color: #333;
+    }
+
+    .card {
+        border-color: black; /* Red border color */
+        border-width: 2px;
+        direction: rtl; /* Ensure RTL layout inside card */
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add box shadow */
+    }
+
+    label.form-check-label {
+        padding-right: 25px !important;
+    }
+
+    .card-header {
+        background-color: #004080; /* Blue header background */
+        color: white;
+        text-align: right; /* Align header text to right */
+    }
+
+    .card-body {
+        background-color: white;
+        text-align: right; /* Align body text to right */
+    }
+
+    .btn-primary {
+        background-color: #dc3545; /* Red button color */
+        border-color: #dc3545;
+    }
+
+        .btn-primary:hover {
+            background-color: #c82333; /* Darker red on hover */
+            border-color: #bd2130;
+        }
+
+    .form-check {
+        margin-bottom: 15px; /* Add bottom margin to each checkbox group */
+    }
+
+    .form-check-input {
+        margin-left: 10px; /* Add left margin to the checkbox */
+    }
+
+    .form-check-label {
+        text-align: right; /* Align checkbox labels to right */
+    }
+
+    .form-check-input:disabled ~ .form-check-label {
+        color: #6c757d; /* Disabled text color */
+    }
+
+    .container {
+        margin-top: 30px;
+    }
+
+    .card-group {
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+        .card-group .card {
+            flex: 1 1 calc(50% - 15px); /* Every two cards next to each other */
+            margin: 0 10px 20px;
+        }
+
+    .btn-primary {
+        display: block;
+        margin: 20px auto; /* Center the button and add vertical spacing */
+    }
+</style>
+
+<h2 class="text-center mt-4">التصويت المحلي</h2>
+
+<div class="container mt-4">
+    <h2 class="text-center">@ViewBag.Title</h2>
+
+    @using (Html.BeginForm())
+    {
+        <div class="card-group">
+            @foreach (var group in Model)
+            {
+                <div class="card" id="card-@group.ListName">
+                    <div class="card-header">
+                        <h5>@group.ListName</h5>
+                    </div>
+                    <div class="card-body">
+                        <input type="radio" name="selectedList" value="@group.ListName" id="list-@group.ListName"
+                               onclick="handleRadioClick('@group.ListName')" />
+                        <label for="list-@group.ListName">اختر هذه @group.ListName</label><br />
+
+                        @foreach (var candidate in group.Candidates)
+                        {
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="candidate-@candidate.id"
+                                       name="selectedCandidates" value="@candidate.id" disabled />
+                                <label class="form-check-label" for="candidate-@candidate.id">
+                                    @candidate.candidateName
+                                </label>
+                            </div>
+                        }
+                    </div>
+                </div>
+            }
+        </div>
+        <button type="submit" class="btn btn-primary mt-4">إرسال</button>
+    }
+</div>
+
+<script>
+    function handleRadioClick(selectedListName) {
+        // Get all card elements
+        var cards = document.querySelectorAll('.card');
+
+        // Iterate through all cards
+        cards.forEach(function (card) {
+            // Get the list name for the current card
+            var cardListName = card.id.replace('card-', '');
+
+            // Get all checkboxes within the card
+            var checkboxes = card.querySelectorAll('input[type="checkbox"]');
+
+            if (cardListName === selectedListName) {
+                // Enable checkboxes if this card's listName matches the selected list
+                checkboxes.forEach(function (checkbox) {
+                    checkbox.disabled = false;
+                });
+            } else {
+                // Disable checkboxes for all other cards
+                checkboxes.forEach(function (checkbox) {
+                    checkbox.disabled = true;
+                });
+            }
+        });
+    }
+</script>

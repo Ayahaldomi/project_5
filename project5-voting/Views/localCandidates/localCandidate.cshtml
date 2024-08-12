@@ -1,0 +1,157 @@
+﻿@model IEnumerable<project5_voting.Models.localCandidate>
+
+
+<style>
+    body {
+        direction: rtl;
+    }
+
+    .text-right {
+        text-align: right;
+    }
+
+    .text-left {
+        text-align: left;
+    }
+
+    .form-horizontal .form-group {
+        text-align: right;
+    }
+
+    .form-group.row {
+        direction: rtl;
+    }
+
+    .card {
+        border-width: 2px; /* Makes the border thicker for better visibility */
+    }
+</style>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2 class="text-right">تقدم طلب أسماء المترشحين</h2>
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="container mt-4">
+        <div class="card border-dark shadow-sm">
+            <div class="card-body">
+                <h4 class="card-title text-right text-dark">تعبئة أسماء المترشحين في القائمة</h4>
+                <hr />
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                <div class="form-group row">
+                    <label class="control-label col-md-2 text-right">الرقم الوطني</label>
+                    <div class="col-md-10">
+                        <input name="national_id" class="form-control" />
+                        <span class="text-danger">@ViewBag.error</span>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label class="control-label col-md-2 text-right">نوع المقعد</label>
+                    <div class="col-md-10">
+                        <select name="typeOfChair">
+                            <option value="">اختر  نوع مقعد الترشح</option>
+                            <option value="تنافس">تنافس</option>
+                            <option value="كوتا">كوتا</option>
+                            <option value="مسيحي">مسيحي</option>
+
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <div class="col-md-10 offset-md-2">
+                        <input type="submit" value="إنشاء" class="btn btn-dark" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+<div class="container mt-4">
+    <div class="card border-dark shadow-sm">
+        <div class="card-body">
+            <table class="table table-bordered table-striped text-right">
+                <thead>
+                    <tr>
+                        <th>الرقم</th>
+                        <th>@Html.DisplayNameFor(model => model.FirstOrDefault().candidateName)</th>
+                        <th>@Html.DisplayNameFor(model => model.FirstOrDefault().election_area)</th>
+                        <th>@Html.DisplayNameFor(model => model.FirstOrDefault().email)</th>
+                        <th>@Html.DisplayNameFor(model => model.FirstOrDefault().national_id)</th>
+                        <th>@Html.DisplayNameFor(model => model.FirstOrDefault().gender)</th>
+                        <th>تاريخ الميلاد</th>
+                        <th>@Html.DisplayNameFor(model => model.FirstOrDefault().religion)</th>
+                        <th>@Html.DisplayNameFor(model => model.FirstOrDefault().typeOfChair)</th>
+                        <th>@Html.DisplayNameFor(model => model.FirstOrDefault().listName)</th>
+                        <th>@Html.DisplayNameFor(model => model.FirstOrDefault().localList.listName)</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model != null)
+                    {
+                        int counter = 1;
+                        foreach (var item in Model)
+                        {
+                            if (Convert.ToInt64(Session["listId"]) == item.listKey)
+                            {
+                                <tr>
+                                    <td>@counter</td>
+                                    <td>@Html.DisplayFor(modelItem => item.candidateName)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.election_area)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.email)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.national_id)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.gender)</td>
+                                    <td>@item.birth_day.Value.ToString("yyyy-MM-dd")</td>
+                                    <td>@Html.DisplayFor(modelItem => item.religion)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.typeOfChair)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.listName)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.localList.listName)</td>
+                                    <td>@Html.ActionLink("حذف", "Delete", new { id = item.id }, new { @class = "btn btn-danger btn-sm" })</td>
+                                </tr>
+                                counter++;
+                            }
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="container mt-4">
+    <a href="javascript:void(0);" class="btn btn-secondary" onclick="confirmBackToHome()">تقديم الطلب</a>
+</div>
+
+@{
+    @Scripts.Render("~/bundles/jqueryval")
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        function confirmBackToHome() {
+            Swal.fire({
+                title: 'هل أنت متأكد من تقديم الطلب؟',
+
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'نعم، انتقل!',
+                cancelButtonText: 'لا، ابقى هنا'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = '@Url.Action("ClearSessionAndRedirect", "localCandidates")';
+                }
+            });
+        }
+    </script>
+}
+

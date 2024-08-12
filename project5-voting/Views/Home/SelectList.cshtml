@@ -1,0 +1,62 @@
+﻿﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+<main class="container mt-4">
+    <div class="row">
+        <!-- بطاقة قائمة الحزب -->
+        <div class="col-md-6 mb-4">
+            <a href="@Url.Action("Createuser", "party")" class="card card-hover text-decoration-none text-black" style="height: 400px; width: 100%; max-width: 600px;">
+                <img src="~/images/القائمه الحزبيه2.png" class="card-img-top" alt="قائمة الحزب" style="height: 300px; object-fit: cover; border-bottom: 2px solid #003366;" />
+                <div class="card-body bg-dark text-light rounded-bottom d-flex flex-column justify-content-center align-items-center">
+                    <h5 class="card-title">قائمة الحزب</h5>
+                    <p class="card-text">
+                        عند ضغط هنا سوف تتجه لإنشاء القائمة الحزبية من أجل الترشح للانتخابات.
+                    </p>
+                </div>
+            </a>
+        </div>
+
+        <!-- بطاقة القائمة المحلية -->
+        <div class="col-md-6 mb-4">
+            <a href="@Url.Action("", "")" class="card card-hover text-decoration-none text-black" style="height: 400px; width: 100%; max-width: 600px;">
+                <img src="~/images/القائمة المحلية.png" class="card-img-top" alt="القائمة المحلية" style="height: 300px; object-fit: cover; border-bottom: 2px solid #003366;" />
+                <div class="card-body bg-dark text-light rounded-bottom d-flex flex-column justify-content-center align-items-center">
+                    <h5 class="card-title">القائمة المحلية</h5>
+                    <p class="card-text">
+                        عند ضغط هنا سوف تتجه لإنشاء القائمة المحلية من أجل الترشح للانتخابات.
+                    </p>
+                </div>
+            </a>
+        </div>
+    </div>
+</main>
+
+<style>
+    .card-hover {
+        transition: transform 0.3s, box-shadow 0.3s;
+        border: 2px solid #003366; /* Navy Blue border for cards */
+    }
+
+        .card-hover:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+        }
+
+    .card-body {
+        background-color: #003f6c; /* Darker navy blue for card background */
+        color: #ffffff; /* White text for better contrast */
+    }
+
+    .card-title {
+        color: #ffffff; /* White title text */
+    }
+
+    .card-text {
+        color: #cce0ff; /* Light blue text for card descriptions */
+    }
+
+    .card-img-top {
+        border-bottom: 2px solid #003366; /* Navy Blue border for images */
+    }
+</style>

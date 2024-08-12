@@ -1,0 +1,92 @@
+﻿@model project5_voting.Models.localList
+
+
+
+<h2 class="text-right mb-4">طلب الترشح للقوائم المحلية</h2>
+
+@Html.AntiForgeryToken()
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div class="container mt-5">
+        <div class="card border-dark shadow-lg">
+            <div class="card-body">
+                <h4 class="card-title text-right text-dark mb-4">تعبئة طلب الترشح</h4>
+                <hr />
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                <div class="form-horizontal">
+                    <div class="form-group row mb-3">
+                        <label class="col-md-2 col-form-label text-dark text-right">اسم القائمة</label>
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.listName, new { htmlAttributes = new { @class = "form-control", placeholder = "الرجاء ادخال اسم القائمة", style = "color: #495057;" } })
+                            @Html.ValidationMessageFor(model => model.listName, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group row mb-3">
+                        <label class="col-md-2 col-form-label text-dark text-right">اسم الدائرة</label>
+                        <div class="col-md-10">
+                            @Html.DropDownListFor(
+                                model => model.electionDistrict,
+                                new SelectList(
+                                    new List<SelectListItem>
+                                    {
+                                        new SelectListItem { Value = "", Text = "اختر دائرة" },
+                                        new SelectListItem { Value = "Circle 1", Text = "اربد الاولى" },
+                                        new SelectListItem { Value = "Circle 2", Text = "اربد الثانية" },
+                                        new SelectListItem { Value = "Circle 3", Text = "المفرق" }
+                                    },
+                                    "Value",
+                                    "Text"),
+                                new { @class = "form-control", required = "required" }
+                            )
+                            @Html.ValidationMessageFor(model => model.electionDistrict, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <div class="col-md-10 offset-md-2">
+                            <button type="submit" style="background-color:black " class="btn btn-primary btn-lg">تقديم</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container mt-3">
+        @Html.ActionLink("Back to List", "Index", new { @class = "btn btn-secondary" })
+    </div>
+}
+
+@{
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+<style>
+    body {
+        direction: rtl;
+    }
+
+    .text-right {
+        text-align: right;
+    }
+
+    .text-left {
+        text-align: left;
+    }
+
+    .form-horizontal .form-group {
+        text-align: right;
+    }
+
+    .form-group.row {
+        direction: rtl;
+    }
+
+    .card {
+        border-width: 2px; /* Makes the border thicker for better visibility */
+    }
+</style>
+

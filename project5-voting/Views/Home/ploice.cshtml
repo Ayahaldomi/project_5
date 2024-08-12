@@ -1,0 +1,161 @@
+﻿﻿@{
+    ViewBag.Title = "سياسات الانتخابات";
+}
+
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/sweetalert2@10/dist/sweetalert2.min.css" rel="stylesheet">
+
+<style>
+   
+
+    .container {
+        max-width: 800px;
+    }
+
+    .policy-section {
+        margin-bottom: 20px;
+        border: 1px solid #ddd;
+        border-radius: 10px;
+        background-color: #ffffff;
+        box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+        overflow: hidden;
+        transition: box-shadow 0.3s ease, transform 0.3s ease;
+    }
+
+        .policy-section h2 {
+            margin: 0;
+            padding: 15px;
+            background-color: #ffffff; /* أبيض */
+            color: #000000; /* أسود */
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 1.2rem;
+            border-bottom: 1px solid #ddd;
+        }
+
+            .policy-section h2 .arrow {
+                font-size: 1.2rem;
+                transition: transform 0.3s ease;
+            }
+
+    .policy-content {
+        padding: 20px;
+        display: none;
+        background-color: #28a745; /* أخضر */
+        color: #ffffff; /* أبيض */
+    }
+
+    .policy-section.show {
+        transform: scale(1.01);
+        box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+    }
+
+        .policy-section.show .policy-content {
+            display: block;
+        }
+
+        .policy-section.show h2 .arrow {
+            transform: rotate(180deg);
+        }
+
+    h2 {
+        color: #d42a2a; /* أحمر */
+    }
+</style>
+
+<div class="container">
+    <h1 class="text-center mb-4">سياسات الانتخابات في الأردن</h1>
+
+    <div class="policy-section">
+        <h2>
+            قانون الانتخابات العامة
+            <span class="arrow">&#9660;</span>
+        </h2>
+        <div class="policy-content">
+            <p>يشمل قانون الانتخابات البرلمانية وقانون البلديات، ويحدد كيفية انتخاب أعضاء مجلس النواب والمجالس البلدية والإجراءات ذات الصلة.</p>
+        </div>
+    </div>
+
+    <div class="policy-section">
+        <h2>
+            شروط الترشح
+            <span class="arrow">&#9660;</span>
+        </h2>
+        <div class="policy-content">
+            <p>يشترط أن يكون المرشح مواطنًا أردنيًا، وأن يكون قد بلغ العمر المحدد، وأن يكون خاليًا من السوابق الجنائية المؤثرة.</p>
+        </div>
+    </div>
+
+    <div class="policy-section">
+        <h2>
+            إجراءات التسجيل والتصويت
+            <span class="arrow">&#9660;</span>
+        </h2>
+        <div class="policy-content">
+            <p>تتطلب إجراءات التسجيل من المواطنين تسجيل أنفسهم في السجلات الانتخابية، ويتم التصويت في مراكز الاقتراع المخصصة.</p>
+        </div>
+    </div>
+
+    <div class="policy-section">
+        <h2>
+            الحملات الانتخابية
+            <span class="arrow">&#9660;</span>
+        </h2>
+        <div class="policy-content">
+            <p>تتضمن القواعد المتعلقة بتمويل الحملات الانتخابية والدعاية، بما في ذلك الشفافية وتجنب الإعلانات المضللة.</p>
+        </div>
+    </div>
+
+    <div class="policy-section">
+        <h2>
+            مراقبة الانتخابات
+            <span class="arrow">&#9660;</span>
+        </h2>
+        <div class="policy-content">
+            <p>تسمح للمراقبين المحليين والدوليين بمراقبة العملية الانتخابية، مع وجود قنوات لتقديم الشكاوى والاعتراضات.</p>
+        </div>
+    </div>
+
+    <div class="policy-section">
+        <h2>
+            الإجراءات القانونية
+            <span class="arrow">&#9660;</span>
+        </h2>
+        <div class="policy-content">
+            <p>تتيح الطعن في نتائج الانتخابات عبر القنوات القانونية المحددة.</p>
+        </div>
+    </div>
+
+    <div class="policy-section">
+        <h2>
+            التحديثات والشفافية
+            <span class="arrow">&#9660;</span>
+        </h2>
+        <div class="policy-content">
+            <p>تعلن النتائج بشكل شفاف، وتُنشر تقارير دورية لضمان الشفافية والمساءلة.</p>
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10/dist/sweetalert2.all.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        $('.policy-section h2').click(function () {
+            $(this).parent().toggleClass('show');
+        });
+
+        var errorMessage = '@TempData["LoginError"]';
+        if (errorMessage) {
+            Swal.fire({
+                icon: 'error',
+                title: 'خطأ',
+                text: errorMessage
+            });
+        }
+    });
+</script>

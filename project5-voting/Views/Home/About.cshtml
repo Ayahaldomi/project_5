@@ -1,0 +1,160 @@
+﻿﻿
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+<style>
+
+
+    .container {
+        max-width: 1100px; /* Increased max-width for container */
+    }
+
+    .project-description {
+        margin-bottom: 50px; /* Increased bottom margin */
+    }
+
+    .description-content {
+        display: flex;
+        flex-direction: column; /* وضع العناصر في عمود */
+        align-items: center; /* توسيط العناصر أفقيًا */
+        text-align: center; /* توسيط النص */
+        margin-bottom: 40px; /* Added bottom margin */
+    }
+
+        .description-content img {
+            border-radius: 8px;
+            width: 100%;
+            max-width: 600px; /* Increased max-width for image */
+            height: auto;
+            margin: 30px 0; /* Increased margin for image */
+        }
+
+    .text-content {
+        max-width: 700px; /* Increased max-width for text */
+        margin-bottom: 30px; /* Added bottom margin for text */
+    }
+
+    .revenue-card {
+        text-align: left;
+        margin-bottom: 40px; /* Increased bottom margin */
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        display: flex;
+        flex-direction: column; /* Set flex-direction to column for responsiveness */
+        align-items: center;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 20px; /* Increased padding */
+        background-color: #ffffff; /* تعديل لون الخلفية */
+    }
+
+        .revenue-card img {
+            border-radius: 8px;
+            width: 100%; /* Set width to 100% for responsiveness */
+            max-width: 180px; /* Set max-width */
+            height: auto; /* Set height to auto for responsiveness */
+            margin-bottom: 20px; /* Margin bottom for image */
+        }
+
+        .revenue-card h5 {
+            margin-top: 0;
+            font-size: 1.4rem; /* Increased font-size */
+            color: #dc3545; /* Red */
+        }
+
+        .revenue-card p {
+            color: #343a40; /* Dark grey for text */
+        }
+
+        .revenue-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+
+    h1, h2 {
+        color: #28a745; /* Green */
+    }
+
+    .description-content {
+        color: #343a40; /* Dark grey for text */
+    }
+
+    .revenue-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+</style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="text-center mb-4">حول المشروع</h1>
+        <div class="project-description">
+            <div class="description-content">
+                <div class="text-content">
+                    <p>هذا المشروع هو تطبيق إلكتروني مخصص لإدارة الانتخابات. يهدف إلى تسهيل عملية تسجيل الأحزاب والمرشحين، وتوفير واجهة مستخدم سهلة الاستخدام لإدارة البيانات ومتابعة التصويت.</p>
+                    <p>يمكن استخدام هذا النظام في الانتخابات الأخرى بفضل مرونته وقابليته للتخصيص.</p>
+                </div>
+                <img src="~/images/about.jpg" class="img-fluid" />
+            </div>
+        </div>
+
+        <h2 class="text-center mb-4">طرق الكسب</h2>
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <div class="revenue-card">
+                    <img src="~/images/الانتخابات البلدية.png" alt="Municipal Election">
+                    <div>
+                        <h5>الانتخابات البلدية</h5>
+                        <p>إدارة وتسهيل الانتخابات المحلية بفعالية وكفاءة.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 mb-3">
+                <div class="revenue-card">
+                    <img src="~/images/الانتخابات الجامعية.jpg" alt="University Election">
+                    <div>
+                        <h5>الانتخابات الجامعية</h5>
+                        <p>تنظيم انتخابات للطلاب أو الكليات بشكل منظم.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 mb-3">
+                <div class="revenue-card">
+                    <img src="~/images/الانتخابات المهنية.jpg" alt="Professional Election">
+                    <div>
+                        <h5>الانتخابات المهنية</h5>
+                        <p>دعم تنظيم انتخابات للمؤسسات المهنية أو النقابات.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 mb-3">
+                <div class="revenue-card">
+                    <img src="~/images/الانتخابات الخاصة بالشركات.jpg" alt="Corporate Election">
+                    <div>
+                        <h5>الانتخابات الخاصة بالشركات</h5>
+                        <p>إدارة انتخابات مجالس الإدارة أو اللجان في الشركات.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 mb-3">
+                <div class="revenue-card">
+                    <img src="~/images/النقابات العمالية.jpg" alt="Trade Unions">
+                    <div>
+                        <h5>النقابات العمالية</h5>
+                        <p>تنظيم انتخابات للنقابات العمالية وتعزيز التفاعل بين الأعضاء.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6 mb-3">
+                <div class="revenue-card">
+                    <img src="~/images/الانتخابات الرئاسية العالمية.jpg" alt="Global Presidential Elections">
+                    <div>
+                        <h5>الانتخابات الرئاسية العالمية</h5>
+                        <p>تنظيم وإدارة الانتخابات الرئاسية على مستوى عالمي.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>

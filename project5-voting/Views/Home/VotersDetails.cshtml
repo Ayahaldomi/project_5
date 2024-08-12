@@ -1,0 +1,95 @@
+﻿@model project5_voting.Models.USER
+
+@{
+    ViewBag.Title = "VotersDetails";
+}
+
+<h2 style="text-align:center;">تفاصيل الناخب</h2>
+
+<div class="container mt-4">
+    <h4>معلومات المستخدم</h4>
+    <hr />
+    <div class="mb-3">
+        @using (Html.BeginForm("Search", "Home", FormMethod.Get, new { @class = "form-inline" }))
+        {
+            <div class="input-group">
+                <input type="text" class="form-control" name="Search" placeholder="ابحث عن الرقم الوطني">
+                <div class="input-group-append">
+                    <input type="submit" value="بحث" class="btn btn-primary" />
+                </div>
+            </div>
+        }
+
+        @if (ViewBag.Error == false)
+        {
+            <p class="alert alert-danger mt-2">
+                يرجى التأكد من صحة الرقم الوطني الخاص بك.
+            </p>
+        }
+    </div>
+    <hr />
+    <dl class="row" >
+        <dt class="col-sm-3">
+            @Html.Label("الرقم الوطني ", htmlAttributes: new { @class = "control-label col-md-3" })
+        </dt>
+        <dd class="col-sm-9">
+            @Html.DisplayFor(model => model.nationalID)
+        </dd>
+
+        <dt class="col-sm-3">
+            @Html.Label("الاسم ", htmlAttributes: new { @class = "control-label col-md-3" })
+        </dt>
+        <dd class="col-sm-9">
+            @Html.DisplayFor(model => model.name)
+        </dd>
+
+        <dt class="col-sm-3">
+            @Html.Label("البريد الالكتروني ", htmlAttributes: new { @class = "control-label col-md-3" })
+        </dt>
+        <dd class="col-sm-9">
+            @Html.DisplayFor(model => model.email)
+        </dd>
+
+        <dt class="col-sm-3">
+            @Html.Label("الجنس ", htmlAttributes: new { @class = "control-label col-md-3" })
+        </dt>
+        <dd class="col-sm-9">
+            @Html.DisplayFor(model => model.gender)
+        </dd>
+
+        <dt class="col-sm-3">
+            @Html.Label("تاريخ الميلاد ", htmlAttributes: new { @class = "control-label col-md-3" })
+        </dt>
+        <dd class="col-sm-9">
+            @Html.DisplayFor(model => model.birthday)
+        </dd>
+
+        <dt class="col-sm-3">
+            @Html.Label("الديانة ", htmlAttributes: new { @class = "control-label col-md-3" })
+        </dt>
+        <dd class="col-sm-9">
+            @Html.DisplayFor(model => model.religion)
+        </dd>
+
+        <dt class="col-sm-3">
+            @Html.Label("المحافظة ", htmlAttributes: new { @class = "control-label col-md-3" })
+        </dt>
+        <dd class="col-sm-9">
+            @Html.DisplayFor(model => model.placeOfResidence)
+        </dd>
+
+        <dt class="col-sm-3">
+            @Html.Label("الدائرة الانتخابية ", htmlAttributes: new { @class = "control-label col-md-3" })
+        </dt>
+        <dd class="col-sm-9">
+            @Html.DisplayFor(model => model.electionArea)
+        </dd>
+
+        <dt class="col-sm-3">
+            @Html.Label("موقع الانتخاب ", htmlAttributes: new { @class = "control-label col-md-3" })
+        </dt>
+        <dd class="col-sm-9">
+            @Html.DisplayFor(model => model.elctionLocation)
+        </dd>
+    </dl>
+</div>

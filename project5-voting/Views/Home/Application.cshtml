@@ -1,0 +1,86 @@
+﻿﻿
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+<style>
+    .card-hover {
+        transition: transform 0.3s, box-shadow 0.3s;
+        border: 3px solid #ff0000; /* Red border for cards */
+    }
+
+        .card-hover:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+        }
+
+    .card-body {
+        background-color: #ffffff; /* White background for card body */
+        color: #000000; /* Black text for better contrast */
+    }
+
+    .card-title {
+        color: #ff0000; /* Red title text */
+        font-size: 1.5rem;
+        font-weight: bold;
+    }
+
+    .card-text {
+        color: #008000; /* Green text for card descriptions */
+        font-size: 1.1rem;
+    }
+
+    .card-img-top {
+        border-bottom: 2px solid #ff0000; /* Red border for images */
+    }
+
+    .btn-custom {
+        background-color: #008000; /* Green button background */
+        border-color: #008000; /* Green button border */
+        color: #ffffff; /* White text */
+        padding: 10px 20px;
+        border-radius: 5px;
+        text-decoration: none;
+        font-size: 1.1rem;
+    }
+
+        .btn-custom:hover {
+            background-color: #006400; /* Darker green on hover */
+            border-color: #006400;
+            color: #ffffff;
+        }
+</style>
+
+<div class="container mt-4">
+    <h1 class="text-center">القوائم المحلية و الحزبية</h1>
+    <div class="row">
+        <!-- بطاقة قائمة الحزب -->
+        <div class="col-md-6 mb-4">
+            <div class="card card-hover text-decoration-none text-black" style="height: 400px; width: 100%; max-width: 600px;">
+                <img src="~/images/1حزبي.png" class="card-img-top" alt="قائمة الحزب" style="height: 300px; object-fit: cover;" />
+                <div class="card-body bg-light text-danger rounded-bottom d-flex flex-column justify-content-center align-items-center">
+                    <h5 class="card-title">قائمة الحزبية</h5>
+                    <p class="card-text">
+                        عند ضغط هنا سوف تتجه لإنشاء القائمة الحزبية من أجل الترشح للانتخابات.
+                    </p>
+                    <a href="@Url.Action("Createuser", "partyLists")" class="btn btn-custom">اذهب لبناء للقائمة</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- بطاقة القائمة المحلية -->
+        <div class="col-md-6 mb-4">
+            <div class="card card-hover text-decoration-none text-black" style="height: 400px; width: 100%; max-width: 600px;">
+
+                <img src="~/images/محلي.png" class="card-img-top" alt="القائمة المحلية" style="height: 300px; object-fit: cover;" />
+                <div class="card-body bg-light text-danger rounded-bottom d-flex flex-column justify-content-center align-items-center">
+                    <h5 class="card-title">القائمة المحلية</h5>
+                    <p class="card-text">
+                        عند ضغط هنا سوف تتجه لإنشاء القائمة المحلية من أجل الترشح للانتخابات.
+                    </p>
+                    <a href="@Url.Action("", "")" class="btn btn-custom">اذهب لبناء للقائمة</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>

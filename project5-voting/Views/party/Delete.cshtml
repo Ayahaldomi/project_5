@@ -1,0 +1,98 @@
+﻿@model project5_voting.Models.PartyCandidate
+
+@{
+    ViewBag.Title = "حذف";
+}
+
+<div class="container mt-4">
+    <h2 class="text-center mb-4">تأكيد الحذف</h2>
+
+    <div class="card">
+        <div class="card-body">
+            <h4>تفاصيل المرشح</h4>
+            <hr />
+
+            <dl class="row">
+                <dt class="col-sm-4">
+                    الايميل
+                </dt>
+                <dd class="col-sm-8">
+                    @Html.DisplayFor(model => model.email)
+                </dd>
+
+                <dt class="col-sm-4">
+                    الاسم
+                </dt>
+                <dd class="col-sm-8">
+                    @Html.DisplayFor(model => model.name)
+                </dd>
+
+                <dt class="col-sm-4">
+                    الرقم الهاتف
+                </dt>
+                <dd class="col-sm-8">
+                    @Html.DisplayFor(model => model.phone)
+                </dd>
+
+                <dt class="col-sm-4">
+                    الرقم الوطني
+                </dt>
+                <dd class="col-sm-8">
+                    @Html.DisplayFor(model => model.nationalId)
+                </dd>
+
+                <dt class="col-sm-4">
+                    نوع الجنس
+                </dt>
+                <dd class="col-sm-8">
+                    @Html.DisplayFor(model => model.gender)
+                </dd>
+
+                <dt class="col-sm-4">
+                    تاريخ الميلاد
+                </dt>
+                <dd class="col-sm-8">
+                    @Html.DisplayFor(model => model.birthDay)
+                </dd>
+
+                <dt class="col-sm-4">
+                    نوع المقعد
+                </dt>
+                <dd class="col-sm-8">
+                    @Html.DisplayFor(model => model.typeOfChair)
+                </dd>
+
+                <dt class="col-sm-4">
+                    ديانة
+                </dt>
+                <dd class="col-sm-8">
+                    @Html.DisplayFor(model => model.religion)
+                </dd>
+
+                <dt class="col-sm-4">
+                    اسم الدائره المحلية
+                </dt>
+                <dd class="col-sm-8">
+                    @Html.DisplayFor(model => model.electoralDistrict)
+                </dd>
+
+                <dt class="col-sm-4">
+                    اسم الحزب
+                </dt>
+                <dd class="col-sm-8">
+                    @Html.DisplayFor(model => model.partyList.partyName)
+                </dd>
+            </dl>
+
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+
+                <div class="form-group">
+                    <button type="submit" class="btn btn-danger">حذف</button>
+                    @Html.ActionLink("العودة إلى القائمة", "Index", new { area = "" }, new { @class = "btn btn-secondary" })
+                </div>
+            }
+        </div>
+    </div>
+</div>

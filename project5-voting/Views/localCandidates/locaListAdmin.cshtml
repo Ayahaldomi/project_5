@@ -1,0 +1,62 @@
+﻿@model IEnumerable<project5_voting.Models.localList>
+
+
+@{
+    ViewBag.Title = "locaListAdmin";
+    Layout = "~/Views/Shared/_LayoutPage1.cshtml";
+
+}
+
+<h2 class="text-center">طلبات الترشح للقوائم المحلية</h2>
+
+
+
+<div class="card" dir="rtl" style="margin: 20px auto; text-align:right">
+    <div class="card-body">
+        <table class="table table-bordered table-striped">
+            <thead class="thead-dark">
+                <tr>
+                    <th>@Html.DisplayNameFor(model => model.listName)</th>
+                    <th>@Html.DisplayNameFor(model => model.electionDistrict)</th>
+                    <th>@Html.DisplayNameFor(model => model.status)</th>
+                    <th>الإجراءات</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@Html.DisplayFor(modelItem => item.listName)</td>
+                        <td>@Html.DisplayFor(modelItem => item.electionDistrict)</td>
+                        <td>
+                            @if (item.status == null)
+                            {
+                                <span class="badge badge-warning">معلق</span>
+                            }
+                            else if (item.status == "0")
+                            {
+                                <span class="badge badge-danger">مرفوض</span>
+                            }
+                            else
+                            {
+                                <span class="badge badge-success">مقبول</span>
+                            }
+                        </td>
+                        <td>
+                            @Html.ActionLink("التفاصيل", "localCandidateAdmin", new { id = item.id }, new { @class = "btn btn-info btn-sm" })
+                            @using (Html.BeginForm("Delete", "localLists", FormMethod.Post, new { id = "delete-form-" + item.id }))
+                            {
+                                @Html.AntiForgeryToken()
+                                <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('هل أنت متأكد أنك تريد حذف هذا العنصر؟')">حذف</button>
+                                @Html.Hidden("id", item.id)
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+

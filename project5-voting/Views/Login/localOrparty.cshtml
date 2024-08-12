@@ -1,0 +1,185 @@
+﻿
+
+@model IEnumerable<project5_voting.Models.USER>
+<style>
+    body {
+        direction: rtl; /* Ensure text direction is right-to-left */
+        text-align: right; /* Align text to the right */
+    }
+
+    .container {
+        max-width: 1200px; /* Adjust as needed */
+        margin: 0 auto; /* Center the container */
+    }
+
+    .row {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center; /* Center the cards horizontally */
+    }
+
+    .card {
+        border-radius: 15px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        overflow: hidden; /* Prevent image from overflowing */
+        margin-bottom: 1rem;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        width: 18rem; /* Set a fixed width for consistency */
+    }
+
+        .card:hover {
+            transform: scale(1.02);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+    .card-img-top {
+        width: 100%;
+        height: auto; /* Maintain aspect ratio */
+    }
+
+    .card-body {
+        padding: 1rem;
+    }
+
+    .card-title {
+        font-size: 1.25rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .card-text {
+        margin-bottom: 1rem;
+    }
+
+    .btn {
+        border-radius: 5px;
+        padding: 0.5rem 1rem;
+        font-size: 1rem;
+    }
+
+    .btn-primary {
+        background-color: #007bff;
+        border: none;
+        color: white;
+    }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+        }
+
+    .btn-warning {
+        background-color: #ffc107;
+        border: none;
+        color: black;
+    }
+
+        .btn-warning:hover {
+            background-color: #e0a800;
+        }
+
+    #warningButton {
+        background-color: #ffc107;
+        border: none;
+        color: black;
+        padding: 0.5rem 1rem;
+        font-size: 1rem;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+        #warningButton:hover {
+            background-color: #e0a800;
+        }
+</style>
+
+
+@using (Html.BeginForm())
+{
+
+
+    var logedInUser = Request.Cookies["logedInUser"];
+
+
+    foreach (var item in Model)
+    {
+        if (item.nationalID == logedInUser.Value)
+        {
+            var ifVoted = item;
+
+
+
+
+
+
+
+            <div class="container">
+                <h2>localORparty</h2>
+                <div class="row">
+                    <div class="col-md-4 mb-4">
+                        @if (ifVoted.localVote == 1 || ifVoted.whiteLocalVote == 1)
+                        {
+                            <div class="card">
+                                <img class="card-img-top" src="~/images/about.jpg" alt="Card image cap">
+                                <div class="card-body">
+                                    <h5 class="card-title">التصويت المحلي</h5>
+                                    <button type="button" id="warningButton">تم التصويت</button>
+                                </div>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="card">
+                                <img class="card-img-top" src="~/images/about.jpg" alt="Card image cap">
+                                <div class="card-body">
+                                    <h5 class="card-title">التصويت المحلي</h5>
+                                    @Html.ActionLink("localVoting", "localVoting", new { @class = "btn btn-primary" })
+                                </div>
+                            </div>
+                        }
+                    </div>
+
+                    <div class="col-md-4 mb-4">
+                        @if (ifVoted.partyVote == 1 || ifVoted.whitePartyVote == 1)
+                        {
+                            <div class="card">
+                                <img class="card-img-top" src="~/images/about.jpg" alt="Card image cap">
+                                <div class="card-body">
+                                    <h5 class="card-title">التصويت الحزبي</h5>
+                                    <button type="button" id="warningButton">تم التصويت</button>
+                                </div>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="card">
+                                <img class="card-img-top" src=".~/images/about.jpg" alt="Card image cap">
+                                <div class="card-body">
+                                    <h5 class="card-title">التصويت الحزبي</h5>
+                                    @Html.ActionLink("partyVoting", "partyVoting", new { @class = "btn btn-primary" })
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        }
+    }
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary" id="deleteButton" onclick="myForm" name="hi">vote</button>
+    </div>
+
+}
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
+<script>
+    document.getElementById('warningButton').onclick = function () {
+        Swal.fire({
+            title: 'انتبه !',
+            text: 'لا تستطيع التصويت',
+            icon: 'warning',
+            confirmButtonColor: '#3085d6',
+            confirmButtonText: 'Okay'
+        });
+    };
+
+</script>
+
+

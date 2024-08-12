@@ -1,0 +1,114 @@
+﻿@model IEnumerable < project5_voting.Models.localCandidate>
+
+@{
+    ViewBag.Title = "localCandidateAdmin";
+}
+
+<h2>localCandidateAdmin</h2>
+@if (Session["selectedList"] == "1")
+{
+    <button id="approve" class="btn btn-primary">Check</button>
+}
+else
+{
+    <button id="showAlert" class="btn btn-primary">Check</button>
+}
+
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Counter</th>
+            <th>
+اسم المرشح            </th>
+            <th>
+الدائرة الانتخابية            </th>
+            <th>
+البريد الالكتروني            </th>
+            <th>
+الرقم الوطني            </th>
+            <th>
+الجنس            </th>
+            <th>
+                Birth Day
+            </th>
+            <th>
+الديانة            </th>
+            <th>
+المقعد الانتخابي            </th>
+            <th>
+اسم القائمة            </th>
+
+
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model != null)
+        {
+            int counter = 1;
+            foreach (var item in Model)
+            {
+                if (Convert.ToInt64(Session["listIdAdmin"]) == item.listKey)
+                {
+                    <tr>
+                        <td>
+                            @counter
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.candidateName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.election_area)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.email)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.national_id)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.gender)
+                        </td>
+                        <td>
+                            @item.birth_day.Value.ToString("yyyy-MM-dd")
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.religion)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.typeOfChair)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.listName)
+                        </td>
+                    </tr>
+                    counter++;
+                }
+            }
+        }
+    </tbody>
+</table>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    document.getElementById('showAlert').addEventListener('click', function () {
+        Swal.fire({
+            icon: 'error',
+            title: 'Denied',
+            text: 'Something went wrong!',
+
+        });
+    });
+    document.getElementById('approve').addEventListener('click', function () {
+        Swal.fire({
+            icon: 'success',
+            title: 'Approved',
+            text: 'All Good!',
+
+        });
+    });
+</script>
+
+
+

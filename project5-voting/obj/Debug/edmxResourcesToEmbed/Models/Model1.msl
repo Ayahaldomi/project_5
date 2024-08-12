@@ -1,0 +1,169 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="ElectionModelStoreContainer" CdmEntityContainer="ElectionEntities">
+    <EntitySetMapping Name="Admins">
+      <EntityTypeMapping TypeName="ElectionModel.Admin">
+        <MappingFragment StoreEntitySet="Admin">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="email" ColumnName="email" />
+          <ScalarProperty Name="password" ColumnName="password" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Contacts">
+      <EntityTypeMapping TypeName="ElectionModel.Contact">
+        <MappingFragment StoreEntitySet="Contact">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="email" ColumnName="email" />
+          <ScalarProperty Name="subject" ColumnName="subject" />
+          <ScalarProperty Name="message" ColumnName="message" />
+          <ScalarProperty Name="date" ColumnName="date" />
+          <ScalarProperty Name="time" ColumnName="time" />
+          <ScalarProperty Name="adminName" ColumnName="adminName" />
+          <ScalarProperty Name="adminResponse" ColumnName="adminResponse" />
+          <ScalarProperty Name="rsponseDate" ColumnName="rsponseDate" />
+          <ScalarProperty Name="rsponseTime" ColumnName="rsponseTime" />
+          <ScalarProperty Name="status" ColumnName="status" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Dates">
+      <EntityTypeMapping TypeName="ElectionModel.Date">
+        <MappingFragment StoreEntitySet="Date">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="startDate" ColumnName="startDate" />
+          <ScalarProperty Name="endDate" ColumnName="endDate" />
+          <ScalarProperty Name="startTime" ColumnName="startTime" />
+          <ScalarProperty Name="endTime" ColumnName="endTime" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ElectionAreas">
+      <EntityTypeMapping TypeName="ElectionModel.ElectionArea">
+        <MappingFragment StoreEntitySet="ElectionAreas">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="areaName" ColumnName="areaName" />
+          <ScalarProperty Name="areaImage" ColumnName="areaImage" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="localCandidates">
+      <EntityTypeMapping TypeName="ElectionModel.localCandidate">
+        <MappingFragment StoreEntitySet="localCandidates">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="candidateName" ColumnName="candidateName" />
+          <ScalarProperty Name="election_area" ColumnName="election_area" />
+          <ScalarProperty Name="email" ColumnName="email" />
+          <ScalarProperty Name="national_id" ColumnName="national_id" />
+          <ScalarProperty Name="gender" ColumnName="gender" />
+          <ScalarProperty Name="birth_day" ColumnName="birth_day" />
+          <ScalarProperty Name="religion" ColumnName="religion" />
+          <ScalarProperty Name="typeOfChair" ColumnName="typeOfChair" />
+          <ScalarProperty Name="listName" ColumnName="listName" />
+          <ScalarProperty Name="counter" ColumnName="counter" />
+          <ScalarProperty Name="img" ColumnName="img" />
+          <ScalarProperty Name="listKey" ColumnName="listKey" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="localLists">
+      <EntityTypeMapping TypeName="ElectionModel.localList">
+        <MappingFragment StoreEntitySet="localList">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="listName" ColumnName="listName" />
+          <ScalarProperty Name="electionDistrict" ColumnName="electionDistrict" />
+          <ScalarProperty Name="counter" ColumnName="counter" />
+          <ScalarProperty Name="status" ColumnName="status" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PartyCandidates">
+      <EntityTypeMapping TypeName="ElectionModel.PartyCandidate">
+        <MappingFragment StoreEntitySet="PartyCandidates">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="partyListID" ColumnName="partyListID" />
+          <ScalarProperty Name="nastionalID" ColumnName="nastionalID" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="email" ColumnName="email" />
+          <ScalarProperty Name="typeOfChair" ColumnName="typeOfChair" />
+          <ScalarProperty Name="religion" ColumnName="religion" />
+          <ScalarProperty Name="gender" ColumnName="gender" />
+          <ScalarProperty Name="birthday" ColumnName="birthday" />
+          <ScalarProperty Name="candidateImage" ColumnName="candidateImage" />
+          <ScalarProperty Name="status" ColumnName="status" />
+          <ScalarProperty Name="electoralDistrict" ColumnName="electoralDistrict" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PartyLists">
+      <EntityTypeMapping TypeName="ElectionModel.PartyList">
+        <MappingFragment StoreEntitySet="PartyList">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="partyName" ColumnName="partyName" />
+          <ScalarProperty Name="partyImage" ColumnName="partyImage" />
+          <ScalarProperty Name="counter" ColumnName="counter" />
+          <ScalarProperty Name="status" ColumnName="status" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="USERS">
+      <EntityTypeMapping TypeName="ElectionModel.USER">
+        <MappingFragment StoreEntitySet="USERS">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="nationalID" ColumnName="nationalID" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="email" ColumnName="email" />
+          <ScalarProperty Name="password" ColumnName="password" />
+          <ScalarProperty Name="gender" ColumnName="gender" />
+          <ScalarProperty Name="birthday" ColumnName="birthday" />
+          <ScalarProperty Name="religion" ColumnName="religion" />
+          <ScalarProperty Name="placeOfResidence" ColumnName="placeOfResidence" />
+          <ScalarProperty Name="electionArea" ColumnName="electionArea" />
+          <ScalarProperty Name="elctionLocation" ColumnName="elctionLocation" />
+          <ScalarProperty Name="localVote" ColumnName="localVote" />
+          <ScalarProperty Name="partyVote" ColumnName="partyVote" />
+          <ScalarProperty Name="whiteLocalVote" ColumnName="whiteLocalVote" />
+          <ScalarProperty Name="whitePartyVote" ColumnName="whitePartyVote" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Ads">
+      <EntityTypeMapping TypeName="ElectionModel.Ad">
+        <MappingFragment StoreEntitySet="Ad">
+          <ScalarProperty Name="status" ColumnName="status" />
+          <ScalarProperty Name="image" ColumnName="image" />
+          <ScalarProperty Name="description" ColumnName="description" />
+          <ScalarProperty Name="areaName" ColumnName="areaName" />
+          <ScalarProperty Name="partyName" ColumnName="partyName" />
+          <ScalarProperty Name="listName" ColumnName="listName" />
+          <ScalarProperty Name="campaignSlagan" ColumnName="campaignSlagan" />
+          <ScalarProperty Name="nationalId" ColumnName="nationalId" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Debates">
+      <EntityTypeMapping TypeName="ElectionModel.Debate">
+        <MappingFragment StoreEntitySet="Debates">
+          <ScalarProperty Name="status" ColumnName="status" />
+          <ScalarProperty Name="zoomLink" ColumnName="zoomLink" />
+          <ScalarProperty Name="debateTime" ColumnName="debateTime" />
+          <ScalarProperty Name="debateDate" ColumnName="debateDate" />
+          <ScalarProperty Name="debateMessage" ColumnName="debateMessage" />
+          <ScalarProperty Name="debateSubject" ColumnName="debateSubject" />
+          <ScalarProperty Name="secondCandidateList" ColumnName="secondCandidateList" />
+          <ScalarProperty Name="secondCandidateID" ColumnName="secondCandidateID" />
+          <ScalarProperty Name="secondCandidateName" ColumnName="secondCandidateName" />
+          <ScalarProperty Name="firstCandidateList" ColumnName="firstCandidateList" />
+          <ScalarProperty Name="firstCandidateID" ColumnName="firstCandidateID" />
+          <ScalarProperty Name="firstCandidateName" ColumnName="firstCandidateName" />
+          <ScalarProperty Name="electionArea" ColumnName="electionArea" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

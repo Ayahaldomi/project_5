@@ -1,0 +1,88 @@
+﻿@model project5_voting.Models.Ad
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+
+<div class="container mt-5">
+    <h2 class="text-center mb-4">حذف</h2>
+
+    <h3 class="text-center">هل أنت متأكد أنك تريد حذف هذا الإعلان؟</h3>
+    <div class="card mx-auto mt-4" style="max-width: 600px;">
+        <div class="card-body">
+            <h4 class="card-title">إعلان</h4>
+            <hr />
+            <dl class="row">
+                <dt class="col-sm-4">
+                    الاسم:
+                </dt>
+                <dd class="col-sm-8">
+                    @Html.DisplayFor(model => model.nationalId)
+                </dd>
+
+
+                <dt class="col-sm-4">
+الدائرة الانتخابية:                </dt>
+                <dd class="col-sm-8">
+                    @Html.DisplayFor(model => model.areaName)
+                </dd>
+
+                <dt class="col-sm-4">
+                    القائمة الانتخابية
+                </dt>
+                <dd class="col-sm-8">
+                    @Html.DisplayFor(model => model.listName)
+                </dd>
+
+                <dt class="col-sm-4">
+اسم الحزب
+                </dt>
+                <dd class="col-sm-8">
+                    @Html.DisplayFor(model => model.partyName)
+                </dd>
+
+                <dt class="col-sm-4">
+شعار الحملة الانتاخبية                </dt>
+                <dd class="col-sm-8">
+                    @Html.DisplayFor(model => model.campaignSlagan)
+                </dd>
+
+                <dt class="col-sm-4">
+الشرح:                </dt>
+                <dd class="col-sm-8">
+                    @Html.DisplayFor(model => model.description)
+                </dd>
+
+                <dt class="col-sm-4">
+                    <img src="~/images/@(Model.image)" alt="Image" width="150" height="150"/>
+                    @Html.DisplayNameFor(model => model.image)
+                </dt>
+                <dd class="col-sm-8">
+                    @Html.DisplayFor(model => model.image)
+                </dd>
+
+                <dt class="col-sm-4">
+الحالة
+                </dt>
+                <dd class="col-sm-8">
+                    @Html.DisplayFor(model => model.status)
+                </dd>
+            </dl>
+
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+
+                <div class="text-center">
+                    <input type="submit" value="حذف" class="btn btn-danger" /> |
+                    @Html.ActionLink("العودة للقائمة", "advertisementAdmin", null, new { @class = "btn btn-success" })
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

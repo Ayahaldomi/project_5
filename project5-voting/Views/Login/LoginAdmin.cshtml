@@ -1,0 +1,82 @@
+﻿    @model project5_voting.Models.Admin
+
+@{
+    ViewBag.Title = "تسجيل دخول المسؤول";
+}
+
+
+@using (Html.BeginForm("LoginAdmin", "Login", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header text-center bg-primary text-white">
+                        <h4>تسجيل دخول المسؤول</h4>
+                    </div>
+                    <div class="card-body">
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.email, new { @class = "form-label" })
+                            @Html.EditorFor(model => model.email, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.email, "", new { @class = "text-danger" })
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.password, new { @class = "form-label" })
+                            @Html.EditorFor(model => model.password, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.password, "", new { @class = "text-danger" })
+                        </div>
+
+                        <div class="form-group text-center">
+                            <input type="submit" value="تسجيل الدخول" class="btn btn-primary" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+<div class="text-center mt-3">
+    @Html.ActionLink("العودة إلى القائمة", "Index", "Home", new { area = "" }, new { @class = "btn btn-link" })
+</div>
+
+<style>
+    .bg-primary {
+        background-color: #003366 !important; /* Dark navy blue */
+    }
+
+    .btn-primary {
+        background-color: #004080; /* Navy blue */
+        border-color: #003366;
+    }
+
+        .btn-primary:hover {
+            background-color: #003366;
+            border-color: #002244;
+        }
+
+    .form-label {
+        color: #003366; /* Navy blue for labels */
+    }
+
+    .card {
+        border-radius: 0.25rem;
+    }
+
+    .card-header {
+        border-bottom: 1px solid #003366;
+    }
+
+    .btn-link {
+        color: #003366;
+    }
+
+        .btn-link:hover {
+            color: #002244;
+        }
+</style>
