@@ -112,14 +112,14 @@
 
 
 
-                        HttpCookie existingCookie = Request.Cookies["logedInUser"];
+                        var existingCookie = Session["logedInUser"];
                         if (existingCookie == null)
                         {
                             <a href="@Url.Action("firststeplogin", "Login")" class="nav-item nav-link ms-3">تسجيل الدخول</a>
                         }
                         else
                         {
-                            <a href="@Url.Action("Logout", "Login")" class="nav-item nav-link ms-3">تسجيل الخروج</a>
+                            <a href="@Url.Action("LogoutUser", "Login")" class="nav-item nav-link ms-3">تسجيل الخروج</a>
 
                         }
 

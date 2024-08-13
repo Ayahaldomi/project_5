@@ -199,37 +199,6 @@ namespace project5_voting.Controllers
             return View(ad);
         }
 
-        // POST: Ads/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "id,nationalId,data,listId,partyName,electionArea,description,URL,status")] Ad ad, HttpPostedFileBase upload)
-        {
-            if (upload != null && upload.ContentLength > 0)
-            {
-                var fileName = Path.GetFileName(upload.FileName);
-
-                var path = Path.Combine(Server.MapPath("~/Images/"), fileName);
-
-
-                if (!Directory.Exists(Server.MapPath("~/Images/")))
-                {
-                    Directory.CreateDirectory(Server.MapPath("~/Images/"));
-                }
-
-
-                upload.SaveAs(path);
-                ad.image = fileName;
-            }
-            if (ModelState.IsValid)
-            {
-                db.Entry(ad).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("advertisementAdmin");
-            }
-            return View(ad);
-        }
 
         // GET: Ads/Delete/5
         public ActionResult Delete(long? id)
@@ -295,7 +264,7 @@ namespace project5_voting.Controllers
                         {
                             amount = new
                             {
-                                total = "130.1",
+                                total = "300",
                                 currency = "USD"
                             },
                             description = "Payment description"

@@ -1,4 +1,4 @@
-﻿@model IEnumerable<project5_voting.Models.electionArea>
+﻿@model IEnumerable<project5_voting.Models.ElectionArea>
 
 @{
     ViewBag.Title = "Index";
@@ -44,7 +44,7 @@
             <div class="col-md-4 mb-4">
                 <a href="@Url.Action("listsDetails", new { id = item.areaName })" class="card-link">
                     <div class="card shadow-sm custom-card">
-                        <img src="/image/@item.imgareaName" class="card-img-top" alt="@item.areaName" style="width: 50vh; height: 50vh;" />
+                        <img src="/image/@item.areaImage" class="card-img-top" alt="@item.areaName" style="width: 50vh; height: 50vh;" />
                         <div class="card-body">
                             <h5 class="card-title">@Html.DisplayFor(modelItem => item.areaName)</h5>
 

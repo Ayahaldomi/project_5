@@ -1,111 +1,139 @@
 ﻿@model IEnumerable<project5_voting.Models.ElectionArea>
 @{
 
-    var electionArea = Request.Cookies["electionArea"];
-    var userElectionArea = electionArea.Value; // Extract NationalID from cookie value
+    var electionArea = Session["electionArea"].ToString();
+    var userElectionArea = electionArea; // Extract NationalID from cookie value
+
+    var name = Session["name"];
+
 
 
 }
 
 
 
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<div style="text-align:center">
+    <h2>دائرتك الانتخابية</h2>
+    <div class="card-deck">
+
+
+
+        @foreach (var item in Model)
+        {
+            if (item.areaName == userElectionArea)
+            {
+                if (item.areaName == "اربد الاولى" || item.areaName == "اربد الثانية" || item.areaName == "المفرق")
+                {
+
+                    <a href="@Url.Action("localORparty", new { id = item.id })" style="text-decoration: none;">
+                        <figure>
+                            <img src="~/image/@item.areaImage" alt="@item.areaName" width="250px" height="300px">
+                            <figcaption>@item.areaName</figcaption>
+                        </figure>
+                    </a>
+                }
+                else
+                {
+
+                    <a href="#" class="card-link" onclick="showAlert(); return false;" style="text-decoration: none;">
+                        <figure>
+                            <img src="~/image/@item.areaImage" alt="@item.areaName" width="250px" height="300px">
+                            <figcaption>@item.areaName</figcaption>
+                        </figure>
+                    </a>
+                }
+            }
+        }
+    </div>
+
+    <br />
+    <h2>الدوائر الانتخابية الأخرى</h2>
+    <div class="card-deck">
+        @foreach (var item in Model)
+        {
+            if (item.areaName != userElectionArea)
+            {
+                <figure>
+                    <img src="~/image/@item.areaImage" alt="@item.areaName" width="250px" height="300px">
+                    <figcaption>@item.areaName</figcaption>
+                </figure>
+            }
+        }
+    </div>
+</div>
+
+
+
+
+@* Razor CSS Styling *@
 <style>
-    body {
-        direction: rtl; /* Set text direction to right-to-left */
-        text-align: right; /* Align text to the right */
+    h2 {
+        font-size: 50px;
+        font-weight: 600;
+        background-image: linear-gradient(to left, #759116, #bf1029);
+        color: transparent;
+        background-clip: text;
+        -webkit-background-clip: text;
+        padding-bottom: 10px;
     }
 
-    .card-link {
-        text-decoration: none;
-        color: inherit;
+    figure {
+        display: inline-grid; /* Make figure elements inline, so they only take up as much space as needed */
+        border-radius: 1rem;
+        overflow: hidden;
+        width: 250px; /* Set a fixed width to control the size */
+        margin: 0 auto; /* Center the figures if they are not taking up the full width */
+        margin: 18px;
     }
 
-    .custom-card {
-        border-radius: 15px;
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
-        overflow: hidden; /* Prevent image from overflowing */
-    }
-
-        .custom-card:hover {
-            transform: scale(1.05);
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        figure > * {
+            grid-area: 1/1;
+            transition: .4s;
         }
 
-    .card-img-top {
-        width: 100%;
-        height: auto; /* Maintain aspect ratio */
-    }
+        figure figcaption {
+            display: grid;
+            align-items: end;
+            font-family: sans-serif;
+            font-size: 2.3rem;
+            font-weight: bold;
+            color: #ffffff; /* Initial text color */
+            padding: .75rem;
+            background: var(--c, rgba(0, 0, 0, 0.7)); /* Darken the background to improve text visibility */
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8); /* Add shadow to the text for better readability */
+            clip-path: inset(0 var(--_i, 100%) 0 0);
+            -webkit-mask: linear-gradient(#000 0 0), linear-gradient(#000 0 0);
+            -webkit-mask-composite: xor;
+            -webkit-mask-clip: text, padding-box;
+            margin: -1px;
+            transition: color .4s ease-in-out; /* Add transition for smooth color change */
+        }
 
-    .card-deck {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 1rem; /* Adjust gap between cards */
-    }
+        figure:hover figcaption {
+            --_i: 0%;
+            color: #ffffff; /* Ensure text color is white on hover */
+        }
 
-    .col-md-4 {
-        flex: 1 1 calc(33.333% - 1rem); /* Adjust card width and spacing */
+        figure:hover img {
+            transform: scale(1.2);
+        }
+
+    @@supports not (-webkit-mask-clip: text) {
+        figure figcaption {
+            -webkit-mask: none;
+            color: #ffffff; /* Ensure fallback color is white */
+        }
     }
 </style>
 
+<!-- SweetAlert2 CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+<!-- SweetAlert2 JS -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-<h2>دائرتك الانتخابية</h2>
-<div class="card-deck">
-   
 
-
-    @foreach (var item in Model)
-    {
-        if (item.areaName == userElectionArea)
-        {
-            if ( item.areaName  == "irbid2" || item.areaName == "اربد الثانية" || item.areaName == "mafraq")
-            {
-                <div class="col-md-4 mb-4">
-                    <a href="@Url.Action("localORparty", new { id = item.id })" class="card-link">
-                        <div class="card shadow-sm custom-card">
-                            <img src="~/image/@item.areaImage" class="card-img-top" alt="@item.areaName" style="width: 50vh; height: 50vh;" />
-                            <div class="card-body">
-                                <h5 class="card-title">@Html.DisplayFor(modelItem => item.areaName)</h5>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-            }
-            else
-            {
-                <div class="col-md-4 mb-4">
-                    <div class="card shadow-sm custom-card">
-                        <a href="#" class="card-link" onclick="showAlert(); return false;">
-                            <img src="~/image/@item.areaImage" class="card-img-top" alt="@item.areaName" style="width: 50vh; height: 50vh;" />
-                            <div class="card-body">
-                                <h5 class="card-title">@Html.DisplayFor(modelItem => item.areaName)</h5>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-            }
-        }
-    }
-</div>
-
-<br />
-<h2>الدوائر الانتخابية الأخرى</h2>
-<div class="card-deck">
-    @foreach (var item in Model)
-    {
-        if (item.areaName != userElectionArea)
-        {
-            <div class="col-md-4 mb-4">
-                <div class="card shadow-sm custom-card">
-                    <img src="~/image/@item.areaImage" class="card-img-top" alt="@item.areaName" style="width: 50vh; height: 50vh;" />
-                    <div class="card-body">
-                        <h5 class="card-title">@Html.DisplayFor(modelItem => item.areaName)</h5>
-                    </div>
-                </div>
-            </div>
-        }
-    }
-</div>
 
 <script>
     function showAlert() {
@@ -116,6 +144,23 @@
             confirmButtonText: "OK"
         });
     }
+    // Show SweetAlert on page load
+    window.onload = function () {
+        Swal.fire({
+            title: 'مرحبا @name',
+            text: 'دائرتك الانتخابية هي: @userElectionArea',
+            imageUrl: '../../imgs/logoelection.png', // Replace with your image URL
+            imageWidth: 100, // Set the width of the image
+            imageHeight: 100, // Set the height of the image (optional)
+            confirmButtonText: 'حسنا',
+            backdrop: true,  // Enables the backdrop to make the popup more prominent
+            allowOutsideClick: false,  // Prevents closing the popup by clicking outside of it
+            allowEscapeKey: false,  // Prevents closing the popup with the escape key
+            customClass: {
+                popup: 'swal2-show' // Ensures it is displayed in the center
+            }
+        });
+    };
 
 </script>
 

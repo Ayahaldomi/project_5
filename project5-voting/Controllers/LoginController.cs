@@ -82,39 +82,42 @@ namespace project5_voting.Controllers
                         client.Disconnect(true);
                     }
 
-                    ViewBag.Message = "Email sent successfully.";
+                   
 
                     // Try to get the existing cookie
-                    HttpCookie existingCookie = Request.Cookies["logedInUser"];
-                    HttpCookie existingCookie1 = Request.Cookies["electionArea"];
+                    //HttpCookie existingCookie = Request.Cookies["logedInUser"];
+                    //HttpCookie existingCookie1 = Request.Cookies["electionArea"];
 
-                    if (existingCookie != null)
-                    {
+                    Session["logedInUser"] = logged_user.nationalID;
+                    Session["electionArea"] = logged_user.electionArea;
 
-                        // Cookie exists, update its value
-                        existingCookie.Value = logged_user.nationalID;
-                        existingCookie.Expires = DateTime.Now.AddHours(1); // Set the expiration time
-                        Response.Cookies.Set(existingCookie); // Update the cookie
+                    //if (existingCookie != null)
+                    //{
+
+                    //    // Cookie exists, update its value
+                    //    existingCookie.Value = logged_user.nationalID;
+                    //    existingCookie.Expires = DateTime.Now.AddHours(1); // Set the expiration time
+                    //    Response.Cookies.Set(existingCookie); // Update the cookie
 
                       
 
-                        existingCookie1.Value = logged_user.electionArea;
-                        existingCookie1.Expires = DateTime.Now.AddHours(1); // Set the expiration time
-                        Response.Cookies.Set(existingCookie1); // Update the cookie
-                    }
-                    else
-                    {
+                    //    existingCookie1.Value = logged_user.electionArea;
+                    //    existingCookie1.Expires = DateTime.Now.AddHours(1); // Set the expiration time
+                    //    Response.Cookies.Set(existingCookie1); // Update the cookie
+                    //}
+                    //else
+                    //{
 
-                        // Cookie does not exist, create a new one
-                        HttpCookie newCookie = new HttpCookie("logedInUser", logged_user.nationalID);
-                        newCookie.Expires = DateTime.Now.AddHours(1); // Set the expiration time
-                        Response.Cookies.Add(newCookie); // Add the new cookie to the response
+                    //    // Cookie does not exist, create a new one
+                    //    HttpCookie newCookie = new HttpCookie("logedInUser", logged_user.nationalID);
+                    //    newCookie.Expires = DateTime.Now.AddHours(1); // Set the expiration time
+                    //    Response.Cookies.Add(newCookie); // Add the new cookie to the response
 
 
-                        HttpCookie newCookie1 = new HttpCookie("electionArea", logged_user.electionArea);
-                        newCookie1.Expires = DateTime.Now.AddHours(1); // Set the expiration time
-                        Response.Cookies.Add(newCookie1); // Add the new cookie to the response
-                    }
+                    //    HttpCookie newCookie1 = new HttpCookie("electionArea", logged_user.electionArea);
+                    //    newCookie1.Expires = DateTime.Now.AddHours(1); // Set the expiration time
+                    //    Response.Cookies.Add(newCookie1); // Add the new cookie to the response
+                    //}
 
                     return RedirectToAction("PasswordReset");
                 }
@@ -128,40 +131,10 @@ namespace project5_voting.Controllers
             }
             else if (user.password == logged_user.password)
             {
-                HttpCookie existingCookie = Request.Cookies["logedInUser"];
-                HttpCookie existingCookie1 = Request.Cookies["electionArea"];
+                Session["logedInUser"] = logged_user.nationalID;
+                Session["electionArea"] = logged_user.electionArea;
+                Session["name"] = logged_user.name;
 
-                if (existingCookie != null)
-                {
-
-                    // Cookie exists, update its value
-                    existingCookie.Value = logged_user.nationalID;
-                    existingCookie.Expires = DateTime.Now.AddHours(1); // Set the expiration time
-                    Response.Cookies.Set(existingCookie); // Update the cookie
-
-
-                 
-
-
-
-                    existingCookie1.Value = logged_user.electionArea;
-                    existingCookie1.Expires = DateTime.Now.AddHours(1); // Set the expiration time
-                    Response.Cookies.Set(existingCookie1); // Update the cookie
-                }
-                else
-                {
-
-                    // Cookie does not exist, create a new one
-                    HttpCookie newCookie = new HttpCookie("logedInUser", logged_user.nationalID);
-                    newCookie.Expires = DateTime.Now.AddHours(1); // Set the expiration time
-                    Response.Cookies.Add(newCookie); // Add the new cookie to the response
-
-                    
-
-                    HttpCookie newCookie1 = new HttpCookie("electionArea", logged_user.electionArea);
-                    newCookie1.Expires = DateTime.Now.AddHours(1); // Set the expiration time
-                    Response.Cookies.Add(newCookie1); // Add the new cookie to the response
-                }
 
                 HttpCookie startDateTime = Request.Cookies["startDateTime"];
 
@@ -198,9 +171,9 @@ namespace project5_voting.Controllers
         public ActionResult PasswordReset(string TempPassword)
         {
 
-            var logedInUser = Request.Cookies["logedInUser"];
+            var logedInUser = Session["logedInUser"].ToString();
 
-            var nationalId = logedInUser.Value; // Extract NationalID from cookie value
+            var nationalId = logedInUser; // Extract NationalID from cookie value
             var logged_user = db.USERS.FirstOrDefault(u => u.nationalID == nationalId);
             if (TempPassword == logged_user.password)
             {
@@ -225,24 +198,24 @@ namespace project5_voting.Controllers
             }
 
             // Extract the user ID from the cookie
-            HttpCookie logedInUser = Request.Cookies["logedInUser"];
-            if (logedInUser == null || string.IsNullOrEmpty(logedInUser.Value))
-            {
-                ViewBag.Message = "User session has expired or is invalid.";
-                return View("bbbbbbbbbbbb");
-            }
+            var logedInUser = Session["logedInUser"].ToString();
+            //if (logedInUser == null || string.IsNullOrEmpty(logedInUser))
+            //{
+            //    ViewBag.Message = "User session has expired or is invalid.";
+            //    return View("bbbbbbbbbbbb");
+            //}
 
-            // Assuming the cookie value is the user ID
-            long userId;
-            if (!long.TryParse(logedInUser.Value, out userId))
-            {
-                ViewBag.Message = "Invalid user session.";
-                return View("cccccccc");
-            }
+            //// Assuming the cookie value is the user ID
+            //long userId;
+            //if (!long.TryParse(logedInUser, out userId))
+            //{
+            //    ViewBag.Message = "Invalid user session.";
+            //    return View("cccccccc");
+            //}
 
             // Find the user by ID
 
-            var nationalId = logedInUser.Value; // Extract NationalID from cookie value
+            var nationalId = logedInUser; // Extract NationalID from cookie value
             var logged_user = db.USERS.FirstOrDefault(u => u.nationalID == nationalId);
             if (logged_user == null)
             {
@@ -297,8 +270,8 @@ namespace project5_voting.Controllers
         [HttpPost]
         public ActionResult localOrparty(string hi)
         {
-            HttpCookie logedInUser = Request.Cookies["logedInUser"];
-            var nationalId = logedInUser.Value; // Extract NationalID from cookie value
+            var logedInUser = Session["logedInUser"].ToString();
+            var nationalId = logedInUser; // Extract NationalID from cookie value
             var logged_user = db.USERS.FirstOrDefault(u => u.nationalID == nationalId);
 
 
@@ -330,8 +303,8 @@ namespace project5_voting.Controllers
         public ActionResult partyVoting(int? selectedPartyId)
         {
             var partyVote = db.PartyLists.FirstOrDefault(u => u.id == selectedPartyId);
-            HttpCookie logedInUser = Request.Cookies["logedInUser"];
-            var nationalId = logedInUser.Value; // Extract NationalID from cookie value
+            var logedInUser = Session["logedInUser"].ToString();
+            var nationalId = logedInUser; // Extract NationalID from cookie value
             var logged_user = db.USERS.FirstOrDefault(u => u.nationalID == nationalId);
 
 
@@ -360,11 +333,11 @@ namespace project5_voting.Controllers
 
         public ActionResult localVoting()
         {
-            HttpCookie electionArea = Request.Cookies["electionArea"];
+            var electionArea = Session["electionArea"].ToString();
 
             // Filter and group candidates by list where status is "approved"
             var candidatesGrouped = db.localLists
-            .Where(l => l.status == "1" && l.electionDistrict == electionArea.Value)
+            .Where(l => l.status == "1" && l.electionDistrict == electionArea)
             .Select(l => new LocalCandidatesGroupedViewModel
             {
                 ListName = l.listName,
@@ -381,8 +354,8 @@ namespace project5_voting.Controllers
         [HttpPost]
         public ActionResult localVoting(string selectedList, long[] selectedCandidates)
         {
-            HttpCookie logedInUser = Request.Cookies["logedInUser"];
-            var nationalId = logedInUser.Value; // Extract NationalID from cookie value
+            var logedInUser = Session["logedInUser"].ToString();
+            var nationalId = logedInUser; // Extract NationalID from cookie value
             var logged_user = db.USERS.FirstOrDefault(u => u.nationalID == nationalId);
 
             var selectedListDetails = db.localLists.FirstOrDefault(l => l.listName == selectedList);
@@ -456,6 +429,17 @@ namespace project5_voting.Controllers
         {
             // قم بحذف بيانات الجلسة
             Session.Remove("Admin");
+
+            // إعادة التوجيه إلى صفحة تسجيل الدخول أو الصفحة الرئيسية
+            return RedirectToAction("Index", "Home");
+        }
+
+        public ActionResult LogoutUser()
+        {
+            // قم بحذف بيانات الجلسة
+            Session.Remove("logedInUser");
+            Session.Remove("electionArea");
+            Session.Remove("name");
 
             // إعادة التوجيه إلى صفحة تسجيل الدخول أو الصفحة الرئيسية
             return RedirectToAction("Index", "Home");

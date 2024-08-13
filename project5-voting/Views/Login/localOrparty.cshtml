@@ -1,185 +1,714 @@
 ﻿
 
 @model IEnumerable<project5_voting.Models.USER>
+@*
+
+
+    @using (Html.BeginForm())
+    {
+
+
+        var logedInUser = Session["logedInUser"].ToString();
+
+
+        foreach (var item in Model)
+        {
+            if (item.nationalID == logedInUser)
+            {
+                var ifVoted = item;
+
+
+
+
+
+
+
+                <div class="container">
+                    <h2>localORparty</h2>
+                    <div class="row">
+                        <div class="col-md-4 mb-4">
+                            @if (ifVoted.localVote == 1 || ifVoted.whiteLocalVote == 1)
+                            {
+                                <div class="card">
+                                    <img class="card-img-top" src="~/images/about.jpg" alt="Card image cap">
+                                    <div class="card-body">
+                                        <h5 class="card-title">التصويت المحلي</h5>
+                                        <button type="button" id="warningButton">تم التصويت</button>
+                                    </div>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="card">
+                                    <img class="card-img-top" src="~/images/about.jpg" alt="Card image cap">
+                                    <div class="card-body">
+                                        <h5 class="card-title">التصويت المحلي</h5>
+                                        @Html.ActionLink("localVoting", "localVoting", new { @class = "btn btn-primary" })
+                                    </div>
+                                </div>
+                            }
+                        </div>
+
+                        <div class="col-md-4 mb-4">
+                            @if (ifVoted.partyVote == 1 || ifVoted.whitePartyVote == 1)
+                            {
+                                <div class="card">
+                                    <img class="card-img-top" src="~/images/about.jpg" alt="Card image cap">
+                                    <div class="card-body">
+                                        <h5 class="card-title">التصويت الحزبي</h5>
+                                        <button type="button" id="warningButton">تم التصويت</button>
+                                    </div>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="card">
+                                    <img class="card-img-top" src=".~/images/about.jpg" alt="Card image cap">
+                                    <div class="card-body">
+                                        <h5 class="card-title">التصويت الحزبي</h5>
+                                        @Html.ActionLink("partyVoting", "partyVoting", new { @class = "btn btn-primary" })
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary" id="deleteButton" onclick="myForm" name="hi">vote</button>
+        </div>
+
+    }
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
+    <script>
+        document.getElementById('warningButton').onclick = function () {
+            Swal.fire({
+                title: 'انتبه !',
+                text: 'لا تستطيع التصويت',
+                icon: 'warning',
+                confirmButtonColor: '#3085d6',
+                confirmButtonText: 'Okay'
+            });
+        };
+
+    </script>*@
+
 <style>
-    body {
-        direction: rtl; /* Ensure text direction is right-to-left */
-        text-align: right; /* Align text to the right */
+
+    /* Typography =======================*/
+    /* Main heading for card's front cover */
+    .card-front__heading {
+        font-size: 2rem; /* Increased font size */
+        margin-top: .5rem;
     }
 
-    .container {
-        max-width: 1200px; /* Adjust as needed */
-        margin: 0 auto; /* Center the container */
+    /* Main heading for inside page */
+    .inside-page__heading {
+        padding-bottom: 1rem;
+        width: 100%;
+        font-size: 1.8rem; /* Increased font size */
     }
 
-    .row {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center; /* Center the cards horizontally */
+    /* Mixed */
+
+    /* For both inside page's main heading and 'view me' text on card front cover */
+    .inside-page__heading,
+    .card-front__text-view {
+        font-size: 1.6rem; /* Increased font size */
+        font-weight: 800;
+        margin-top: .3rem;
     }
 
-    .card {
-        border-radius: 15px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        overflow: hidden; /* Prevent image from overflowing */
-        margin-bottom: 1rem;
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
-        width: 18rem; /* Set a fixed width for consistency */
+    .inside-page__heading--city,
+    .card-front__text-view--city {
+        color: #ff62b2;
     }
 
-        .card:hover {
-            transform: scale(1.02);
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    .inside-page__heading--ski,
+    .card-front__text-view--ski {
+        color: #2aaac1;
+    }
+
+    .inside-page__heading--beach,
+    .card-front__text-view--beach {
+        color: #fa7f67;
+    }
+
+    .inside-page__heading--camping,
+    .card-front__text-view--camping {
+        color: #00b97c;
+    }
+
+    /* Front cover */
+
+    .card-front__tp {
+        color: #fafbfa;
+    }
+
+    /* For pricing text on card front cover */
+    .card-front__text-price {
+        font-size: 1.5rem; /* Increased font size */
+        margin-top: -.2rem;
+    }
+
+    /* Back cover */
+
+    /* For inside page's body text */
+    .inside-page__text {
+        color: #333;
+        font-size: 1.2rem; /* Increased font size */
+    }
+
+    /* Icons ===========================================*/
+
+    .card-front__icon {
+        fill: #fafbfa;
+        font-size: 4vw; /* Increased font size */
+        height: 4rem;
+        margin-top: -.5rem;
+        width: 4rem;
+    }
+
+    img.card-front__icon {
+        height: 120px; /* Increased size */
+        width: 120px !important; /* Increased size */
+    }
+
+    /* Buttons =================================================*/
+
+    .inside-page__btn {
+        background-color: transparent;
+        border: 3px solid;
+        border-radius: .5rem;
+        font-size: 1.5rem; /* Increased font size */
+        font-weight: 600;
+        margin-top: 1.5rem;
+        overflow: hidden;
+        padding: .8rem 1.5rem;
+        position: relative;
+        text-decoration: none;
+        transition: all .3s ease;
+        width: auto; /* Changed to auto so it doesn't take full width */
+        z-index: 10;
+    }
+
+        .inside-page__btn::before {
+            content: "";
+            height: 100%;
+            left: 0;
+            position: absolute;
+            top: 0;
+            transform: scaleY(0);
+            transition: all .3s ease;
+            width: 100%;
+            z-index: -1;
         }
 
-    .card-img-top {
-        width: 100%;
-        height: auto; /* Maintain aspect ratio */
+    .inside-page__btn--city {
+        border-color: #ff40a1;
+        color: #ff40a1;
     }
 
-    .card-body {
+        .inside-page__btn--city::before {
+            background-color: #ff40a1;
+        }
+
+    .inside-page__btn--ski {
+        border-color: #279eb2;
+        color: #279eb2;
+    }
+
+        .inside-page__btn--ski::before {
+            background-color: #279eb2;
+        }
+
+    .inside-page__btn--beach {
+        border-color: #fa7f67;
+        color: #fa7f67;
+    }
+
+        .inside-page__btn--beach::before {
+            background-color: #fa7f67;
+        }
+
+    .inside-page__btn--camping {
+        border-color: #00b97d;
+        color: #00b97d;
+    }
+
+        .inside-page__btn--camping::before {
+            background-color: #00b97d;
+        }
+
+    .inside-page__btn:hover {
+        color: #fafbfa;
+    }
+
+        .inside-page__btn:hover::before {
+            transform: scaleY(1);
+        }
+
+    /* Layout Structure=========================================*/
+
+    .main {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        height: 80vh;
+        width: 100%;
+    }
+
+    /* Container to hold all cards in one place */
+    .card-area {
+        align-items: center;
+        display: flex;
+        flex-wrap: nowrap;
+        height: 100%;
+        justify-content: space-evenly;
         padding: 1rem;
     }
 
-    .card-title {
-        font-size: 1.25rem;
-        margin-bottom: 0.5rem;
+    /* Card ============================================*/
+
+    /* Area to hold an individual card */
+    .card-section {
+        align-items: center;
+        display: flex;
+        height: 100%;
+        justify-content: center;
+        width: 100%;
     }
 
-    .card-text {
-        margin-bottom: 1rem;
+    /* A container to hold the flip card and the inside page */
+    .card {
+        background-color: rgba(0, 0, 0, .05);
+        box-shadow: -.1rem 1.7rem 6.6rem -3.2rem rgba(0, 0, 0, 0.5);
+        height: 20rem; /* Increased height */
+        width: 20rem; /* Increased width */
+        position: relative;
+        transition: all 0.8s ease;
     }
 
-    .btn {
-        border-radius: 5px;
-        padding: 0.5rem 1rem;
-        font-size: 1rem;
+    /* Flip card - covering both the front and inside front page */
+
+    /* An outer container to hold the flip card. This excludes the inside page */
+    .flip-card {
+        height: 20rem; /* Increased height */
+        perspective: 100rem;
+        position: absolute;
+        right: 0;
+        transition: all 0.8s ease;
+        visibility: hidden;
+        width: 20rem; /* Increased width */
+        z-index: 100;
     }
 
-    .btn-primary {
-        background-color: #007bff;
-        border: none;
-        color: white;
-    }
-
-        .btn-primary:hover {
-            background-color: #0056b3;
+        /* The outer container's visibility is set to hidden. This is to make everything within the container NOT set to hidden  */
+        /* This is done so content in the inside page can be selected */
+        .flip-card > * {
+            visibility: visible;
         }
 
-    .btn-warning {
-        background-color: #ffc107;
-        border: none;
-        color: black;
+    /* An inner container to hold the flip card. This excludes the inside page */
+    .flip-card__container {
+        height: 100%;
+        position: absolute;
+        right: 0;
+        transform-origin: left;
+        transform-style: preserve-3d;
+        transition: all 0.8s ease;
+        width: 100%;
     }
 
-        .btn-warning:hover {
-            background-color: #e0a800;
+    .card-front,
+    .card-back {
+        backface-visibility: hidden;
+        height: 100%;
+        left: 0;
+        position: absolute;
+        top: 0;
+        width: 100%;
+    }
+
+    /* Styling for the front side of the flip card */
+
+    /* container for the front side */
+    .card-front {
+        background-color: #fafbfa;
+        height: 20rem; /* Increased height */
+        width: 20rem; /* Increased width */
+    }
+
+    /* Front side's top section */
+    .card-front__tp {
+        align-items: center;
+        clip-path: polygon(0 0, 100% 0, 100% 90%, 57% 90%, 50% 100%, 43% 90%, 0 90%);
+        display: flex;
+        flex-direction: column;
+        height: 16rem; /* Increased height */
+        justify-content: center;
+        padding: 1rem; /* Increased padding */
+    }
+
+    .card-front__tp--city {
+        background: linear-gradient(to bottom, #ff73b9, #ff40a1);
+    }
+
+    .card-front__tp--ski {
+        background: linear-gradient(to bottom, #47c2d7, #279eb2);
+    }
+
+    .card-front__tp--beach {
+        background: linear-gradient(to bottom, #fb9b88, #f86647);
+    }
+
+    .card-front__tp--camping {
+        background: linear-gradient(to bottom, #00db93, #00b97d);
+    }
+
+    /* Front card's bottom section */
+    .card-front__bt {
+        align-items: center;
+        display: flex;
+        justify-content: center;
+    }
+
+    /* Styling for the back side of the flip card */
+
+    .card-back {
+        background-color: #fafbfa;
+        transform: rotateY(180deg);
+    }
+
+    /* Specifically targeting the <video> element */
+    .video__container {
+        clip-path: polygon(0% 0%, 100% 0%, 90% 50%, 100% 100%, 0% 100%);
+        height: auto;
+        min-height: 100%;
+        object-fit: cover;
+        width: 100%;
+    }
+
+    /* Inside page */
+
+    .inside-page {
+        background-color: #fafbfa;
+        box-shadow: inset 20rem 0px 5rem -2.5rem rgba(0, 0, 0, 0.25);
+        height: 100%;
+        padding: 1.5rem; /* Increased padding */
+        position: absolute;
+        right: 0;
+        transition: all 0.8s ease;
+        width: 20rem; /* Increased width */
+        z-index: 1;
+    }
+
+    .inside-page__container {
+        align-items: center;
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        text-align: center;
+        width: 100%;
+    }
+
+    /* Functionality ====================================*/
+
+    /* This is to keep the card centered (within its container) when opened */
+    .card:hover {
+        box-shadow: -.1rem 1.7rem 6.6rem -3.2rem rgba(0, 0, 0, 0.75);
+        width: 40rem; /* Increased width when hovered */
+    }
+
+        /* When the card is hovered, the flip card container will rotate */
+        .card:hover .flip-card__container {
+            transform: rotateY(-180deg);
         }
 
-    #warningButton {
-        background-color: #ffc107;
-        border: none;
-        color: black;
-        padding: 0.5rem 1rem;
-        font-size: 1rem;
-        border-radius: 5px;
-        cursor: pointer;
+        /* When the card is hovered, the shadow on the inside page will shrink to the left */
+        .card:hover .inside-page {
+            box-shadow: inset 1rem 0px 5rem -2.5rem rgba(0, 0, 0, 0.1);
+        }
+
+
+
+    .center-wrapper {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%; /* Full width */
+        margin-top: 0.7em;
     }
 
-        #warningButton:hover {
-            background-color: #e0a800;
+    /* Button Styling */
+    .styled-button {
+        background-color: #00b97d; /* Background color */
+        color: #ffffff; /* Text color */
+        font-size: 1.6rem; /* Font size */
+        padding: 10px 20px; /* Padding */
+        border: none; /* Remove default border */
+        border-radius: 5px; /* Rounded corners */
+        display: flex; /* Flexbox for alignment */
+        align-items: center; /* Center items vertically */
+        justify-content: center; /* Center items horizontally */
+        cursor: pointer; /* Pointer cursor on hover */
+        transition: background-color 0.3s ease; /* Smooth transition for hover */
+    }
+
+        /* Hover Effect */
+        .styled-button:hover {
+            background-color: #00a36c; /* Darker green on hover */
+        }
+
+        /* Icon Styling */
+        .styled-button i {
+            margin-right: 8px; /* Space between icon and text */
+            font-size: 1.6rem; /* Icon size */
         }
 </style>
 
 
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+
+
+<div class="center-wrapper">
+    <!-- Button with Icon -->
+    <button id="showVideo" class="styled-button">
+        <i class="fas fa-play"></i> كيفية الاقتراع
+    </button>
+</div>
 @using (Html.BeginForm())
 {
-
-
-    var logedInUser = Request.Cookies["logedInUser"];
-
+    var logedInUser = Session["logedInUser"].ToString();
+    var electionArea = Session["electionArea"].ToString();
 
     foreach (var item in Model)
     {
-        if (item.nationalID == logedInUser.Value)
+        if (item.nationalID == logedInUser)
         {
             var ifVoted = item;
 
-
-
-
-
-
-
-            <div class="container">
-                <h2>localORparty</h2>
-                <div class="row">
-                    <div class="col-md-4 mb-4">
-                        @if (ifVoted.localVote == 1 || ifVoted.whiteLocalVote == 1)
-                        {
+            <main class="main">
+                <section class="card-area">
+                    @if (ifVoted.partyVote == 1 || ifVoted.whitePartyVote == 1)
+                    {
+                        <!-- Card: Beach -->
+                        <section class="card-section">
                             <div class="card">
-                                <img class="card-img-top" src="~/images/about.jpg" alt="Card image cap">
-                                <div class="card-body">
-                                    <h5 class="card-title">التصويت المحلي</h5>
-                                    <button type="button" id="warningButton">تم التصويت</button>
+                                <div class="flip-card">
+                                    <div class="flip-card__container">
+                                        <div class="card-front">
+                                            <div class="card-front__tp card-front__tp--beach">
+                                                <img src="../../imgs/logoelection.png" alt="Settings Icon" class="card-front__icon">
+                                                <h2 class="card-front__heading">الدائرة الانتخابية العامة</h2>
+                                            </div>
+                                            <div class="card-front__bt">
+                                                <p class="card-front__text-view card-front__text-view--beach">لا يمكنك التصويت مرة اخرى</p>
+                                            </div>
+                                        </div>
+                                        <div class="card-back">
+                                            <video class="video__container" autoplay muted loop>
+                                                <source class="video__media" src="https://player.vimeo.com/external/332588783.sd.mp4?s=cab1817146dd72daa6346a1583cc1ec4d9e677c7&profile_id=139&oauth2_token_id=57447761" type="video/mp4">
+                                            </video>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="inside-page">
+                                    <div class="inside-page__container">
+                                        <h3 class="inside-page__heading inside-page__heading--beach">الدائرة الانتخابية العامة</h3>
+                                        <p class="inside-page__text">يخصص للدائرة الانتخابية العامة وفقا لنظام القائمة النسبية المغلقة 41 مقعدا، وتشكل من القوائم الحزبية فقط</p>
+                                        <a href="#" class="inside-page__btn inside-page__btn--beach" id="voteDoneButton1">تم التصويت</a>
+                                    </div>
                                 </div>
                             </div>
-                        }
-                        else
-                        {
+                        </section>
+                    }
+                    else
+                    {
+                        <!-- Card: Beach -->
+                        <section class="card-section">
                             <div class="card">
-                                <img class="card-img-top" src="~/images/about.jpg" alt="Card image cap">
-                                <div class="card-body">
-                                    <h5 class="card-title">التصويت المحلي</h5>
-                                    @Html.ActionLink("localVoting", "localVoting", new { @class = "btn btn-primary" })
+                                <div class="flip-card">
+                                    <div class="flip-card__container">
+                                        <div class="card-front">
+                                            <div class="card-front__tp card-front__tp--beach">
+                                                <img src="../../imgs/logoelection.png" alt="Settings Icon" class="card-front__icon">
+                                                <h2 class="card-front__heading">الدائرة الانتخابية العامة</h2>
+                                            </div>
+                                            <div class="card-front__bt">
+                                                <p class="card-front__text-view card-front__text-view--beach">صوت الان</p>
+                                            </div>
+                                        </div>
+                                        <div class="card-back">
+                                            <video class="video__container" autoplay muted loop>
+                                                <source class="video__media" src="https://player.vimeo.com/external/332588783.sd.mp4?s=cab1817146dd72daa6346a1583cc1ec4d9e677c7&profile_id=139&oauth2_token_id=57447761" type="video/mp4">
+                                            </video>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="inside-page">
+                                    <div class="inside-page__container">
+                                        <h3 class="inside-page__heading inside-page__heading--beach">الدائرة الانتخابية العامة</h3>
+                                        <p class="inside-page__text">يخصص للدائرة الانتخابية العامة وفقا لنظام القائمة النسبية المغلقة 41 مقعدا، وتشكل من القوائم الحزبية فقط</p>
+                                        <a href="@Url.Action("partyVoting")" class="inside-page__btn inside-page__btn--beach">صوت الان</a>
+                                    </div>
                                 </div>
                             </div>
-                        }
-                    </div>
+                        </section>
+                    }
 
-                    <div class="col-md-4 mb-4">
-                        @if (ifVoted.partyVote == 1 || ifVoted.whitePartyVote == 1)
-                        {
+                    @if (ifVoted.localVote == 1 || ifVoted.whiteLocalVote == 1)
+                    {
+                        <!-- Card: Camping -->
+                        <section class="card-section">
                             <div class="card">
-                                <img class="card-img-top" src="~/images/about.jpg" alt="Card image cap">
-                                <div class="card-body">
-                                    <h5 class="card-title">التصويت الحزبي</h5>
-                                    <button type="button" id="warningButton">تم التصويت</button>
+                                <div class="flip-card">
+                                    <div class="flip-card__container">
+                                        <div class="card-front">
+                                            <div class="card-front__tp card-front__tp--camping">
+                                                <img src="../../imgs/logoelection.png" alt="Settings Icon" class="card-front__icon">
+                                                <h2 class="card-front__heading">الدائرة الانتخابية العامة</h2>
+                                            </div>
+                                            <div class="card-front__bt">
+                                                <p class="card-front__text-view card-front__text-view--camping">لا يمكنك التصويت مرة اخرى</p>
+                                            </div>
+                                        </div>
+                                        <div class="card-back">
+                                            <video class="video__container" autoplay muted loop>
+                                                <source class="video__media" src="https://player.vimeo.com/external/180185916.sd.mp4?s=c893e4770f87b00e0d6b5a1de138b01b02aaa085&profile_id=164&oauth2_token_id=57447761" type="video/mp4">
+                                            </video>
+                                        </div>
+                                    </div>
                                 </div>
+                                @if (electionArea == "اربد الاولى")
+                                {
+                                    <div class="inside-page">
+                                        <div class="inside-page__container">
+                                            <h3 class="inside-page__heading inside-page__heading--camping">دائرة اربد الاولى</h3>
+                                            <p class="inside-page__text">خصص لها 8 مقاعد منها مقعد للمرأة، وتضم ألوية (قصبة اربد، والوسطية، وبني كنانة، والرمثا).</p>
+                                            <a href="#" class="inside-page__btn inside-page__btn--beach" id="voteDoneButton2">تم التصويت</a>
+                                        </div>
+                                    </div>
+                                }
+                                else if (electionArea == "اربد الثانية")
+                                {
+                                    <div class="inside-page">
+                                        <div class="inside-page__container">
+                                            <h3 class="inside-page__heading inside-page__heading--camping">دائرة اربد الثانية</h3>
+                                            <p class="inside-page__text">خصص لها 7 مقاعد منها مقعد للمرأة ومقعد للمسيحيين، وتضم ألوية (بني عبيد، والمزار الشمالي، والطيبة، والأغوار الشمالية، والكورة).</p>
+                                            <a href="#" class="inside-page__btn inside-page__btn--beach" id="voteDoneButton3">تم التصويت</a>
+                                        </div>
+                                    </div>
+                                }
+                                else if (electionArea == "المفرق")
+                                {
+                                    <div class="inside-page">
+                                        <div class="inside-page__container">
+                                            <h3 class="inside-page__heading inside-page__heading--camping">دائرة المفرق</h3>
+                                            <p class="inside-page__text">خصص لها 4 مقاعد، منها مقعد للمرأة</p>
+                                            <a href="#" class="inside-page__btn inside-page__btn--beach" id="voteDoneButton4">تم التصويت</a>
+                                        </div>
+                                    </div>
+                                }
                             </div>
-                        }
-                        else
-                        {
+                        </section>
+                    }
+                    else
+                    {
+                        <section class="card-section">
                             <div class="card">
-                                <img class="card-img-top" src=".~/images/about.jpg" alt="Card image cap">
-                                <div class="card-body">
-                                    <h5 class="card-title">التصويت الحزبي</h5>
-                                    @Html.ActionLink("partyVoting", "partyVoting", new { @class = "btn btn-primary" })
+                                <div class="flip-card">
+                                    <div class="flip-card__container">
+                                        <div class="card-front">
+                                            <div class="card-front__tp card-front__tp--camping">
+                                                <img src="../../imgs/logoelection.png" alt="Settings Icon" class="card-front__icon">
+                                                <h2 class="card-front__heading">الدائرة الانتخابية العامة</h2>
+                                            </div>
+                                            <div class="card-front__bt">
+                                                <p class="card-front__text-view card-front__text-view--camping">صوت الان</p>
+                                            </div>
+                                        </div>
+                                        <div class="card-back">
+                                            <video class="video__container" autoplay muted loop>
+                                                <source class="video__media" src="https://player.vimeo.com/external/180185916.sd.mp4?s=c893e4770f87b00e0d6b5a1de138b01b02aaa085&profile_id=164&oauth2_token_id=57447761" type="video/mp4">
+                                            </video>
+                                        </div>
+                                    </div>
                                 </div>
+                                @if (electionArea == "اربد الاولى")
+                                {
+                                    <div class="inside-page">
+                                        <div class="inside-page__container">
+                                            <h3 class="inside-page__heading inside-page__heading--camping">دائرة اربد الاولى</h3>
+                                            <p class="inside-page__text">خصص لها 8 مقاعد منها مقعد للمرأة، وتضم ألوية (قصبة اربد، والوسطية، وبني كنانة، والرمثا).</p>
+                                            <a href="@Url.Action("localVoting")" class="inside-page__btn inside-page__btn--beach">صوت الان</a>
+                                        </div>
+                                    </div>
+                                }
+                                else if (electionArea == "اربد الثانية")
+                                {
+                                    <div class="inside-page">
+                                        <div class="inside-page__container">
+                                            <h3 class="inside-page__heading inside-page__heading--camping">دائرة اربد الثانية</h3>
+                                            <p class="inside-page__text">خصص لها 7 مقاعد منها مقعد للمرأة ومقعد للمسيحيين، وتضم ألوية (بني عبيد، والمزار الشمالي، والطيبة، والأغوار الشمالية، والكورة).</p>
+                                            <a href="@Url.Action("localVoting")" class="inside-page__btn inside-page__btn--beach">صوت الان</a>
+                                        </div>
+                                    </div>
+                                }
+                                else if (electionArea == "المفرق")
+                                {
+                                    <div class="inside-page">
+                                        <div class="inside-page__container">
+                                            <h3 class="inside-page__heading inside-page__heading--camping">دائرة المفرق</h3>
+                                            <p class="inside-page__text">خصص لها 4 مقاعد، منها مقعد للمرأة</p>
+                                            <a href="@Url.Action("localVoting")" class="inside-page__btn inside-page__btn--beach">صوت الان</a>
+                                        </div>
+                                    </div>
+                                }
                             </div>
-                        }
-                    </div>
-                </div>
-            </div>
+                        </section>
+                    }
+                </section>
+            </main>
         }
     }
-    <div class="form-group">
-        <button type="submit" class="btn btn-primary" id="deleteButton" onclick="myForm" name="hi">vote</button>
-    </div>
-
 }
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
+
 <script>
-    document.getElementById('warningButton').onclick = function () {
-        Swal.fire({
-            title: 'انتبه !',
-            text: 'لا تستطيع التصويت',
-            icon: 'warning',
-            confirmButtonColor: '#3085d6',
-            confirmButtonText: 'Okay'
+    // Handle the click event for all buttons with IDs 'voteDoneButton1', 'voteDoneButton2', 'voteDoneButton3', 'voteDoneButton4'
+    document.querySelectorAll('[id^="voteDoneButton"]').forEach(function (button) {
+        button.addEventListener('click', function (event) {
+            event.preventDefault(); // Prevent the default anchor behavior
+            Swal.fire({
+                title: 'تم التصويت',
+                text: 'لقد تم تسجيل تصويتك بنجاح!',
+                icon: 'success',
+                confirmButtonText: 'حسنًا'
+            });
         });
-    };
+    });
 
+    // Attach click event to the button for showing video
+    document.getElementById('showVideo').addEventListener('click', function () {
+        Swal.fire({
+            title: 'Watch this video!',
+            html: '<video id="videoPlayer" width="100%" height="auto" controls></video>',
+            confirmButtonText: 'Close',
+            width: 900,  // Set a larger width for the popup
+            padding: '3em',
+            backdrop: true,
+            allowOutsideClick: false,
+            allowEscapeKey: false
+        });
+
+        // Delay the video by 2 seconds
+        setTimeout(function () {
+            var videoPlayer = document.getElementById('videoPlayer');
+            videoPlayer.innerHTML = '<source src="../../imgs/howToVote.mp4" type="video/mp4">Your browser does not support the video tag.';
+            videoPlayer.play(); // Start playing the video
+        }, 2000); // 2000ms = 2 seconds
+    });
 </script>
-
 
