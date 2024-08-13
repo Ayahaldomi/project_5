@@ -2,59 +2,59 @@
 
 @model IEnumerable<project5_voting.Models.PartyList>
 <style>
-    body {
+    /*body {
         direction: rtl;
         background-color: #f8f9fa;
         color: #333;
     }
 
     .card {
-        border-color: gray; /* Red border color */
-        border-width: 2px;
-        direction: rtl; /* Ensure RTL layout inside card */
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add box shadow */
-    }
+        border-color: gray;*/ /* Red border color */
+        /*border-width: 2px;
+        direction: rtl;*/ /* Ensure RTL layout inside card */
+        /*box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);*/ /* Add box shadow */
+    /*}
 
     label.form-check-label {
         padding-right: 20px !important;
     }
 
     .card-header {
-        background-color: #007bff; /* Blue header background */
-        color: white;
-        text-align: right; /* Align header text to right */
-    }
+        background-color: #007bff;*/ /* Blue header background */
+        /*color: white;
+        text-align: right;*/ /* Align header text to right */
+    /*}
 
     .card-body {
         background-color: white;
-        text-align: right; /* Align body text to right */
-    }
+        text-align: right;*/ /* Align body text to right */
+    /*}
 
     .btn-primary {
-        background-color: #dc3545; /* Red button color */
-        border-color: #dc3545;
+        background-color: #dc3545;*/ /* Red button color */
+        /*border-color: #dc3545;
     }
 
         .btn-primary:hover {
-            background-color: #c82333; /* Darker red on hover */
-            border-color: #bd2130;
+            background-color: #c82333;*/ /* Darker red on hover */
+            /*border-color: #bd2130;
         }
 
     .form-check {
-        margin-bottom: 15px; /* Add bottom margin to each checkbox group */
-    }
+        margin-bottom: 15px;*/ /* Add bottom margin to each checkbox group */
+    /*}
 
     .form-check-input {
-        margin-left: 10px; /* Add left margin to the checkbox */
-    }
+        margin-left: 10px;*/ /* Add left margin to the checkbox */
+    /*}
 
     .form-check-label {
-        text-align: right; /* Align checkbox labels to right */
-    }
+        text-align: right;*/ /* Align checkbox labels to right */
+    /*}
 
     .form-check-input:disabled ~ .form-check-label {
-        color: #6c757d; /* Disabled text color */
-    }
+        color: #6c757d;*/ /* Disabled text color */
+    /*}
 
     .row {
         margin-top: 30px;
@@ -66,7 +66,165 @@
 
     .btn-primary {
         display: block;
-        margin: 20px auto; /* Center the button and add vertical spacing */
+        margin: 20px auto;*/ /* Center the button and add vertical spacing */
+    /*}*/
+
+@@import url('https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700;800;900&display=swap');
+
+*, *:after, *:before {
+  box-sizing: border-box;
+}
+
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+.card-list {
+  width: 90%;
+  max-width: 400px;
+}
+
+.card {
+  background-color: #FFF;
+  border: solid 1px red;
+  box-shadow: 0 0 0 1px rgba(#000, .05), 0 20px 50px 0 rgba(#000, .1);
+  border-radius: 15px;
+  overflow: hidden;
+  padding: 1.25rem;
+  position: relative;
+  transition: .15s ease-in;
+
+  &:hover, &:focus-within {
+    box-shadow: 0 0 0 2px #16C79A, 0 10px 60px 0 rgba(#000, .1);
+      transform: translatey(-5px);
+  }
+}
+
+.card-image {
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.card-header {
+  margin-top: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  a
+    {
+        font-weight: 600;
+        font-size: 1.375rem;
+        line-height: 1.25;
+        padding-right: 1rem;
+        text-decoration: none;
+        color: inherit;
+        will-change: transform;
+        pointer-events: none;
+        color: gray; /* Optionally change the color to indicate it's disabled */
+        text-decoration: none; /* Remove underline */
+        &:after {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0;
+      right: 0;
+      bottom: 0;
+    }
+  }
+
+
+}
+
+.icon-button {
+  border: 0;
+  background-color: #fff;
+  border-radius: 50%;
+  width: 2.5rem;
+  height: 2.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-shrink: 0;
+  font-size: 1.25rem;
+  transition: .25s ease;
+  box-shadow: 0 0 0 1px rgba(#000, .05), 0 3px 8px 0 rgba(#000, .15);
+  z-index: 1;
+  cursor: pointer;
+  color: #565656;
+
+  svg {
+    width: 1em;
+    height: 1em;
+  }
+  &:hover, &:focus {
+    background-color: #EC4646;
+    color: #FFF;
+  }
+}
+
+.card-footer {
+  margin-top: 1.25rem;
+  border-top: 1px solid #ddd;
+  padding-top: 1.25rem;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.card-meta {
+  display: flex;
+  align-items: center;
+  color: #787878;
+  &:first-child:after {
+    display: block;
+    content: "";
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background-color: currentcolor;
+    margin-left: .75rem;
+    margin-right: .75rem;
+  }
+  svg {
+    flex-shrink: 0;
+    width: 1em;
+    height: 1em;
+    margin-right: .25em;
+  }
+}
+
+
+
+    figure.card-image {
+        width: 334px;
+        height: 165px;
+    }
+
+    .row {
+        --bs-gutter-x: 1.5rem;
+        --bs-gutter-y: 0;
+        display: flex;
+        flex-wrap: wrap;
+        margin-top: calc(var(--bs-gutter-y)* -1);
+        margin-right: calc(var(--bs-gutter-x) / -2);
+        margin-left: calc(var(--bs-gutter-x) / -2);
+        flex-direction: row-reverse;
+        justify-content: space-evenly;
+    }
+    .card-list {
+        width: 90%;
+        max-width: 400px;
+        margin-bottom: 2em;
+    }
+
+    #deleteButton:hover {
+        background-color: #00a36c; /* Darker green on hover */
+    }
+
+    .form-group {
+        text-align: center; /* Center the button within the container */
     }
 </style>
 
@@ -79,7 +237,7 @@
         {
             if (party.status == "1")
             {
-                <div class="col-md-4">
+                @*<div class="col-md-4">
                     <div class="card mb-3">
                         <div class="card-body">
                             <h5 class="card-title">@party.partyName</h5>
@@ -89,9 +247,27 @@
                             </div>
                         </div>
                     </div>
+                </div>*@
+
+                <div class="card-list">
+                    <article class="card">
+                        <figure class="card-image">
+                            <img src="../../Image1/@party.partyImage" alt="An orange painted blue, cut in half laying on a blue background" />
+                        </figure>
+                        <div class="card-header">
+
+                            <input type="radio" id="party_@party.id" name="selectedPartyId" value="@party.id" class="form-check-input" />
+                            <a href="#">@party.partyName</a>
+
+                        </div>
+                        
+                    </article>
                 </div>
             }
         }
     </div>
-    <button type="submit" class="btn btn-primary">إرسال</button>
+    <div class="form-group text-center">
+        <button type="submit" class="btn btn-primary btn-lg" id="deleteButton">تصويت</button>
+    </div>
 }
+

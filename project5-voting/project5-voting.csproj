@@ -249,6 +249,11 @@
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Image1\ALhade.jpg" />
+    <Content Include="Image1\alhoueh.jpg" />
+    <Content Include="Image1\almostacbal.jpg" />
+    <Content Include="Image1\Leadership.jpg" />
+    <Content Include="Image1\test.jpeg" />
     <Content Include="images\1حزبي.png" />
     <Content Include="images\about-img.jpg" />
     <Content Include="images\about.jpg" />
@@ -315,6 +320,7 @@
     <Content Include="imgs\eceecf31-2d75-48c5-bba2-d7965514578d.png" />
     <Content Include="imgs\howToVote.mp4" />
     <Content Include="imgs\logoelection.png" />
+    <Content Include="imgs\test.jpeg" />
     <Content Include="js\main.js" />
     <Content Include="lib\animate\animate.css" />
     <Content Include="lib\animate\animate.min.css" />

@@ -3,116 +3,194 @@
 @model IEnumerable<project5_voting.Models.LocalCandidatesGroupedViewModel>
 
 <style>
-    body {
-        direction: rtl;
-        background-color: #f8f9fa;
-        color: #333;
+
+    .voting-cards-container {
+        width: 450px;
+        display: flex;
+        /* flex-wrap: wrap; */
+        justify-content: center;
+        gap: 20px;
+        padding: 20px;
     }
 
     .card {
-        border-color: black; /* Red border color */
-        border-width: 2px;
-        direction: rtl; /* Ensure RTL layout inside card */
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add box shadow */
-    }
-
-    label.form-check-label {
-        padding-right: 25px !important;
-    }
-
-    .card-header {
-        background-color: #004080; /* Blue header background */
-        color: white;
-        text-align: right; /* Align header text to right */
-    }
-
-    .card-body {
-        background-color: white;
-        text-align: right; /* Align body text to right */
-    }
-
-    .btn-primary {
-        background-color: #dc3545; /* Red button color */
-        border-color: #dc3545;
-    }
-
-        .btn-primary:hover {
-            background-color: #c82333; /* Darker red on hover */
-            border-color: #bd2130;
-        }
-
-    .form-check {
-        margin-bottom: 15px; /* Add bottom margin to each checkbox group */
-    }
-
-    .form-check-input {
-        margin-left: 10px; /* Add left margin to the checkbox */
-    }
-
-    .form-check-label {
-        text-align: right; /* Align checkbox labels to right */
-    }
-
-    .form-check-input:disabled ~ .form-check-label {
-        color: #6c757d; /* Disabled text color */
-    }
-
-    .container {
-        margin-top: 30px;
-    }
-
-    .card-group {
         display: flex;
-        flex-wrap: wrap;
+        flex-direction: column; /* Ensure that the content inside the card is stacked vertically */
+        align-items: center;
+        justify-content: center;
+        background-color: #f5f5f5;
+        margin: 10px; /* Space between cards */
+        width: 500px; /* Fixed width for each card */
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        border: 10px solid #007F3D; /* Green border around the card */
+        border-radius: 8px;
+        padding: 10px;
+        transition: transform 0.3s ease-in-out;
     }
 
-        .card-group .card {
-            flex: 1 1 calc(50% - 15px); /* Every two cards next to each other */
-            margin: 0 10px 20px;
+    .voting-card {
+        width: 100%; /* Make sure the voting card takes full width inside the card container */
+        background-color: #fff;
+        border-radius: 8px;
+        padding: 10px;
+        transition: transform 0.3s ease-in-out;
+    }
+
+
+
+    .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 10px;
+    }
+
+    .logo img {
+        width: 30px;
+        height: 30px;
+    }
+
+    .list-number span {
+        font-size: 20px;
+        font-weight: bold;
+        border: 2px solid #000;
+        padding: 5px 10px;
+        border-radius: 50%;
+    }
+
+    .list-name span {
+        font-size: 18px;
+        font-weight: bold;
+    }
+
+    .candidates {
+        border: 2px solid #008037;
+        border-radius: 8px;
+        padding: 10px;
+        margin: 5px;
+    }
+
+    .candidate {
+        display: flex;
+        align-items: center;
+        border-bottom: 1px solid #008037;
+        padding: 5px 0;
+    }
+
+        .candidate:last-child {
+            border-bottom: none;
         }
 
-    .btn-primary {
-        display: block;
-        margin: 20px auto; /* Center the button and add vertical spacing */
+    .checkbox {
+        width: 30px;
+        display: flex;
+        justify-content: center;
+    }
+
+    .candidate-image img {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        margin-right: 10px;
+    }
+
+    .candidate-name {
+        flex: 1;
+        text-align: right;
+        font-size: 20px;
+    }
+
+    .candidate-number {
+        font-size: 14px;
+        margin-left: 10px;
+    }
+
+
+    .flex {
+        display: flex;
+        flex-direction: row-reverse;
+        flex-wrap: wrap;
+        justify-content: space-around;
+    }
+
+    #deleteButton {
+        font-size: 1.5rem; /* Increase the font size */
+        padding: 15px 30px; /* Increase padding for a larger button */
+        width: 200px; /* Set a fixed width if desired */
+        display: inline-block;
+        background-color: #00b97d;
+    }
+
+        #deleteButton:hover {
+            background-color: #00a36c; /* Darker green on hover */
+        }
+
+    .form-group {
+        text-align: center; /* Center the button within the container */
     }
 </style>
 
 <h2 class="text-center mt-4">التصويت المحلي</h2>
 
-<div class="container mt-4">
-    <h2 class="text-center">@ViewBag.Title</h2>
 
-    @using (Html.BeginForm())
-    {
-        <div class="card-group">
-            @foreach (var group in Model)
-            {
-                <div class="card" id="card-@group.ListName">
-                    <div class="card-header">
-                        <h5>@group.ListName</h5>
-                    </div>
-                    <div class="card-body">
-                        <input type="radio" name="selectedList" value="@group.ListName" id="list-@group.ListName"
-                               onclick="handleRadioClick('@group.ListName')" />
-                        <label for="list-@group.ListName">اختر هذه @group.ListName</label><br />
-
+@using (Html.BeginForm())
+{
+    var listcount = 1;
+    <div class="flex">
+        @foreach (var group in Model)
+        {
+            <div class="card" id="card-@group.ListName">
+                <div class="voting-cards-container">
+                    <div class="voting-card" data-aos="fade-up">
+                        <div class="header">
+                            <div class="logo">
+                                <input type="radio" name="selectedList" value="@group.ListName" id="list-@group.ListName"
+                                       onclick="handleRadioClick('@group.ListName')" style="transform: scale(2); margin-left: 15px;" /> <!-- Radio button for selecting the list -->
+                            </div>
+                            <div class="list-number">
+                                <span>@listcount</span>
+                            </div>
+                            <div class="list-name">
+                                <span>قائمة @group.ListName</span>
+                            </div>
+                        </div>
+                        @{
+                            var candCaunter = 1;
+                        }
                         @foreach (var candidate in group.Candidates)
                         {
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="candidate-@candidate.id"
-                                       name="selectedCandidates" value="@candidate.id" disabled />
-                                <label class="form-check-label" for="candidate-@candidate.id">
-                                    @candidate.candidateName
-                                </label>
+                            <div class="candidates">
+                                <div class="candidate">
+                                    <div class="checkbox">
+                                        <input class="form-check-input" type="checkbox" id="candidate-@candidate.id"
+                                               name="selectedCandidates" value="@candidate.id" disabled style="transform: scale(1.5);">
+                                    </div>
+                                    <div class="candidate-image">
+                                        <img src="../../imgs/@candidate.img" alt="Candidate 1"> <!-- Placeholder for the candidate image -->
+                                    </div>
+                                    <div class="candidate-name">@candidate.candidateName</div>
+                                    <div class="candidate-number">@candCaunter</div>
+                                </div>
                             </div>
+                            candCaunter++;
                         }
+
                     </div>
                 </div>
-            }
-        </div>
-        <button type="submit" class="btn btn-primary mt-4">إرسال</button>
-    }
-</div>
+            </div>
+            listcount++;
+
+        }
+    </div>
+    <div class="form-group text-center">
+        <button type="submit" class="btn btn-primary btn-lg" id="deleteButton" >تصويت</button>
+    </div>
+}
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+
+
+
 
 <script>
     function handleRadioClick(selectedListName) {
@@ -136,6 +214,7 @@
                 // Disable checkboxes for all other cards
                 checkboxes.forEach(function (checkbox) {
                     checkbox.disabled = true;
+                    checkbox.checked = false; // Uncheck the checkbox
                 });
             }
         });

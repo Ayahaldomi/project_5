@@ -1,98 +1,7 @@
 ﻿
 
 @model IEnumerable<project5_voting.Models.USER>
-@*
 
-
-    @using (Html.BeginForm())
-    {
-
-
-        var logedInUser = Session["logedInUser"].ToString();
-
-
-        foreach (var item in Model)
-        {
-            if (item.nationalID == logedInUser)
-            {
-                var ifVoted = item;
-
-
-
-
-
-
-
-                <div class="container">
-                    <h2>localORparty</h2>
-                    <div class="row">
-                        <div class="col-md-4 mb-4">
-                            @if (ifVoted.localVote == 1 || ifVoted.whiteLocalVote == 1)
-                            {
-                                <div class="card">
-                                    <img class="card-img-top" src="~/images/about.jpg" alt="Card image cap">
-                                    <div class="card-body">
-                                        <h5 class="card-title">التصويت المحلي</h5>
-                                        <button type="button" id="warningButton">تم التصويت</button>
-                                    </div>
-                                </div>
-                            }
-                            else
-                            {
-                                <div class="card">
-                                    <img class="card-img-top" src="~/images/about.jpg" alt="Card image cap">
-                                    <div class="card-body">
-                                        <h5 class="card-title">التصويت المحلي</h5>
-                                        @Html.ActionLink("localVoting", "localVoting", new { @class = "btn btn-primary" })
-                                    </div>
-                                </div>
-                            }
-                        </div>
-
-                        <div class="col-md-4 mb-4">
-                            @if (ifVoted.partyVote == 1 || ifVoted.whitePartyVote == 1)
-                            {
-                                <div class="card">
-                                    <img class="card-img-top" src="~/images/about.jpg" alt="Card image cap">
-                                    <div class="card-body">
-                                        <h5 class="card-title">التصويت الحزبي</h5>
-                                        <button type="button" id="warningButton">تم التصويت</button>
-                                    </div>
-                                </div>
-                            }
-                            else
-                            {
-                                <div class="card">
-                                    <img class="card-img-top" src=".~/images/about.jpg" alt="Card image cap">
-                                    <div class="card-body">
-                                        <h5 class="card-title">التصويت الحزبي</h5>
-                                        @Html.ActionLink("partyVoting", "partyVoting", new { @class = "btn btn-primary" })
-                                    </div>
-                                </div>
-                            }
-                        </div>
-                    </div>
-                </div>
-            }
-        }
-        <div class="form-group">
-            <button type="submit" class="btn btn-primary" id="deleteButton" onclick="myForm" name="hi">vote</button>
-        </div>
-
-    }
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
-    <script>
-        document.getElementById('warningButton').onclick = function () {
-            Swal.fire({
-                title: 'انتبه !',
-                text: 'لا تستطيع التصويت',
-                icon: 'warning',
-                confirmButtonColor: '#3085d6',
-                confirmButtonText: 'Okay'
-            });
-        };
-
-    </script>*@
 
 <style>
 
@@ -132,12 +41,12 @@
 
     .inside-page__heading--beach,
     .card-front__text-view--beach {
-        color: #fa7f67;
+        color: #e4272a;
     }
 
     .inside-page__heading--camping,
     .card-front__text-view--camping {
-        color: #00b97c;
+        color: #059b4f;
     }
 
     /* Front cover */
@@ -224,21 +133,21 @@
         }
 
     .inside-page__btn--beach {
-        border-color: #fa7f67;
-        color: #fa7f67;
+        border-color: #e4272a;
+        color: #e4272a;
     }
 
         .inside-page__btn--beach::before {
-            background-color: #fa7f67;
+            background-color: #e4272a;
         }
 
     .inside-page__btn--camping {
-        border-color: #00b97d;
-        color: #00b97d;
+        border-color: #059b4f;
+        color: #059b4f;
     }
 
         .inside-page__btn--camping::before {
-            background-color: #00b97d;
+            background-color: #059b4f;
         }
 
     .inside-page__btn:hover {
@@ -255,7 +164,7 @@
         display: flex;
         flex-direction: column;
         justify-content: center;
-        height: 80vh;
+        height: 65vh;
         width: 100%;
     }
 
@@ -360,11 +269,11 @@
     }
 
     .card-front__tp--beach {
-        background: linear-gradient(to bottom, #fb9b88, #f86647);
+        background: linear-gradient(to bottom, #e4272a, #ec5454);
     }
 
     .card-front__tp--camping {
-        background: linear-gradient(to bottom, #00db93, #00b97d);
+        background: linear-gradient(to bottom, #059b4f, #52b079);
     }
 
     /* Front card's bottom section */
@@ -466,6 +375,37 @@
             margin-right: 8px; /* Space between icon and text */
             font-size: 1.6rem; /* Icon size */
         }
+
+    .no-flip .flip-card__container {
+        transform: none !important; /* Disable the flipping transform */
+        cursor: not-allowed; /* Change cursor to indicate no flipping */
+    }
+
+    .no-flip .card {
+        cursor: not-allowed; /* Optional: change the cursor on the entire card */
+    }
+
+        .no-flip .card:hover {
+            box-shadow: none; /* Disable the hover shadow effect */
+            width: 20rem; /* Maintain the original width on hover */
+        }
+
+
+    #deleteButton {
+        font-size: 1.5rem; /* Increase the font size */
+        padding: 15px 30px; /* Increase padding for a larger button */
+        width: 200px; /* Set a fixed width if desired */
+        display: inline-block;
+        background-color: #00b97d;
+    }
+        #deleteButton:hover {
+            background-color: #00a36c; /* Darker green on hover */
+        }
+
+    .form-group {
+        text-align: center; /* Center the button within the container */
+    }
+
 </style>
 
 
@@ -502,7 +442,7 @@
                                         <div class="card-front">
                                             <div class="card-front__tp card-front__tp--beach">
                                                 <img src="../../imgs/logoelection.png" alt="Settings Icon" class="card-front__icon">
-                                                <h2 class="card-front__heading">الدائرة الانتخابية العامة</h2>
+                                                <h2 class="card-front__heading">ورقة اقتراع الدائرة العامة</h2>
                                             </div>
                                             <div class="card-front__bt">
                                                 <p class="card-front__text-view card-front__text-view--beach">لا يمكنك التصويت مرة اخرى</p>
@@ -519,7 +459,7 @@
                                     <div class="inside-page__container">
                                         <h3 class="inside-page__heading inside-page__heading--beach">الدائرة الانتخابية العامة</h3>
                                         <p class="inside-page__text">يخصص للدائرة الانتخابية العامة وفقا لنظام القائمة النسبية المغلقة 41 مقعدا، وتشكل من القوائم الحزبية فقط</p>
-                                        <a href="#" class="inside-page__btn inside-page__btn--beach" id="voteDoneButton1">تم التصويت</a>
+                                        <a href="#" class="inside-page__btn inside-page__btn--beach" id="voteDoneButton1">لا يمكنك التصويت مرة اخرى</a>
                                     </div>
                                 </div>
                             </div>
@@ -535,7 +475,7 @@
                                         <div class="card-front">
                                             <div class="card-front__tp card-front__tp--beach">
                                                 <img src="../../imgs/logoelection.png" alt="Settings Icon" class="card-front__icon">
-                                                <h2 class="card-front__heading">الدائرة الانتخابية العامة</h2>
+                                                <h2 class="card-front__heading">ورقة اقتراع الدائرة العامة</h2>
                                             </div>
                                             <div class="card-front__bt">
                                                 <p class="card-front__text-view card-front__text-view--beach">صوت الان</p>
@@ -569,7 +509,7 @@
                                         <div class="card-front">
                                             <div class="card-front__tp card-front__tp--camping">
                                                 <img src="../../imgs/logoelection.png" alt="Settings Icon" class="card-front__icon">
-                                                <h2 class="card-front__heading">الدائرة الانتخابية العامة</h2>
+                                                <h2 class="card-front__heading">كتيب اقتراع الدائرة المحلية</h2>
                                             </div>
                                             <div class="card-front__bt">
                                                 <p class="card-front__text-view card-front__text-view--camping">لا يمكنك التصويت مرة اخرى</p>
@@ -588,7 +528,7 @@
                                         <div class="inside-page__container">
                                             <h3 class="inside-page__heading inside-page__heading--camping">دائرة اربد الاولى</h3>
                                             <p class="inside-page__text">خصص لها 8 مقاعد منها مقعد للمرأة، وتضم ألوية (قصبة اربد، والوسطية، وبني كنانة، والرمثا).</p>
-                                            <a href="#" class="inside-page__btn inside-page__btn--beach" id="voteDoneButton2">تم التصويت</a>
+                                            <a href="#" class="inside-page__btn inside-page__btn--camping" id="voteDoneButton2">تم التصويت</a>
                                         </div>
                                     </div>
                                 }
@@ -598,7 +538,7 @@
                                         <div class="inside-page__container">
                                             <h3 class="inside-page__heading inside-page__heading--camping">دائرة اربد الثانية</h3>
                                             <p class="inside-page__text">خصص لها 7 مقاعد منها مقعد للمرأة ومقعد للمسيحيين، وتضم ألوية (بني عبيد، والمزار الشمالي، والطيبة، والأغوار الشمالية، والكورة).</p>
-                                            <a href="#" class="inside-page__btn inside-page__btn--beach" id="voteDoneButton3">تم التصويت</a>
+                                            <a href="#" class="inside-page__btn inside-page__btn--camping" id="voteDoneButton3">تم التصويت</a>
                                         </div>
                                     </div>
                                 }
@@ -608,7 +548,7 @@
                                         <div class="inside-page__container">
                                             <h3 class="inside-page__heading inside-page__heading--camping">دائرة المفرق</h3>
                                             <p class="inside-page__text">خصص لها 4 مقاعد، منها مقعد للمرأة</p>
-                                            <a href="#" class="inside-page__btn inside-page__btn--beach" id="voteDoneButton4">تم التصويت</a>
+                                            <a href="#" class="inside-page__btn inside-page__btn--camping" id="voteDoneButton4">تم التصويت</a>
                                         </div>
                                     </div>
                                 }
@@ -624,7 +564,7 @@
                                         <div class="card-front">
                                             <div class="card-front__tp card-front__tp--camping">
                                                 <img src="../../imgs/logoelection.png" alt="Settings Icon" class="card-front__icon">
-                                                <h2 class="card-front__heading">الدائرة الانتخابية العامة</h2>
+                                                <h2 class="card-front__heading">كتيب اقتراع الدائرة المحلية</h2>
                                             </div>
                                             <div class="card-front__bt">
                                                 <p class="card-front__text-view card-front__text-view--camping">صوت الان</p>
@@ -643,7 +583,7 @@
                                         <div class="inside-page__container">
                                             <h3 class="inside-page__heading inside-page__heading--camping">دائرة اربد الاولى</h3>
                                             <p class="inside-page__text">خصص لها 8 مقاعد منها مقعد للمرأة، وتضم ألوية (قصبة اربد، والوسطية، وبني كنانة، والرمثا).</p>
-                                            <a href="@Url.Action("localVoting")" class="inside-page__btn inside-page__btn--beach">صوت الان</a>
+                                            <a href="@Url.Action("localVoting")" class="inside-page__btn inside-page__btn--camping">صوت الان</a>
                                         </div>
                                     </div>
                                 }
@@ -653,7 +593,7 @@
                                         <div class="inside-page__container">
                                             <h3 class="inside-page__heading inside-page__heading--camping">دائرة اربد الثانية</h3>
                                             <p class="inside-page__text">خصص لها 7 مقاعد منها مقعد للمرأة ومقعد للمسيحيين، وتضم ألوية (بني عبيد، والمزار الشمالي، والطيبة، والأغوار الشمالية، والكورة).</p>
-                                            <a href="@Url.Action("localVoting")" class="inside-page__btn inside-page__btn--beach">صوت الان</a>
+                                            <a href="@Url.Action("localVoting")" class="inside-page__btn inside-page__btn--camping">صوت الان</a>
                                         </div>
                                     </div>
                                 }
@@ -662,8 +602,8 @@
                                     <div class="inside-page">
                                         <div class="inside-page__container">
                                             <h3 class="inside-page__heading inside-page__heading--camping">دائرة المفرق</h3>
-                                            <p class="inside-page__text">خصص لها 4 مقاعد، منها مقعد للمرأة</p>
-                                            <a href="@Url.Action("localVoting")" class="inside-page__btn inside-page__btn--beach">صوت الان</a>
+                                            <p class="inside-page__text">خصص لها 4 مقاعد، منها مقعد للمرأة</p><br /><br />
+                                            <a href="@Url.Action("localVoting")" class="inside-page__btn inside-page__btn--camping">صوت الان</a>
                                         </div>
                                     </div>
                                 }
@@ -674,6 +614,10 @@
             </main>
         }
     }
+    <div class="form-group text-center">
+        <button type="submit" class="btn btn-primary btn-lg" id="deleteButton" onclick="myForm" name="hi">انهاء التصويت</button>
+    </div>
+
 }
 
 <script>
@@ -682,10 +626,11 @@
         button.addEventListener('click', function (event) {
             event.preventDefault(); // Prevent the default anchor behavior
             Swal.fire({
-                title: 'تم التصويت',
-                text: 'لقد تم تسجيل تصويتك بنجاح!',
-                icon: 'success',
-                confirmButtonText: 'حسنًا'
+                title: 'انتبه !',
+                text: 'لا تستطيع التصويت اكثر من مرة !',
+                icon: 'warning',
+                confirmButtonColor: '#3085d6',
+                confirmButtonText: 'حسنا'
             });
         });
     });
@@ -693,9 +638,9 @@
     // Attach click event to the button for showing video
     document.getElementById('showVideo').addEventListener('click', function () {
         Swal.fire({
-            title: 'Watch this video!',
+            title: 'كيفية الاقتراع',
             html: '<video id="videoPlayer" width="100%" height="auto" controls></video>',
-            confirmButtonText: 'Close',
+            confirmButtonText: 'اغلاق',
             width: 900,  // Set a larger width for the popup
             padding: '3em',
             backdrop: true,

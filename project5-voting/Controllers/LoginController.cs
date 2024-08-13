@@ -84,40 +84,11 @@ namespace project5_voting.Controllers
 
                    
 
-                    // Try to get the existing cookie
-                    //HttpCookie existingCookie = Request.Cookies["logedInUser"];
-                    //HttpCookie existingCookie1 = Request.Cookies["electionArea"];
 
                     Session["logedInUser"] = logged_user.nationalID;
                     Session["electionArea"] = logged_user.electionArea;
 
-                    //if (existingCookie != null)
-                    //{
 
-                    //    // Cookie exists, update its value
-                    //    existingCookie.Value = logged_user.nationalID;
-                    //    existingCookie.Expires = DateTime.Now.AddHours(1); // Set the expiration time
-                    //    Response.Cookies.Set(existingCookie); // Update the cookie
-
-                      
-
-                    //    existingCookie1.Value = logged_user.electionArea;
-                    //    existingCookie1.Expires = DateTime.Now.AddHours(1); // Set the expiration time
-                    //    Response.Cookies.Set(existingCookie1); // Update the cookie
-                    //}
-                    //else
-                    //{
-
-                    //    // Cookie does not exist, create a new one
-                    //    HttpCookie newCookie = new HttpCookie("logedInUser", logged_user.nationalID);
-                    //    newCookie.Expires = DateTime.Now.AddHours(1); // Set the expiration time
-                    //    Response.Cookies.Add(newCookie); // Add the new cookie to the response
-
-
-                    //    HttpCookie newCookie1 = new HttpCookie("electionArea", logged_user.electionArea);
-                    //    newCookie1.Expires = DateTime.Now.AddHours(1); // Set the expiration time
-                    //    Response.Cookies.Add(newCookie1); // Add the new cookie to the response
-                    //}
 
                     return RedirectToAction("PasswordReset");
                 }
@@ -136,22 +107,23 @@ namespace project5_voting.Controllers
                 Session["name"] = logged_user.name;
 
 
-                HttpCookie startDateTime = Request.Cookies["startDateTime"];
+                //HttpCookie startDateTime = Request.Cookies["startDateTime"];
 
-                var startdate = Request.Cookies["startDateTime"].Value;
-                var endate = Request.Cookies["endDateTime"].Value;
+                //var startdate = Request.Cookies["startDateTime"].Value;
+                //var endate = Request.Cookies["endDateTime"].Value;
 
 
-                var date = DateTime.Now.ToString();
+                //var date = DateTime.Now.ToString();
 
-                int result1 = string.Compare(startdate, date);
-                int result2 = string.Compare(endate, date);
+                //int result1 = string.Compare(startdate, date);
+                //int result2 = string.Compare(endate, date);
 
-                if (result1 < 0 && result2 > 0)
-                {
-                    return RedirectToAction("electionArea");
-                }
-                return RedirectToAction("Index", "Home");
+                //if (result1 < 0 && result2 > 0)
+                //{
+                //    return RedirectToAction("electionArea");
+                //}
+                //return RedirectToAction("Index", "Home");
+                return RedirectToAction("electionArea");
             }
             else
             {
@@ -199,19 +171,7 @@ namespace project5_voting.Controllers
 
             // Extract the user ID from the cookie
             var logedInUser = Session["logedInUser"].ToString();
-            //if (logedInUser == null || string.IsNullOrEmpty(logedInUser))
-            //{
-            //    ViewBag.Message = "User session has expired or is invalid.";
-            //    return View("bbbbbbbbbbbb");
-            //}
 
-            //// Assuming the cookie value is the user ID
-            //long userId;
-            //if (!long.TryParse(logedInUser, out userId))
-            //{
-            //    ViewBag.Message = "Invalid user session.";
-            //    return View("cccccccc");
-            //}
 
             // Find the user by ID
 
@@ -231,23 +191,25 @@ namespace project5_voting.Controllers
             // Set success message
             ViewBag.Message = "Password has been successfully reset.";
 
-            HttpCookie startDateTime = Request.Cookies["startDateTime"];
+            //HttpCookie startDateTime = Request.Cookies["startDateTime"];
 
-            var startdate = Request.Cookies["startDateTime"].Value;
-            var endate = Request.Cookies["endDateTime"].Value;
+            //var startdate = Request.Cookies["startDateTime"].Value;
+            //var endate = Request.Cookies["endDateTime"].Value;
 
-            //var end = Session["EndDateTime"].ToString();
+            ////var end = Session["EndDateTime"].ToString();
 
-            var date = DateTime.Now.ToString();
+            //var date = DateTime.Now.ToString();
 
-            int result1 = string.Compare(startdate, date);
-            int result2 = string.Compare(endate, date);
+            //int result1 = string.Compare(startdate, date);
+            //int result2 = string.Compare(endate, date);
 
-            if (result1 < 0 && result2 > 0)
-            {
-                return RedirectToAction("electionArea");
-            }
-            return RedirectToAction("Index", "Home");
+            //if (result1 < 0 && result2 > 0)
+            //{
+            //    return RedirectToAction("electionArea");
+            //}
+            //return RedirectToAction("Index", "Home");
+
+            return RedirectToAction("electionArea");
         }
 
         //////////////////////////////////////////////////////////////////////
@@ -288,7 +250,7 @@ namespace project5_voting.Controllers
                 db.SaveChanges();
             }
 
-            return View("index");
+            return RedirectToAction("LogoutUser");
 
         }
 
