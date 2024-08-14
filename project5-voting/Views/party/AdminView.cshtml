@@ -1,9 +1,8 @@
 ﻿@model IEnumerable<project5_voting.Models.PartyCandidate>
 
-
 @{
     ViewBag.Title = "AdminView";
-    //Layout = "~/Views/Shared/_Layout1.cshtml";
+    Layout = "~/Views/Shared/_LayoutPage1.cshtml";
 }
 
 <div class="container mt-5">
@@ -31,7 +30,6 @@
                         <th scope="col" class="sortable" data-sort="name">الاسم <span class="sort-icon">▲</span></th>
                         <th scope="col" class="sortable" data-sort="status">الحالة <span class="sort-icon">▲</span></th>
                         <th scope="col" class="sortable" data-sort="email">البريد الإلكتروني <span class="sort-icon">▲</span></th>
-                        <th scope="col" class="sortable" data-sort="phone">الهاتف <span class="sort-icon">▲</span></th>
                         <th scope="col" class="sortable" data-sort="nationalId">رقم الهوية <span class="sort-icon">▲</span></th>
                         <th scope="col" class="sortable" data-sort="gender">الجنس <span class="sort-icon">▲</span></th>
                         <th scope="col" class="sortable" data-sort="birthDay">تاريخ الميلاد <span class="sort-icon">▲</span></th>
@@ -49,24 +47,23 @@
                         var statusText = item.status == "1" ? "مكتمل" : "غير مكتمل";
                         var rowClass = item.status == "1" ? "completed" : "incomplete";
 
-                        var imageUrl = item.status == "1" ? Url.Content("~/images/تم الموافقه على طلب.png") : Url.Content("~/images/طلب قيد دراسة.png");
-
-                        <tr class="candidate-row" data-status="@rowClass" data-name="@item.name" data-status-value="@item.status" data-email="@item.email" data-phone="@item.phone" data-nationalId="@item.nationalId" data-gender="@item.gender" data-birthDay="@item.birthDay" data-typeOfChair="@item.typeOfChair" data-religion="@item.religion" data-electoralDistrict="@item.electoralDistrict" data-partyName="@item.partyList.partyName">
-                            <td><img src="@imageUrl" alt="Party Image" class="img-fluid rounded-circle" style="height: 50px; width: 50px; object-fit: cover;"></td>
+                        <tr class="candidate-row" data-status="@rowClass" data-name="@item.name" data-status-value="@item.status" data-email="@item.email" data-nationalId="@item.nastionalID" data-gender="@item.gender" data-birthDay="@item.birthday" data-typeOfChair="@item.typeOfChair" data-religion="@item.religion" data-electoralDistrict="@item.electoralDistrict" data-partyName="@item.PartyList.partyName">
+                            <td>
+                                <img src="../../Image1/@Url.Content(item.candidateImage)" alt="candidateImage Image" class="img-fluid rounded-circle" style="height: 50px; width: 50px; object-fit: cover;">
+                            </td>
                             <td>@Html.DisplayFor(modelItem => item.name)</td>
                             <td><span class="badge @badgeClass">@statusText</span></td>
                             <td>@Html.DisplayFor(modelItem => item.email)</td>
-                            <td>@Html.DisplayFor(modelItem => item.phone)</td>
-                            <td>@Html.DisplayFor(modelItem => item.nationalId)</td>
+                            <td>@Html.DisplayFor(modelItem => item.nastionalID)</td>
                             <td>@Html.DisplayFor(modelItem => item.gender)</td>
-                            <td>@(item.birthDay.HasValue ? item.birthDay.Value.ToString("yyyy-MM-dd") : string.Empty)</td>
+                            <td>@(item.birthday.HasValue ? item.birthday.Value.ToString("yyyy-MM-dd") : string.Empty)</td>
                             <td>@Html.DisplayFor(modelItem => item.typeOfChair)</td>
                             <td>@Html.DisplayFor(modelItem => item.religion)</td>
                             <td>@Html.DisplayFor(modelItem => item.electoralDistrict)</td>
                             <td>@Html.DisplayFor(modelItem => item.PartyList.partyName)</td>
                             <td>
                                 <div class="btn-group-vertical" role="group">
-                                    @Html.ActionLink("حذف", "Delete", new { id = item.id }, new { @class = "btn btn-sm btn-danger my-1" })
+                                    @Html.ActionLink("حذف", "DeletePartyCandidates", new { id = item.id }, new { @class = "btn btn-sm btn-danger my-1" })
                                     @Html.ActionLink("مكتمل", "SetStatus", new { id = item.id, status = "1" }, new { @class = "btn btn-sm btn-success my-1" })
                                     @Html.ActionLink("غير مكتمل", "SetStatus", new { id = item.id, status = "0" }, new { @class = "btn btn-sm btn-secondary my-1" })
                                 </div>
@@ -87,7 +84,7 @@
                 confirmButtonText: 'رجوع للخلف'
             }).then((result) => {
                 if (result.isConfirmed) {
-                    window.location.href = '@Url.Action("IndexAdmin", "partyLists")';
+                    window.location.href = '@Url.Action("IndexAdmin", "party")';
                 }
             });
         </script>

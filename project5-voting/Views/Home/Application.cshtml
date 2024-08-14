@@ -1,6 +1,4 @@
-﻿﻿
-<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-<style>
+﻿<style>
     .card-hover {
         transition: transform 0.3s, box-shadow 0.3s;
         border: 3px solid #ff0000; /* Red border for cards */
@@ -10,11 +8,6 @@
             transform: scale(1.05);
             box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
         }
-
-    .card-body {
-        background-color: #ffffff; /* White background for card body */
-        color: #000000; /* Black text for better contrast */
-    }
 
     .card-title {
         color: #ff0000; /* Red title text */
@@ -53,29 +46,28 @@
     <div class="row">
         <!-- بطاقة قائمة الحزب -->
         <div class="col-md-6 mb-4">
-            <div class="card card-hover text-decoration-none text-black" style="height: 400px; width: 100%; max-width: 600px;">
+            <div class="card card-hover">
                 <img src="~/images/1حزبي.png" class="card-img-top" alt="قائمة الحزب" style="height: 300px; object-fit: cover;" />
-                <div class="card-body bg-light text-danger rounded-bottom d-flex flex-column justify-content-center align-items-center">
+                <div class="card-body text-center bg-light">
                     <h5 class="card-title">قائمة الحزبية</h5>
                     <p class="card-text">
                         عند ضغط هنا سوف تتجه لإنشاء القائمة الحزبية من أجل الترشح للانتخابات.
                     </p>
-                    <a href="@Url.Action("Createuser", "partyLists")" class="btn btn-custom">اذهب لبناء للقائمة</a>
+                    <a href="@Url.Action("Createuser", "party")" class="btn btn-custom">اذهب لبناء القائمة</a>
                 </div>
             </div>
         </div>
 
         <!-- بطاقة القائمة المحلية -->
         <div class="col-md-6 mb-4">
-            <div class="card card-hover text-decoration-none text-black" style="height: 400px; width: 100%; max-width: 600px;">
-
+            <div class="card card-hover">
                 <img src="~/images/محلي.png" class="card-img-top" alt="القائمة المحلية" style="height: 300px; object-fit: cover;" />
-                <div class="card-body bg-light text-danger rounded-bottom d-flex flex-column justify-content-center align-items-center">
+                <div class="card-body text-center bg-light">
                     <h5 class="card-title">القائمة المحلية</h5>
                     <p class="card-text">
                         عند ضغط هنا سوف تتجه لإنشاء القائمة المحلية من أجل الترشح للانتخابات.
                     </p>
-                    <a href="@Url.Action("", "")" class="btn btn-custom">اذهب لبناء للقائمة</a>
+                    <a href="@Url.Action("localList", "localCandidates")" class="btn btn-custom">اذهب لبناء القائمة</a>
                 </div>
             </div>
         </div>

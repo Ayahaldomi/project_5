@@ -1,98 +1,73 @@
 ﻿@model project5_voting.Models.PartyCandidate
 
 @{
-    ViewBag.Title = "حذف";
+    ViewBag.Title = "تأكيد الحذف";
 }
 
-<div class="container mt-4">
-    <h2 class="text-center mb-4">تأكيد الحذف</h2>
-
-    <div class="card">
-        <div class="card-body">
-            <h4>تفاصيل المرشح</h4>
-            <hr />
-
-            <dl class="row">
-                <dt class="col-sm-4">
-                    الايميل
-                </dt>
-                <dd class="col-sm-8">
-                    @Html.DisplayFor(model => model.email)
-                </dd>
-
-                <dt class="col-sm-4">
-                    الاسم
-                </dt>
-                <dd class="col-sm-8">
-                    @Html.DisplayFor(model => model.name)
-                </dd>
-
-                <dt class="col-sm-4">
-                    الرقم الهاتف
-                </dt>
-                <dd class="col-sm-8">
-                    @Html.DisplayFor(model => model.phone)
-                </dd>
-
-                <dt class="col-sm-4">
-                    الرقم الوطني
-                </dt>
-                <dd class="col-sm-8">
-                    @Html.DisplayFor(model => model.nationalId)
-                </dd>
-
-                <dt class="col-sm-4">
-                    نوع الجنس
-                </dt>
-                <dd class="col-sm-8">
-                    @Html.DisplayFor(model => model.gender)
-                </dd>
-
-                <dt class="col-sm-4">
-                    تاريخ الميلاد
-                </dt>
-                <dd class="col-sm-8">
-                    @Html.DisplayFor(model => model.birthDay)
-                </dd>
-
-                <dt class="col-sm-4">
-                    نوع المقعد
-                </dt>
-                <dd class="col-sm-8">
-                    @Html.DisplayFor(model => model.typeOfChair)
-                </dd>
-
-                <dt class="col-sm-4">
-                    ديانة
-                </dt>
-                <dd class="col-sm-8">
-                    @Html.DisplayFor(model => model.religion)
-                </dd>
-
-                <dt class="col-sm-4">
-                    اسم الدائره المحلية
-                </dt>
-                <dd class="col-sm-8">
-                    @Html.DisplayFor(model => model.electoralDistrict)
-                </dd>
-
-                <dt class="col-sm-4">
-                    اسم الحزب
-                </dt>
-                <dd class="col-sm-8">
-                    @Html.DisplayFor(model => model.partyList.partyName)
-                </dd>
-            </dl>
-
-            @using (Html.BeginForm())
-            {
-                @Html.AntiForgeryToken()
-
-                <div class="form-group">
-                    <button type="submit" class="btn btn-danger">حذف</button>
-                    @Html.ActionLink("العودة إلى القائمة", "Index", new { area = "" }, new { @class = "btn btn-secondary" })
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card border-danger">
+                <div class="card-header bg-danger text-white text-center">
+                    <h3>تأكيد حذف المرشح</h3>
                 </div>
-            }
+                <div class="card-body">
+                    <p class="text-center text-danger mb-4">
+                        هل أنت متأكد أنك تريد حذف هذا المرشح؟ هذا الإجراء لا يمكن التراجع عنه.
+                    </p>
+                    <div class="table-responsive">
+                        <table class="table table-bordered">
+                            <tbody>
+                                <tr>
+                                    <th scope="row">الايميل</th>
+                                    <td>@Html.DisplayFor(model => model.email)</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">الاسم</th>
+                                    <td>@Html.DisplayFor(model => model.name)</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">الرقم الوطني</th>
+                                    <td>@Html.DisplayFor(model => model.nastionalID)</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">نوع الجنس</th>
+                                    <td>@Html.DisplayFor(model => model.gender)</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">تاريخ الميلاد</th>
+                                    <td>@Html.DisplayFor(model => model.birthday)</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">نوع المقعد</th>
+                                    <td>@Html.DisplayFor(model => model.typeOfChair)</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">الديانة</th>
+                                    <td>@Html.DisplayFor(model => model.religion)</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">اسم الدائرة المحلية</th>
+                                    <td>@Html.DisplayFor(model => model.electoralDistrict)</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">اسم الحزب</th>
+                                    <td>@Html.DisplayFor(model => model.PartyList.partyName)</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    @using (Html.BeginForm())
+                    {
+                        @Html.AntiForgeryToken()
+                        <div class="text-center mt-4">
+                            <button type="submit" class="btn btn-danger btn-lg px-5">حذف</button>
+                            @Html.ActionLink("العودة إلى القائمة", "Index", new { area = "" }, new { @class = "btn btn-secondary btn-lg px-5 ml-3" })
+                        </div>
+                    }
+                </div>
+            </div>
         </div>
     </div>
 </div>

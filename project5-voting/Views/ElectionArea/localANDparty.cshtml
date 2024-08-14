@@ -8,50 +8,67 @@
 <head>
     <title>@ViewBag.Title</title>
     <style>
+
+
+
         .card-container {
+            background-color: #f3fff370;
             display: flex;
-            justify-content: space-around;
-            margin-top: 20px;
+            justify-content: center;
+            gap: 131px;
+            margin-top: 24px;
         }
 
         .card {
             width: 300px;
             border: 1px solid #ddd;
-            border-radius: 5px;
+            border-radius: 10px;
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
             text-align: center;
             margin: 10px;
+            transition: transform 0.2s, box-shadow 0.2s;
         }
+
+            .card:hover {
+                transform: scale(1.05);
+                box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            }
 
             .card img {
                 width: 100%;
                 height: auto;
                 border-bottom: 1px solid #ddd;
+                border-radius: 10px; /* جعل الحواف دائرية أكثر */
             }
 
             .card h5 {
-                margin: 10px 0;
+                margin: 31px 0;
             }
 
         .btn-primary {
-            background-color: #007bff;
-            border-color: #007bff;
+            font-size: 20px;
+            background-color: #28a745; /* Green background color */
+            border-color: #28a745; /* Green border color */
             color: white;
             padding: 10px 20px;
             border-radius: 5px;
             text-decoration: none;
+            transition: background-color 0.2s, border-color 0.2s;
         }
 
             .btn-primary:hover {
-                background-color: #0056b3;
-                border-color: #004085;
+                background-color: #218838; /* Darker green on hover */
+                border-color: #1e7e34;
             }
+
+        h5, .h5 {
+            font-size: 2.25rem;
+        }
     </style>
 </head>
 
-<h1 style="text-align:center">القوائم المحلية و الحزبية  </h1>
-
 <body>
+    <h1 style="text-align:center">القوائم المحلية و الحزبية  </h1>
 
 
     <hr />

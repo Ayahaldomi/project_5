@@ -107,7 +107,19 @@
                         }
 
 
-                        <a href="@Url.Action("UserDebate", "Home")" class="nav-item nav-link">مناظرات</a>
+
+                        <ul class="navbar-nav">
+                            <!-- Dropdown Menu -->
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    مناظرات
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" href="@Url.Action("UserDebate", "Debate")">المناظرات</a>
+                                    <a class="dropdown-item" href="@Url.Action("DebateForm", "Debate")">لطلب مناظرة</a>
+                                </div>
+                            </li>
+                        </ul>
                         <a href="@Url.Action("Contact", "Contacts")" class="nav-item nav-link">اتصل بنا</a>
 
 
@@ -184,11 +196,14 @@
     <script src="~/lib/counterup/counterup.min.js"></script>
     <script src="~/lib/parallax/parallax.min.js"></script>
     <script src="~/lib/lightbox/js/lightbox.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 
     <script src="~/js/main.js"></script>
 </body>
 </html>
+
+
 
 @Scripts.Render("~/bundles/jquery")
 @Scripts.Render("~/bundles/bootstrap")

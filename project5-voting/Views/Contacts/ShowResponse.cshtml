@@ -10,49 +10,49 @@
 
 
 <main>
-    <div class="card" dir="rtl" style="width: 700px; margin: 20px auto;">
+    <div class="card" dir="rtl" style="width: 700px; margin:100px auto">
         <div class="card-body">
-            <h5 class="card-title text-center mb-4">عرض الرد</h5>
+            <h2 class="card-title text-center mb-4">عرض الرد</h2>
 
             <div class="row g-3">
                 <div class="col-md-6">
-                    <label class="form-label">اسم المستخدم</label>
+                    <p class="form-label" style="text-align: right; margin-bottom: 10px !important;">اسم المستخدم</p>
                     @Html.EditorFor(model => model.name, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
                 </div>
                 <div class="col-md-6">
-                    <label class="form-label">بريد المستخدم الإلكتروني</label>
+                    <p class="form-label" style="text-align: right; margin-bottom: 10px !important;">بريد المستخدم الإلكتروني</p>
                     @Html.EditorFor(model => model.email, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
                 </div>
             </div>
 
             <div class="row g-3 mt-3">
                 <div class="col-md-6">
-                    <label class="form-label">تاريخ الرد</label>
+                    <p class="form-label" style="text-align: right; margin-bottom: 10px !important;">تاريخ الرد</p>
                     @Html.EditorFor(model => model.rsponseDate, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
                 </div>
                 <div class="col-md-6">
-                    <label class="form-label">وقت الرد</label>
+                    <p class="form-label" style="text-align: right; margin-bottom: 10px !important;">وقت الرد</p>
                     @Html.EditorFor(model => model.rsponseTime, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
                 </div>
             </div>
 
             <div class="row g-3 mt-3">
                 <div class="col-12">
-                    <label class="form-label">اسم المسؤول</label>
+                    <p class="form-label" style="text-align: right; margin-bottom: 10px !important;">اسم المسؤول</p>
                     @Html.EditorFor(model => model.adminName, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
                 </div>
             </div>
 
             <div class="row g-3 mt-3">
                 <div class="col-12">
-                    <label class="form-label">الموضوع</label>
+                    <p class="form-label" style="text-align: right; margin-bottom: 10px !important;">الموضوع</p>
                     @Html.EditorFor(model => model.subject, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
                 </div>
             </div>
 
             <div class="row g-3 mt-3">
                 <div class="col-12">
-                    <label class="form-label">نص الرد</label>
+                    <p class="form-label" style="text-align: right; margin-bottom: 10px !important;">نص الرد</p>
                     @Html.TextAreaFor(model => model.adminResponse, new { @class = "form-control", @id = "floatingTextarea", @style = "height: 100px;", @readonly = "readonly" })
                 </div>
             </div>

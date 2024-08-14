@@ -5,91 +5,130 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="container mt-5">
-    <div class="row justify-content-center">
-        <div class="col-lg-8 col-md-10">
+<div class="text-right p-5" style="direction: rtl; font-size: 24px; background-color: #9e404a; color: white">
+    <h1 class="text-center" style="color:white">تقدم لطلب مناظرة</h1>
+    <p>للتقدم بطلب مناظرة في موقعنا، هناك عدة شروط أهمها:</p>
+    <ul>
+        <li>يجب على المرشح التأكد من مطابقة اسمه مع الاسم المسجل لدى هيئة الانتخابات العامة.</li>
+        <li>يجب أن يتطابق الرقم الوطني الخاص به مع الرقم الموجود لدى الهيئة.</li>
+        <li>يجب أن تتطابق القائمة الانتخابية التي يمثلها المرشح مع القائمة المعتمدة لدى هيئة الانتخابات العامة.</li>
+        <li>يجب أن يكون جميع المرشحين المتقدمين للمناظرة من نفس الدائرة الانتخابية.</li>
+        <li>دفع رسوم تقديم الطلب البالغة 200 دينار أردني (غير مستردة في حال رفض الطلب).</li>
+    </ul>
+</div>
+
+<div style="margin:50px">
+    <div class="row" style="margin: 50px 50px">
+        <!-- Image Column -->
+        <div class="col-lg-4 col-md-5 mb-4">
+            <img src="https://media.istockphoto.com/id/676448830/photo/pulpit-and-two-microphones-with-a-national-flag-on-background-jordan.jpg?s=2048x2048&w=is&k=20&c=bT9AuxdUTnjl2U8yQ0y-aLj7vr2qREU3uLJhdf4ye_8=" alt="Alternate Text" height="580" width="600" />
+        </div>
+
+        <!-- Form Column -->
+        <div class="col-lg-6 col-md-4 " style="margin-left: 205px">
             <div class="card">
                 <div class="card-body">
-                    <h2 class="text-center">نموذج المناظرة</h2>
-
+                    <h2 class="text-center">نموذج طلب مناظرة</h2>
+                    <br /><br />
                     @using (Html.BeginForm())
                     {
                         @Html.AntiForgeryToken()
 
                         <div class="form-horizontal" style="direction: rtl;">
-                            <h4>بيانات المناظرة</h4>
-                            <hr />
-
                             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
-                        <div class="form-group row my-3">
-                            @Html.Label("الدائرة الانتخابية", htmlAttributes: new { @class = "control-label col-md-3" })
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <h5 class="text-center">معلومات المرشح الأول</h5>
+                                    <div class="row">
+                                        <div>
+                                            @Html.Label("اسم المرشح الاول ", htmlAttributes: new { @class = "control-label " })
+                                            @Html.EditorFor(model => model.firstCandidateName, new { htmlAttributes = new { @class = "form-control" } })
+                                            @Html.ValidationMessageFor(model => model.firstCandidateName, "", new { @class = "text-danger" })
+                                        </div>
 
-                            <div class="col-md-9">
-                                @Html.EditorFor(model => model.electionArea, new { htmlAttributes = new { @class = "form-control" } })
-                                @Html.ValidationMessageFor(model => model.electionArea, "", new { @class = "text-danger" })
+                                        <div>
+                                            @Html.Label("الرقم الوطني للمرشح", htmlAttributes: new { @class = "control-label" })
+                                            @Html.EditorFor(model => model.firstCandidateID, new { htmlAttributes = new { @class = "form-control" } })
+                                            @Html.ValidationMessageFor(model => model.firstCandidateID, "", new { @class = "text-danger" })
+                                        </div>
+
+                                        <div>
+                                            @Html.Label("اسم القائمة ", htmlAttributes: new { @class = "control-label " })
+                                            @Html.EditorFor(model => model.firstCandidateList, new { htmlAttributes = new { @class = "form-control" } })
+                                            @Html.ValidationMessageFor(model => model.firstCandidateList, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6" style="border-right:1px black solid">
+                                    <h5 class="text-center">معلومات المرشح الثاني</h5>
+                                    <div class="row">
+                                        <div>
+                                            @Html.Label("اسم المرشح الثاني", htmlAttributes: new { @class = "control-label" })
+                                            @Html.EditorFor(model => model.secondCandidateName, new { htmlAttributes = new { @class = "form-control" } })
+                                            @Html.ValidationMessageFor(model => model.secondCandidateName, "", new { @class = "text-danger" })
+                                        </div>
+
+                                        <div>
+                                            @Html.Label("الرقم الوطني للمرشح", htmlAttributes: new { @class = "control-label" })
+                                            @Html.EditorFor(model => model.secondCandidateID, new { htmlAttributes = new { @class = "form-control" } })
+                                            @Html.ValidationMessageFor(model => model.secondCandidateID, "", new { @class = "text-danger" })
+                                        </div>
+
+                                        <div>
+                                            @Html.Label("اسم القائمة ", htmlAttributes: new { @class = "control-label" })
+                                            @Html.EditorFor(model => model.secondCandidateList, new { htmlAttributes = new { @class = "form-control" } })
+                                            @Html.ValidationMessageFor(model => model.secondCandidateList, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
+
+                            @{
+                                var electionAreas = new List<SelectListItem>
+                                                                                {
+                                    new SelectListItem { Text = "اربد الاولى", Value = "اربد الاولى" },
+                                    new SelectListItem { Text = "اربد الثانية", Value = "اربد الثانية" },
+                                    new SelectListItem { Text = "عمان الاولى", Value = "عمان الاولى" },
+                                    new SelectListItem { Text = "عمان الثانية", Value = "عمان الثانية" },
+                                    new SelectListItem { Text = "عمان الثالثة", Value = "عمان الثالثة" },
+                                    new SelectListItem { Text = "الزرقاء", Value = "الزرقاء" },
+                                    new SelectListItem { Text = "البلقاء", Value = "البلقاء" },
+                                    new SelectListItem { Text = "الكرك", Value = "الكرك" },
+                                    new SelectListItem { Text = "عجلون", Value = "عجلون" },
+                                    new SelectListItem { Text = "مأدبا", Value = "مأدبا" },
+                                    new SelectListItem { Text = "معان", Value = "معان" },
+                                    new SelectListItem { Text = "جرش", Value = "جرش" },
+                                    new SelectListItem { Text = "المفرق", Value = "المفرق" },
+                                    new SelectListItem { Text = "الطفيلة", Value = "الطفيلة" },
+                                    new SelectListItem { Text = "العقبة", Value = "العقبة" },
+                                    new SelectListItem { Text = "بدو الشمال", Value = "بدو الشمال" },
+                                    new SelectListItem { Text = "بدو الوسط", Value = "بدو الوسط" },
+                                    new SelectListItem { Text = "بدو الجنوب", Value = "بدو الجنوب" },
+                                };
+                            }
 
                             <div class="form-group row my-3">
-                                @Html.Label("اسم المرشح الاول ", htmlAttributes: new { @class = "control-label col-md-3" })
-                                <div class="col-md-9">
-                                    @Html.EditorFor(model => model.firstCandidateName, new { htmlAttributes = new { @class = "form-control" } })
-                                    @Html.ValidationMessageFor(model => model.firstCandidateName, "", new { @class = "text-danger" })
+                                @Html.Label("الدائرة الانتخابية", htmlAttributes: new { @class = "control-label col-md-2" })
+
+                                <div class="col-md-10">
+                                    @Html.DropDownListFor(model => model.electionArea, electionAreas, "▼ اختر الدائرة الانتخابية", new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.electionArea, "", new { @class = "text-danger" })
                                 </div>
                             </div>
 
                             <div class="form-group row my-3">
-                                @Html.Label("الرقم الوطني للمرشح", htmlAttributes: new { @class = "control-label col-md-3" })
-                                <div class="col-md-9">
-                                    @Html.EditorFor(model => model.firstCandidateID, new { htmlAttributes = new { @class = "form-control" } })
-                                    @Html.ValidationMessageFor(model => model.firstCandidateID, "", new { @class = "text-danger" })
-                                </div>
-                            </div>
-
-                            <div class="form-group row my-3">
-                                @Html.Label("اسم القائمة ", htmlAttributes: new { @class = "control-label col-md-3" })
-                                <div class="col-md-9">
-                                    @Html.EditorFor(model => model.firstCandidateList, new { htmlAttributes = new { @class = "form-control" } })
-                                    @Html.ValidationMessageFor(model => model.firstCandidateList, "", new { @class = "text-danger" })
-                                </div>
-                            </div>
-
-                            <div class="form-group row my-3">
-                                @Html.Label("اسم المرشح الثاني", htmlAttributes: new { @class = "control-label col-md-3" })
-                                <div class="col-md-9">
-                                    @Html.EditorFor(model => model.secondCandidateName, new { htmlAttributes = new { @class = "form-control" } })
-                                    @Html.ValidationMessageFor(model => model.secondCandidateName, "", new { @class = "text-danger" })
-                                </div>
-                            </div>
-
-                            <div class="form-group row my-3">
-                                @Html.Label("الرقم الوطني للمرشح", htmlAttributes: new { @class = "control-label col-md-3" })
-                                <div class="col-md-9">
-                                    @Html.EditorFor(model => model.secondCandidateID, new { htmlAttributes = new { @class = "form-control" } })
-                                    @Html.ValidationMessageFor(model => model.secondCandidateID, "", new { @class = "text-danger" })
-                                </div>
-                            </div>
-
-                            <div class="form-group row my-3">
-                                @Html.Label("اسم القائمة ", htmlAttributes: new { @class = "control-label col-md-3" })
-                                <div class="col-md-9">
-                                    @Html.EditorFor(model => model.secondCandidateList, new { htmlAttributes = new { @class = "form-control" } })
-                                    @Html.ValidationMessageFor(model => model.secondCandidateList, "", new { @class = "text-danger" })
-                                </div>
-                            </div>
-
-                            <div class="form-group row my-3">
-                                @Html.Label("موضوع المناظرة", htmlAttributes: new { @class = "control-label col-md-3" })
-                                <div class="col-md-9">
+                                @Html.Label("موضوع المناظرة", htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
                                     @Html.EditorFor(model => model.debateSubject, new { htmlAttributes = new { @class = "form-control" } })
                                     @Html.ValidationMessageFor(model => model.debateSubject, "", new { @class = "text-danger" })
                                 </div>
                             </div>
 
                             <div class="form-group row my-3">
-                                @Html.Label("وصف", htmlAttributes: new { @class = "control-label col-md-3" })
-                                <div class="col-md-9">
+                                @Html.Label("وصف", htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
                                     @Html.EditorFor(model => model.debateMessage, new { htmlAttributes = new { @class = "form-control" } })
                                     @Html.ValidationMessageFor(model => model.debateMessage, "", new { @class = "text-danger" })
                                 </div>
@@ -107,3 +146,4 @@
         </div>
     </div>
 </div>
+

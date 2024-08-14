@@ -320,31 +320,35 @@ namespace project5_voting.Controllers
             var nationalId = logedInUser; // Extract NationalID from cookie value
             var logged_user = db.USERS.FirstOrDefault(u => u.nationalID == nationalId);
 
-            var selectedListDetails = db.localLists.FirstOrDefault(l => l.listName == selectedList);
-            selectedListDetails.counter = selectedListDetails.counter + 1;
-            db.Entry(selectedListDetails).State = EntityState.Modified;
-            db.SaveChanges();
-
-            if (selectedListDetails != null)
+            if (selectedList != null)
             {
-                // Increment the counter for each selected candidate
-                foreach (var candidateId in selectedCandidates)
+                var selectedListDetails = db.localLists.FirstOrDefault(l => l.listName == selectedList);
+                selectedListDetails.counter = selectedListDetails.counter + 1;
+                db.Entry(selectedListDetails).State = EntityState.Modified;
+                db.SaveChanges();
+
+                if (selectedCandidates != null)
                 {
-                    var candidate = db.localCandidates
-                        .FirstOrDefault(c => c.id == candidateId);
+
+                    // Increment the counter for each selected candidate
+                    foreach (var candidateId in selectedCandidates)
+                    {
+                        var candidate = db.localCandidates
+                            .FirstOrDefault(c => c.id == candidateId);
 
 
 
-                    candidate.counter = candidate.counter + 1;
-                    db.Entry(candidate).State = EntityState.Modified;
-                    db.SaveChanges();
+                        candidate.counter = candidate.counter + 1;
+                        db.Entry(candidate).State = EntityState.Modified;
+                        db.SaveChanges();
+
+                    }
+                    
 
                 }
                 logged_user.localVote = 1;
                 db.Entry(logged_user).State = EntityState.Modified;
                 db.SaveChanges();
-
-
             }
             else
             {

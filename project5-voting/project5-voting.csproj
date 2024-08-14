@@ -537,6 +537,8 @@
     <Content Include="Views\Result\staticResults.cshtml" />
     <Content Include="Views\Result\partyResults.cshtml" />
     <Content Include="Views\Home\UserDebate.cshtml" />
+    <Content Include="Views\party\DeleteAdmin.cshtml" />
+    <Content Include="Views\party\DeletePartyCandidates.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

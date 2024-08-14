@@ -50,7 +50,7 @@ namespace project5_voting.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> addAdvertisement([Bind(Include = "id,nationalId,data,listId,partyName,electionArea,description,status")] Ad ad, HttpPostedFileBase upload)
+        public async Task<ActionResult> addAdvertisement([Bind(Include = "name,nationalId,campaignSlagan,listName,partyName,areaName,description,image,status")] Ad ad, HttpPostedFileBase upload)
         {
             if (ModelState.IsValid)
             {

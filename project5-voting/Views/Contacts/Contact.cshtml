@@ -4,64 +4,50 @@
     ViewBag.Title = "اتصل بنا";
 }
 
-<section class="ftco-section mt-5" dir="rtl">
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-12">
-                <div class="row">
-                    <!-- Image Column -->
-                    <div class="col-md-6 d-flex align-items-center">
-                        <img src="~/images/jordan.jpeg" alt="Contact Image" class="img-fluid rounded" style="max-width: 100%;">
-                    </div>
+<div class="container-fluid px-5 my-5">
+    <div class="row justify-content-center">
+        <div class="col-xl-10">
+            <div class="card border-0 rounded-3 shadow-lg overflow-hidden">
+                <div class="card-body p-0">
+                    <div class="row g-0">
+                        <div class="col-sm-6 d-none d-sm-block bg-image">
+                            <img src="~/images/jordan.jpeg" height="535" width="600" />
+                        </div>
 
-                    <!-- Form Column -->
-                    <div class="col-md-6">
-                        <div class="bg-white border rounded shadow-sm p-4">
-                            <h4 class="text-center mb-4">نموذج الاتصال</h4>
-                            @using (Html.BeginForm())
+                        <div class="col-sm-6 p-4">
+                            <div class="text-center">
+                                <div class="h3 fw-light">تواصل معنا</div>
+                            </div>
+
+                            @using (Html.BeginForm("Contact", "Contacts", FormMethod.Post, new { @onsubmit = "displayAlert(this); return false;" }))
                             {
-                                @Html.AntiForgeryToken()
-
-                                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-
-                                <div class="form-group row">
-                                    <label class="col-md-3">الاسم </label>
-                                    <div class="col-md-9">
-                                        @Html.EditorFor(model => model.name, new { htmlAttributes = new { @class = "form-control", placeholder = "أدخل اسمك" } })
-                                        @Html.ValidationMessageFor(model => model.name, "", new { @class = "text-danger" })
-                                    </div>
+                                <!-- Name Input -->
+                                <div class="form-floating mb-3">
+                                    @Html.EditorFor(model => model.name, new { htmlAttributes = new { @class = "form-control", @placeholder = "أدخل اسمك", @required = "required" } })
+                                    <label for="name">الاسم</label>
                                 </div>
 
-                                <div class="form-group row">
-                                    <label class="col-md-3">الايميل </label>
-                                    <div class="col-md-9">
-                                        @Html.EditorFor(model => model.email, new { htmlAttributes = new { @class = "form-control", placeholder = "أدخل بريدك الإلكتروني" } })
-                                        @Html.ValidationMessageFor(model => model.email, "", new { @class = "text-danger" })
-                                    </div>
+                                <!-- Email Input -->
+                                <div class="form-floating mb-3">
+                                    @Html.TextBoxFor(model => model.email, new { @class = "form-control", @type = "email", @placeholder = "البريد الالكتروني", @required = "required" })
+                                    <label for="email">البريد الالكتروني</label>
                                 </div>
 
-                                <div class="form-group row">
-                                    <label class="col-md-3">الموضوع </label>
-                                    <div class="col-md-9">
-                                        @Html.EditorFor(model => model.subject, new { htmlAttributes = new { @class = "form-control", placeholder = "أدخل موضوع الرسالة" } })
-                                        @Html.ValidationMessageFor(model => model.subject, "", new { @class = "text-danger" })
-                                    </div>
+                                <!-- Subject Input -->
+                                <div class="form-floating mb-3">
+                                    @Html.EditorFor(model => model.subject, new { htmlAttributes = new { @class = "form-control", @placeholder = "الموضوع", @required = "required" } })
+                                    <label for="subject">الموضوع</label>
                                 </div>
 
-                                <div class="form-group row">
-                                    <label class="col-md-3">الرساله </label>
-                                    <div class="col-md-9">
-                                        @Html.TextBoxFor(model => model.message, new { @class = "form-control", placeholder = "أدخل رسالتك" })
-                                        @Html.ValidationMessageFor(model => model.message, "", new { @class = "text-danger" })
-                                    </div>
+                                <!-- Message Input -->
+                                <div class="form-floating mb-3">
+                                    @Html.TextAreaFor(model => model.message, new { @class = "form-control", @type = "text", @placeholder = "رسالتك", @style = "height: 10rem;", @required = "required" })
+                                    <label for="message">رسالتك</label>
                                 </div>
 
-                                <br />
-
-                                <div class="form-group row">
-                                    <div class="col-md-12 text-center">
-                                        <input type="submit" value="إرسال" class="btn btn-primary" style="width:300px" />
-                                    </div>
+                                <!-- Submit button -->
+                                <div class="d-grid">
+                                    <button class="btn btn-primary btn-lg disabled" id="submitButton" type="submit">ارسال</button>
                                 </div>
                             }
                         </div>
@@ -70,8 +56,53 @@
             </div>
         </div>
     </div>
-</section>
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+    <script>
+        $(document).ready(function () {
+            // Check if all required fields are filled
+            $('input, textarea').on('input', function () {
+                let allFilled = true;
+
+                $('input[required], textarea[required]').each(function () {
+                    if ($(this).val() === '') {
+                        allFilled = false;
+                    }
+                });
+
+                // Enable or disable the submit button based on the fields' values
+                if (allFilled) {
+                    $('#submitButton').removeClass('disabled').prop('disabled', false);
+                } else {
+                    $('#submitButton').addClass('disabled').prop('disabled', true);
+                }
+            });
+
+            // Initial check in case the form is pre-filled
+            $('input[required], textarea[required]').trigger('input');
+        });
+    </script>
 }
+
+
+
+<script type="text/javascript">
+    function displayAlert(form) {
+        Swal.fire({
+            title: "شكرا لتواصلك معنا",
+            text: "سوف يتم التواصل معكم باقرب وقت ممكن",
+            showConfirmButton: false,
+            timer: 1800,
+        });
+
+        setTimeout(function () {
+            form.submit();
+        }, 2000);
+    }
+</script>

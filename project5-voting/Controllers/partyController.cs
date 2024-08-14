@@ -11,6 +11,7 @@ using MailKit.Net.Smtp;
 using Microsoft.Ajax.Utilities;
 using MimeKit;
 using System.Net;
+using System.IO;
 
 namespace project5_voting.Controllers
 {
@@ -25,25 +26,51 @@ namespace project5_voting.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Createuser([Bind(Include = "id,partyName,counter")] PartyList partyList)
+
+        public ActionResult Createuser([Bind(Include = "id,partyName,counter")] PartyList partyList, HttpPostedFileBase PartyImage)
         {
             if (ModelState.IsValid)
             {
                 try
                 {
+                    // Check if a party with the same name already exists
                     var existingParty = db.PartyLists.FirstOrDefault(p => p.partyName == partyList.partyName);
+                    if (existingParty != null)
+                    {
+                        ModelState.AddModelError("partyName", "A party with the same name already exists.");
+                        return View(partyList);
+                    }
 
+                    // Handle file upload
+                    if (PartyImage != null && PartyImage.ContentLength > 0)
+                    {
+                        // Generate a unique filename
+                        var fileName = Path.GetFileName(PartyImage.FileName);
+                        var path = Path.Combine(Server.MapPath("~/Image1/"), fileName);
+
+                        // Save the file
+                        PartyImage.SaveAs(path);
+
+                        // Set the image path in the model
+                        partyList.partyImage = fileName;
+                    }
+
+                    // Add new party to the database
                     db.PartyLists.Add(partyList);
                     db.SaveChanges();
+
+                    // Store party information in session
                     Session["PartyId"] = partyList.id;
                     Session["PartyName"] = partyList.partyName;
                     Session["Counter"] = 0;
+                    Session["partyImage"] = partyList.partyImage;
 
-                    return RedirectToAction("Create"); // تأكد من صحة اسم الـ Controller والإجراء
+                    // Redirect to the appropriate action
+                    return RedirectToAction("index", "party");
                 }
                 catch (DbEntityValidationException ex)
                 {
-                    // Print the details to the error log or console
+                    // Handle validation errors
                     foreach (var validationErrors in ex.EntityValidationErrors)
                     {
                         foreach (var validationError in validationErrors.ValidationErrors)
@@ -52,10 +79,14 @@ namespace project5_voting.Controllers
                         }
                     }
                 }
+                catch (Exception ex)
+                {
+                    // Log the exception or handle it as needed
+                    ModelState.AddModelError("", "An unexpected error occurred. Please try again.");
+                }
             }
 
             return View(partyList);
-
         }
 
         //////////////////////////////// ADD Candidite///////////////////////////////////////
@@ -180,6 +211,7 @@ namespace project5_voting.Controllers
             if (string.IsNullOrEmpty(partyName))
             {
                 partyName = Session["PartyName"] as string;
+
             }
             else
             {
@@ -233,6 +265,7 @@ namespace project5_voting.Controllers
             var id = Session["PartyId"] as string;
             var partyName = Session["PartyName"] as string;
             var counter = Session["Counter"] as int?;
+            var partyImage = Session["partyImage"];
 
             if (string.IsNullOrEmpty(partyName) || counter == null)
             {
@@ -244,14 +277,14 @@ namespace project5_voting.Controllers
             if (partyList == null)
             {
                 TempData["ErrorMessage"] = "Party not found.";
-                return RedirectToAction("Createuser", "partyLists");
+                return RedirectToAction("Createuser", "party");
             }
 
             int parsedPartyId;
             if (partyList.id > int.MaxValue)
             {
                 TempData["ErrorMessage"] = "Party ID is too large.";
-                return RedirectToAction("Createuser", "partyLists");
+                return RedirectToAction("Createuser", "party");
             }
             else
             {
@@ -272,7 +305,7 @@ namespace project5_voting.Controllers
             ViewBag.PartyName = partyName;
             ViewBag.Counter = counter;
             ViewBag.Id = id;
-
+            ViewBag.partyImage = partyImage;
             return View(partyCandidates);
         }
 
@@ -331,160 +364,128 @@ namespace project5_voting.Controllers
             return paymentNumber;
         }
 
+
         // GET: partyCandidates/Create
         public ActionResult Create()
         {
-            ViewBag.partyId = new SelectList(db.PartyLists, "id", "partyName");
+            //ViewBag.partyId = new SelectList(db.PartyLists, "id", "partyName");
+            ViewBag.partyId = Session["PartyId"].ToString();
             return View();
         }
 
         // POST: partyCandidates/Create
+
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "id,partyId,email,name,phone,nationalId,gender,birthDay,typeOfChair,religion,status,electoralDistrict")] PartyCandidate partyCandidate)
+        public ActionResult Create([Bind(Include = "id,partyId,nastionalID,name,email,typeOfChair,religion,gender,birthday,candidateImage,status,electoralDistrict")] PartyCandidate partyCandidate, HttpPostedFileBase candidateImage)
         {
-            var partyName = Session["partyName"];
-
-            if (partyName == null)
-            {
-                ViewBag.PartyName = "Party name not found in session";
-                return View(partyCandidate);
-            }
-            else
-            {
-                ViewBag.PartyName = partyName;
-            }
-
-            var x = db.PartyLists
-                       .Where(p => p.partyName == partyName.ToString())
-                       .FirstOrDefault();
-
-            if (x == null)
-            {
-                ModelState.AddModelError("", "Party not found.");
-                ViewBag.partyId = new SelectList(db.PartyLists, "id", "partyName");
-                return View(partyCandidate);
-            }
-
-            partyCandidate.partyListID = x.id;
-            Session["PartyId"] = x.id;
-
-            // Check if the party already has 41 candidates
-            var candidateCount = db.PartyCandidates.Count(p => p.partyListID == x.id);
-            if (candidateCount >= 41)
-            {
-                ModelState.AddModelError("", "The party already has 41 candidates. No more candidates can be added.");
-                ViewBag.partyId = new SelectList(db.PartyLists, "id", "partyName", partyCandidate.partyListID);
-                return View(partyCandidate);
-            }
-
-            // Check if the candidate is older than 25 years old
-            if (partyCandidate.birthday.HasValue && (DateTime.Now.Year - partyCandidate.birthday.Value.Year) < 25)
-            {
-                ModelState.AddModelError("birthDay", "The candidate must be older than 25 years.");
-                ViewBag.partyId = new SelectList(db.PartyLists, "id", "partyName", partyCandidate.partyListID);
-                return View(partyCandidate);
-            }
-
-            // Check phone number validity
-            //if (!IsValidPhoneNumber(partyCandidate.ph))
+            //if (candidateImageFile != null && candidateImageFile.ContentLength > 0)
             //{
-            //    ModelState.AddModelError("phone", "Phone number must be 10 digits and start with 077, 078, or 079.");
-            //    ViewBag.partyId = new SelectList(db.PartyLists, "id", "partyName", partyCandidate.partyListID);
-            //    return View(partyCandidate);
+            //    try
+            //    {
+            //        // توليد اسم فريد للصورة باستخدام GUID
+            //        string uniqueFileName = Guid.NewGuid().ToString() + "_" + Path.GetFileName(candidateImageFile.FileName);
+            //        string path = Path.Combine(Server.MapPath("~/Image1/Candidates/"), uniqueFileName);
+
+            //        // حفظ الصورة في المسار المحدد
+            //        candidateImageFile.SaveAs(path);
+
+            //        // تخزين المسار النسبي للصورة في قاعدة البيانات
+            //        partyCandidate.candidateImage = "~/Image1/Candidates/" + uniqueFileName;
+            //    }
+            //    catch (Exception ex)
+            //    {
+            //        ModelState.AddModelError("", "حدث خطأ أثناء رفع الصورة. حاول مرة أخرى.");
+            //    }
             //}
 
-            // Check national ID validity
-            if (!IsValidNationalId(partyCandidate.nastionalID))
+            //if (ModelState.IsValid)
+            //{
+            //    partyCandidate.partyListID =Convert.ToInt32(Session["PartyId"].ToString());
+
+            //    db.PartyCandidates.Add(partyCandidate);
+            //    db.SaveChanges();
+            //    return RedirectToAction("Index");
+            //}
+            if (candidateImage != null && candidateImage.ContentLength > 0)
             {
-                ModelState.AddModelError("nationalId", "National ID must be 10 digits.");
-                ViewBag.partyId = new SelectList(db.PartyLists, "id", "partyName", partyCandidate.partyListID);
-                return View(partyCandidate);
+                // Generate a unique filename
+                var fileName = Path.GetFileName(candidateImage.FileName);
+                var path = Path.Combine(Server.MapPath("~/Image1/"), fileName);
+
+                // Save the file
+                candidateImage.SaveAs(path);
+
+                // Set the image path in the model
+                partyCandidate.candidateImage = fileName;
+            }
+            partyCandidate.partyListID = Convert.ToInt32(Session["PartyId"].ToString());
+
+            // Add new party to the database
+            db.PartyCandidates.Add(partyCandidate);
+            db.SaveChanges();
+
+            return RedirectToAction("Index");
+        }
+
+
+        // Helper function to validate the national ID
+        private bool IsValidNationalId(string nationalId)
+        {
+            return nationalId.Length == 10 && nationalId.All(char.IsDigit);
+        }
+
+
+
+
+
+
+
+
+
+
+        //private bool IsValidPhoneNumber(string phoneNumber)
+        //{
+        //    // Validate phone number based on your criteria
+        //    return !string.IsNullOrEmpty(phoneNumber) &&
+        //           phoneNumber.Length == 10 &&
+        //           (phoneNumber.StartsWith("077") || phoneNumber.StartsWith("078") || phoneNumber.StartsWith("079"));
+        //}
+
+
+        public ActionResult DeletePartyCandidates(long? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            // Check email validity for Gmail
-            if (!partyCandidate.email.EndsWith("@gmail.com", StringComparison.OrdinalIgnoreCase))
+            var partyCandidate = db.PartyCandidates.Find(id);
+
+            if (partyCandidate == null)
             {
-                ModelState.AddModelError("email", "Email must be a Gmail address.");
-                ViewBag.partyId = new SelectList(db.PartyLists, "id", "partyName", partyCandidate.partyListID);
-                return View(partyCandidate);
+                return HttpNotFound();
             }
 
-            if (ModelState.IsValid)
-            {
-                var candidates = db.PartyCandidates
-                                    .Where(p => p.partyListID == partyCandidate.partyListID)
-                                    .OrderBy(p => p.id)
-                                    .ToList();
-
-                if (db.PartyCandidates.Any(p => p.email == partyCandidate.email || p.nastionalID == partyCandidate.nastionalID))
-                {
-                    ModelState.AddModelError("", "A candidate with the same email or national ID already exists.");
-                    ViewBag.partyId = new SelectList(db.PartyLists, "id", "partyName", partyCandidate.partyListID);
-                    return View(partyCandidate);
-                }
-
-                var femaleCount = candidates.Take(3).Count(c => c.gender == "female");
-                var youngCandidatesCount = candidates.Take(5)
-                                                      .Count(c => c.birthday.HasValue && (DateTime.Now.Year - c.birthday.Value.Year) < 35);
-
-                if (candidates.Count < 3 && femaleCount == 0)
-                {
-                    partyCandidate.gender = "female";
-                }
-
-                if (youngCandidatesCount == 0)
-                {
-                    var today = DateTime.Today;
-                    var birthDate = today.AddYears(-34);
-                    partyCandidate.birthday = birthDate;
-                }
-
-                if (candidates.Count == 38 && partyCandidate.religion != "مسيحي")
-                {
-                    ModelState.AddModelError("religion", "The 39th candidate must be Christian.");
-                    ViewBag.partyId = new SelectList(db.PartyLists, "id", "partyName", partyCandidate.partyListID);
-                    return View(partyCandidate);
-                }
-
-                if (candidates.Count == 39 && partyCandidate.religion != "مسيحي")
-                {
-                    ModelState.AddModelError("religion", "The 40th candidate must be Christian.");
-                    ViewBag.partyId = new SelectList(db.PartyLists, "id", "partyName", partyCandidate.partyListID);
-                    return View(partyCandidate);
-                }
-
-                if (candidates.Count == 40 && partyCandidate.typeOfChair != "Chechen" && partyCandidate.typeOfChair != "Circassian")
-                {
-                    ModelState.AddModelError("typeOfChair", "The 41st candidate must be either Chechen or Circassian.");
-                    ViewBag.partyId = new SelectList(db.PartyLists, "id", "partyName", partyCandidate.partyListID);
-                    return View(partyCandidate);
-                }
-
-                db.PartyCandidates.Add(partyCandidate);
-                db.SaveChanges();
-
-                return RedirectToAction("Index");
-            }
-
-            ViewBag.partyId = new SelectList(db.PartyLists, "id", "partyName", partyCandidate.partyListID);
             return View(partyCandidate);
         }
 
-        private bool IsValidPhoneNumber(string phoneNumber)
+        // POST: partyCandidates/Delete/5
+        [HttpPost, ActionName("DeletePartyCandidates")]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteConfirmedPartyCandidates(long id)
         {
-            // Validate phone number based on your criteria
-            return !string.IsNullOrEmpty(phoneNumber) &&
-                   phoneNumber.Length == 10 &&
-                   (phoneNumber.StartsWith("077") || phoneNumber.StartsWith("078") || phoneNumber.StartsWith("079"));
+            var partyCandidate = db.PartyCandidates.Find(id);
+
+            if (partyCandidate == null)
+            {
+                return HttpNotFound();
+            }
+
+            db.PartyCandidates.Remove(partyCandidate);
+            db.SaveChanges();
+            return RedirectToAction("AdminView");
         }
-
-
-        private bool IsValidNationalId(string nationalId)
-        {
-            return !string.IsNullOrEmpty(nationalId) && nationalId.Length == 10 && nationalId.All(char.IsDigit);
-        }
-
 
 
 
@@ -525,9 +526,42 @@ namespace project5_voting.Controllers
         }
 
 
+        public ActionResult DeleteAdmin(long? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
 
+            var PartyLists = db.PartyLists.Find(id);
+
+            if (PartyLists == null)
+            {
+                return HttpNotFound();
+            }
+
+            return View(PartyLists);
+        }
+
+        // POST: partyCandidates/Delete/5
+        [HttpPost, ActionName("DeleteAdmin")]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteConfirmedAdmin(long id)
+        {
+            var PartyLists = db.PartyLists.Find(id);
+
+            if (PartyLists == null)
+            {
+                return HttpNotFound();
+            }
+
+            db.PartyLists.Remove(PartyLists);
+            db.SaveChanges();
+            return RedirectToAction("AdminView");
+        }
         public ActionResult IndexAdmin()
         {
+            // استرجاع بيانات الحزب من قاعدة البيانات
             var partyLists = db.PartyLists.ToList();
             return View(partyLists);
         }

@@ -7,83 +7,75 @@
 <div class="container mt-5">
     <div class="row justify-content-center">
         <div class="col-md-8">
-            <div class="form-background p-4">
-                @using (Html.BeginForm())
-                {
-                    <h2 class="text-center mb-4">إنشاء مرشح جديد</h2>
+            <div class="card shadow-lg">
+                <div class="card-header bg-success text-white text-center">
+                    <h2 class="text-white">إنشاء مرشح جديد</h2>
+                </div>
+                <div class="card-body">
+                    @using (Html.BeginForm("Create", "party", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                    {
+                        @Html.AntiForgeryToken()
 
-                    @Html.AntiForgeryToken()
-
-                    <div class="form-horizontal p-4 rounded shadow-sm bg-white">
-                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        @Html.ValidationSummary(true, "", new { @class = "alert alert-danger" })
 
                         <div class="form-group mb-3">
-                            <label for="email" class="form-label">البريد الإلكتروني</label>
+                            <label for="email">البريد الإلكتروني</label>
                             @Html.EditorFor(model => model.email, new { htmlAttributes = new { @class = "form-control" } })
                             @Html.ValidationMessageFor(model => model.email, "", new { @class = "text-danger" })
                         </div>
 
                         <div class="form-group mb-3">
-                            <label for="name" class="form-label">الاسم</label>
+                            <label for="name">الاسم</label>
                             @Html.EditorFor(model => model.name, new { htmlAttributes = new { @class = "form-control" } })
                             @Html.ValidationMessageFor(model => model.name, "", new { @class = "text-danger" })
                         </div>
 
                         <div class="form-group mb-3">
-                            <label for="phone" class="form-label">رقم الهاتف</label>
-                            @Html.EditorFor(model => model.phone, new { htmlAttributes = new { @class = "form-control" } })
-                            @Html.ValidationMessageFor(model => model.phone, "", new { @class = "text-danger" })
+                            <label for="nationalId">الرقم الوطني</label>
+                            @Html.EditorFor(model => model.nastionalID, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.nastionalID, "", new { @class = "text-danger" })
                         </div>
 
                         <div class="form-group mb-3">
-                            <label for="nationalId" class="form-label">الرقم الوطني</label>
-                            @Html.EditorFor(model => model.nationalId, new { htmlAttributes = new { @class = "form-control", @id = "nationalId" } })
-                            @Html.ValidationMessageFor(model => model.nationalId, "", new { @class = "text-danger" })
-                        </div>
-
-                        <div class="form-group mb-3">
-                            <label for="gender" class="form-label">الجنس</label>
+                            <label for="gender">الجنس</label>
                             @Html.DropDownListFor(model => model.gender, new SelectList(new List<SelectListItem>
-                            {
-                                new SelectListItem { Value = "Male", Text = "ذكر" },
-                                new SelectListItem { Value = "Female", Text = "أنثى" }
-                            }, "Value", "Text"), "اختر الجنس", new { @class = "form-control", @id = "gender" })
+                                {
+                                    new SelectListItem { Value = "ذكر", Text = "ذكر" },
+                                    new SelectListItem { Value = "أنثى", Text = "أنثى" }
+                                }, "Value", "Text"), "اختر الجنس", new { @class = "form-control" })
                             @Html.ValidationMessageFor(model => model.gender, "", new { @class = "text-danger" })
                         </div>
 
                         <div class="form-group mb-3">
-                            <label for="birthDay" class="form-label">تاريخ الميلاد</label>
-                            @Html.TextBoxFor(model => model.birthDay, "{0:yyyy-MM-dd}", new { @class = "form-control", type = "date" })
-                            @Html.ValidationMessageFor(model => model.birthDay, "", new { @class = "text-danger" })
+                            <label for="birthDay">تاريخ الميلاد</label>
+                            @Html.TextBoxFor(model => model.birthday, "{0:yyyy-MM-dd}", new { @class = "form-control", type = "date" })
+                            @Html.ValidationMessageFor(model => model.birthday, "", new { @class = "text-danger" })
                         </div>
 
                         <div class="form-group mb-3">
-                            <label for="typeOfChair" class="form-label">نوع المقعد</label>
-                            @Html.DropDownListFor(model => model.typeOfChair,
-                                new List<SelectListItem>
+                            <label for="typeOfChair">نوع المقعد</label>
+                            @Html.DropDownListFor(model => model.typeOfChair, new List<SelectListItem>
                                 {
                                     new SelectListItem { Text = "تنافسية", Value = "تنافسية" },
                                     new SelectListItem { Text = "مسيحية", Value = "مسيحية" },
                                     new SelectListItem { Text = "شركسية", Value = "شركسية" }
-                                },
-                                new { @class = "form-control", @required = "required" })
+                                }, new { @class = "form-control" })
                             @Html.ValidationMessageFor(model => model.typeOfChair, "", new { @class = "text-danger" })
                         </div>
 
                         <div class="form-group mb-3">
-                            <label for="religion" class="form-label">الدين</label>
+                            <label for="religion">الدين</label>
                             @Html.DropDownListFor(model => model.religion, new SelectList(new List<SelectListItem>
-                            {
-                                new SelectListItem { Text = "مسلم", Value = "مسلم" },
-                                new SelectListItem { Text = "مسيحي", Value = "مسيحي" }
-                            }, "Value", "Text"), htmlAttributes: new { @class = "form-control" })
+                                {
+                                    new SelectListItem { Text = "مسلم", Value = "مسلم" },
+                                    new SelectListItem { Text = "مسيحي", Value = "مسيحي" }
+                                }, "Value", "Text"), new { @class = "form-control" })
                             @Html.ValidationMessageFor(model => model.religion, "", new { @class = "text-danger" })
                         </div>
 
                         <div class="form-group mb-3">
-                            <label for="electoralDistrict" class="form-label">المنطقة الانتخابية</label>
-                            @Html.DropDownListFor(model => model.electoralDistrict,
-                                new List<SelectListItem>
+                            <label for="electoralDistrict">المنطقة الانتخابية</label>
+                            @Html.DropDownListFor(model => model.electoralDistrict, new List<SelectListItem>
                                 {
                                     new SelectListItem { Text = "عمان الاولى", Value = "عمان1" },
                                     new SelectListItem { Text = "عمان الثانية", Value = "عمان2" },
@@ -104,96 +96,23 @@
                                     new SelectListItem { Text = "بدوي شمال", Value = "بدوي شمال" },
                                     new SelectListItem { Text = "بدوي وسط", Value = "بدوي وسط" },
                                     new SelectListItem { Text = "بدوي جنوب", Value = "بدوي جنوب" }
-                                },
-                                new { @class = "form-control", @required = "required" })
+                                }, new { @class = "form-control" })
                             @Html.ValidationMessageFor(model => model.electoralDistrict, "", new { @class = "text-danger" })
                         </div>
 
-                        <div class="form-group text-center mt-4">
+                        <div class="form-group mb-3">
+                            <label for="candidateImage">صورة المرشح</label>
+                            <input type="file" name="candidateImage" class="form-control" accept="image/*" />
+                            @Html.ValidationMessageFor(model => model.candidateImage, "", new { @class = "text-danger" })
+                        </div>
+
+                        <div class="form-group text-center">
                             <input type="submit" value="إنشاء" class="btn btn-primary btn-animate mx-2" />
                             @Html.ActionLink("العودة إلى القائمة", "RequestForm", "Home", null, new { @class = "btn btn-secondary btn-animate mx-2" })
                         </div>
-                    </div>
-                }
+                    }
+                </div>
             </div>
         </div>
     </div>
 </div>
-
-@{
-    @Scripts.Render("~/bundles/jqueryval")
-}
-
-<style>
-    body {
-        background-color: #f0f4f8; /* خلفية خفيفة */
-        font-family: 'Arial', sans-serif;
-    }
-
-    h2 {
-        font-weight: bold;
-        color: #003366; /* كحلي داكن */
-    }
-
-    .form-background {
-        background-color: #ffffff; /* خلفية بيضاء */
-        padding: 30px;
-        border-radius: 10px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    }
-
-    .form-horizontal {
-        background-color: #ffffff; /* خلفية بيضاء */
-        padding: 30px;
-        border-radius: 10px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    }
-
-    .form-label {
-        font-weight: bold;
-        color: #003366; /* كحلي داكن */
-    }
-
-    .btn-primary {
-        background-color: #004080; /* كحلي */
-        border-color: #003366; /* كحلي داكن */
-    }
-
-        .btn-primary:hover {
-            background-color: #003366; /* كحلي داكن */
-            border-color: #002244; /* كحلي أغمق */
-        }
-
-    .btn-secondary {
-        background-color: #0066cc; /* كحلي متوسط */
-        border-color: #005bb5; /* كحلي أغمق */
-    }
-
-        .btn-secondary:hover {
-            background-color: #005bb5; /* كحلي أغمق */
-            border-color: #004080; /* كحلي */
-        }
-
-    .btn-animate {
-        transition: transform 0.3s, box-shadow 0.3s;
-    }
-
-        .btn-animate:hover {
-            transform: scale(1.05);
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-        }
-
-    .form-control {
-        border-radius: 5px;
-        box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
-    }
-
-    .form-group {
-        margin-bottom: 15px;
-    }
-
-    .text-danger {
-        color: #dc3545; /* لون أحمر للأخطاء */
-    }
-</style>
-

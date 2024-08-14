@@ -6,14 +6,8 @@
 }
 <style>
     /* Background Styling */
-    body {
-        background-color: #f4f4f9; /* Light grey background for the entire page */
-        font-family: Arial, sans-serif;
-    }
-
-    /* Container Styling */
     .containerPartyCandidate {
-        width: 90%;
+        width: 80%;
         margin: 0 auto;
         padding: 20px;
         background-color: #ffffff;
@@ -21,59 +15,76 @@
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     }
 
-    /* Heading Styling */
     h1 {
         color: #333;
         margin-bottom: 20px;
         text-align: center;
     }
 
+    /* Button Styling */
+    .btn {
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        color: #fff;
+        text-decoration: none;
+        font-weight: bold;
+        display: inline-block;
+    }
+
+    .btn-primary {
+        background-color: #28a745; /* Green button */
+    }
+
+        .btn-primary:hover {
+            background-color: #218838; /* Darker green on hover */
+        }
+
+    .btn-secondary {
+        background-color: #3a7d34; /* Darker green for secondary button */
+    }
+
+        .btn-secondary:hover {
+            background-color: #2c6b2f; /* Even darker green on hover */
+        }
+
     /* Table Styling */
     .styled-table {
         width: 100%;
         border-collapse: collapse;
         margin: 20px 0;
-        background-color: #ffffff;
+        background-color: #fff;
         box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        border-radius: 8px;
+        overflow: hidden; /* Ensures border-radius is applied */
     }
 
         .styled-table thead th {
-            background-color: #007bff;
-            color: #ffffff;
-            padding: 10px;
+            background-color: #28a745; /* Green header */
+            color: #fff;
+            padding: 12px 15px;
             text-align: left;
         }
 
         .styled-table tbody tr:nth-child(even) {
-            background-color: #f9f9f9;
+            background-color: #f9f9f9; /* Light grey for even rows */
         }
 
         .styled-table tbody tr:hover {
-            background-color: #e2e2e2;
+            background-color: #e2f2e2; /* Light green for hover effect */
         }
 
         .styled-table td {
-            padding: 10px;
+            padding: 12px 15px;
             border-bottom: 1px solid #ddd;
         }
 
         .styled-table th, .styled-table td {
             text-align: left;
+            font-size: 24px;
         }
-
-            /* Add Action Button Styling (Optional) */
-            .styled-table td a {
-                padding: 5px 10px;
-                color: #fff;
-                text-decoration: none;
-                border-radius: 5px;
-                background-color: #007bff;
-            }
-
-                .styled-table td a:hover {
-                    background-color: #0056b3;
-                }
 </style>
+
 <body>
     <div class="containerPartyCandidate">
         <h1>أسماء المترشحين في هذه القائمة</h1>
@@ -84,10 +95,10 @@
                     <th>@Html.DisplayNameFor(model => model.email)</th>
                     <th>@Html.DisplayNameFor(model => model.name)</th>
                     <th>@Html.DisplayNameFor(model => model.gender)</th>
-                    <th>@Html.DisplayNameFor(model => model.birthDay)</th>
+                    <th>@Html.DisplayNameFor(model => model.birthday)</th>
                     <th>@Html.DisplayNameFor(model => model.typeOfChair)</th>
-                    <th>@Html.DisplayNameFor(model => model.religion)</th>
-                    <th>@Html.DisplayNameFor(model => model.partyList.partyName)</th>
+                    @*<th>@Html.DisplayNameFor(model => model.religion)</th>*@
+                    @*<th>@Html.DisplayNameFor(model => model.partyList.partyName)</th>*@
                     <th>Actions</th>
                 </tr>
             </thead>
@@ -98,10 +109,10 @@
                         <td>@Html.DisplayFor(modelItem => item.email)</td>
                         <td>@Html.DisplayFor(modelItem => item.name)</td>
                         <td>@Html.DisplayFor(modelItem => item.gender)</td>
-                        <td>@Html.DisplayFor(modelItem => item.birthDay)</td>
+                        <td>@Html.DisplayFor(modelItem => item.birthday)</td>
                         <td>@Html.DisplayFor(modelItem => item.typeOfChair)</td>
-                        <td>@Html.DisplayFor(modelItem => item.religion)</td>
-                        <td>@Html.DisplayFor(modelItem => item.partyList.partyName)</td>
+                        @*<td>@Html.DisplayFor(modelItem => item.religion)</td>*@
+                        @*<td>@Html.DisplayFor(modelItem => item.partyListID.partyName)</td>*@
                         <td>
                             <!-- Add action links or buttons here if needed -->
                         </td>

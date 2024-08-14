@@ -16,79 +16,83 @@
                     {
                         @Html.AntiForgeryToken()
 
-                <div class="form-horizontal" style="direction: rtl;">
-                    <h4>بيانات الحملة الانتخابية</h4>
-                    <hr />
+                        <div class="form-horizontal" style="direction: rtl;">
+                            <h4>بيانات الحملة الانتخابية</h4>
+                            <hr />
 
-                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
-                    <div class="form-group row my-3">
-                        @Html.Label("اسم المرشح ", htmlAttributes: new { @class = "control-label col-md-3" })
-                        <div class="col-md-9">
-                            @Html.EditorFor(model => model.nationalId, new { htmlAttributes = new { @class = "form-control" } })
-                            @Html.ValidationMessageFor(model => model.nationalId, "", new { @class = "text-danger" })
+                            <div class="form-group row my-3">
+                                @Html.Label("اسم المرشح ", htmlAttributes: new { @class = "control-label col-md-3" })
+                                <div class="col-md-9">
+                                    @Html.EditorFor(model => model.name, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.name, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="form-group row my-3">
+                                @Html.Label("الرقم الوطني ", htmlAttributes: new { @class = "control-label col-md-3" })
+                                <div class="col-md-9">
+                                    @Html.EditorFor(model => model.nationalId, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.nationalId, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="form-group row my-3">
+                                @Html.Label("شعار الحملة ", htmlAttributes: new { @class = "control-label col-md-3" })
+                                <div class="col-md-9">
+                                    @Html.EditorFor(model => model.campaignSlagan, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.campaignSlagan, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="form-group row my-3">
+                                @Html.Label("اسم القائمة ", htmlAttributes: new { @class = "control-label col-md-3" })
+                                <div class="col-md-9">
+                                    @Html.EditorFor(model => model.listName, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.listName, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="form-group row my-3">
+                                @Html.Label(" اسم الحزب", htmlAttributes: new { @class = "control-label col-md-3" })
+                                <div class="col-md-9">
+                                    @Html.EditorFor(model => model.partyName, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.partyName, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group row my-3">
+                                @Html.Label("الدائرة الانتخابية ", htmlAttributes: new { @class = "control-label col-md-3" })
+                                <div class="col-md-9">
+                                    @Html.EditorFor(model => model.areaName, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.areaName, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group row my-3">
+                                @Html.Label("وصف الحملة الانتخابية ", htmlAttributes: new { @class = "control-label col-md-3" })
+                                <div class="col-md-9">
+                                    @Html.EditorFor(model => model.description, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.description, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group row my-3">
+                                @Html.Label("صورة المرشح", htmlAttributes: new { @class = "control-label col-md-3" })
+                                <div class="col-md-9">
+                                    <input type="file" name="upload" class="form-control" />
+                                </div>
+                            </div>
+
+
+
+                            <div class="form-group row my-3">
+                                <div class="col-md-12 text-center">
+                                    <button type="submit" class="btn btn-primary">الدفع باستخدام PayPal</button>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-
-                    <div class="form-group row my-3">
-                        @Html.Label("الدائرة الانتخابية ", htmlAttributes: new { @class = "control-label col-md-3" })
-                        <div class="col-md-9">
-                            @Html.EditorFor(model => model.areaName, new { htmlAttributes = new { @class = "form-control" } })
-                            @Html.ValidationMessageFor(model => model.areaName, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-
-                    <div class="form-group row my-3">
-                        @Html.Label("اسم القائمة ", htmlAttributes: new { @class = "control-label col-md-3" })
-                        <div class="col-md-9">
-                            @Html.EditorFor(model => model.listName, new { htmlAttributes = new { @class = "form-control" } })
-                            @Html.ValidationMessageFor(model => model.listName, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-
-                    <div class="form-group row my-3">
-                        @Html.Label(" اسم الحزب", htmlAttributes: new { @class = "control-label col-md-3" })
-                        <div class="col-md-9">
-                            @Html.EditorFor(model => model.partyName, new { htmlAttributes = new { @class = "form-control" } })
-                            @Html.ValidationMessageFor(model => model.partyName, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-
-                    <div class="form-group row my-3">
-                        @Html.Label(" شعار الحملة", htmlAttributes: new { @class = "control-label col-md-3" })
-                        <div class="col-md-9">
-                            @Html.EditorFor(model => model.campaignSlagan, new { htmlAttributes = new { @class = "form-control" } })
-                            @Html.ValidationMessageFor(model => model.campaignSlagan, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-
-
-                    <div class="form-group row my-3">
-                        @Html.Label("وصف الحملة الانتخابية ", htmlAttributes: new { @class = "control-label col-md-3" })
-                        <div class="col-md-9">
-                            @Html.EditorFor(model => model.description, new { htmlAttributes = new { @class = "form-control" } })
-                            @Html.ValidationMessageFor(model => model.description, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-
-                    <div class="form-group row my-3">
-                        @Html.Label("صورة المرشح", htmlAttributes: new { @class = "control-label col-md-3" })
-                        <div class="col-md-9">
-                            <input type="file" name="upload" class="form-control" />
-                        </div>
-                    </div>
-
-
-
-                    <div class="form-group row my-3">
-                        <div class="col-md-12 text-center">
-                            <button type="submit" class="btn btn-primary">الدفع باستخدام PayPal</button>
-                        </div>
-                    </div>
-                </div>
                     }
                 </div>
             </div>
         </div>
     </div>
 </div>
+

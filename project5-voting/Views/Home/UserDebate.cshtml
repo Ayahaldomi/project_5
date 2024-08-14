@@ -4,112 +4,27 @@
     ViewBag.Title = "UserDebate";
 }
 
-<h2 class="text-center">المناظرات</h2>
 
-<div class="container mt-4" dir="rtl">
-    <div class="row">
-        @foreach (var debate in Model)
+<div class="d-flex justify-content-center align-items-center" style="height: 100vh;">
+    <img src="https://www.addustour.com/file.php?fileid=615328&width=800&height=450" alt="Alternate Text" class="img-fluid" />
+</div>
+
+
+<div class="container" dir="rtl">
+    <h2 class="text-center">المناظرات</h2>
+    <br />
+    <div class="row d-flex justify-content-start">
+        @foreach (var item in Model)
         {
-            <div class="col-md-4 mb-3">
-                <div class="card">
-                    <div class="card-header bg-primary text-white">
-                        <h5>تفاصيل المناظرة</h5>
-                    </div>
-                    <div class="card-body">
-                        <dl class="row">
-                            <div class="col-sm-5">
-                                <dt>@Html.DisplayNameFor(model => model.electionArea)</dt>
-                            </div>
-                            <div class="col-sm-7">
-                                <dd>@Html.DisplayFor(model => debate.electionArea)</dd>
-                            </div>
+            <div class="card mx-2" style="width: 450px;">
+                <img src="https://www.shutterstock.com/shutterstock/photos/1336472291/display_1500/stock-photo-speech-of-an-abstract-man-in-a-suit-on-stage-at-the-stand-for-performances-tribune-or-pulpit-for-1336472291.jpg" class="card-img-top" alt="Debate Image">
+                <div class="card-body ">
+                    <h6 class="card-title text-truncate">@item.debateSubject</h6>
+                    <p>انضم الى هذه المناظرة بين المرشح @item.firstCandidateName , و المرشح @item.secondCandidateName <span class="fw-bold">من دائرة @item.electionArea</span></p>
 
-                            <div class="col-sm-5">
-                                <dt>@Html.DisplayNameFor(model => model.firstCandidateName)</dt>
-                            </div>
-                            <div class="col-sm-7">
-                                <dd>@Html.DisplayFor(model => debate.firstCandidateName)</dd>
-                            </div>
-
-                            <div class="col-sm-5">
-                                <dt>@Html.DisplayNameFor(model => model.firstCandidateID)</dt>
-                            </div>
-                            <div class="col-sm-7">
-                                <dd>@Html.DisplayFor(model => debate.firstCandidateID)</dd>
-                            </div>
-
-                            <div class="col-sm-5">
-                                <dt>@Html.DisplayNameFor(model => model.firstCandidateList)</dt>
-                            </div>
-                            <div class="col-sm-7">
-                                <dd>@Html.DisplayFor(model => debate.firstCandidateList)</dd>
-                            </div>
-
-                            <div class="col-sm-5">
-                                <dt>@Html.DisplayNameFor(model => model.secondCandidateName)</dt>
-                            </div>
-                            <div class="col-sm-7">
-                                <dd>@Html.DisplayFor(model => debate.secondCandidateName)</dd>
-                            </div>
-
-                            <div class="col-sm-5">
-                                <dt>@Html.DisplayNameFor(model => model.secondCandidateID)</dt>
-                            </div>
-                            <div class="col-sm-7">
-                                <dd>@Html.DisplayFor(model => debate.secondCandidateID)</dd>
-                            </div>
-
-                            <div class="col-sm-5">
-                                <dt>@Html.DisplayNameFor(model => model.secondCandidateList)</dt>
-                            </div>
-                            <div class="col-sm-7">
-                                <dd>@Html.DisplayFor(model => debate.secondCandidateList)</dd>
-                            </div>
-
-                            <div class="col-sm-5">
-                                <dt>@Html.DisplayNameFor(model => model.debateSubject)</dt>
-                            </div>
-                            <div class="col-sm-7">
-                                <dd>@Html.DisplayFor(model => debate.debateSubject)</dd>
-                            </div>
-
-                            <div class="col-sm-5">
-                                <dt>@Html.DisplayNameFor(model => model.debateMessage)</dt>
-                            </div>
-                            <div class="col-sm-7">
-                                <dd>@Html.DisplayFor(model => debate.debateMessage)</dd>
-                            </div>
-
-                            <div class="col-sm-5">
-                                <dt>@Html.DisplayNameFor(model => model.zoomLink)</dt>
-                            </div>
-                            <div class="col-sm-7">
-                                <dd>@Html.DisplayFor(model => debate.zoomLink)</dd>
-                            </div>
-
-                            <div class="col-sm-5">
-                                <dt>@Html.DisplayNameFor(model => model.status)</dt>
-                            </div>
-                            <div class="col-sm-7">
-                                <dd>@Html.DisplayFor(model => debate.status)</dd>
-                            </div>
-
-                            <div class="col-sm-5">
-                                <dt>@Html.DisplayNameFor(model => model.debateDate)</dt>
-                            </div>
-                            <div class="col-sm-7">
-                                <dd>@Html.DisplayFor(model => debate.debateDate)</dd>
-                            </div>
-
-                            <div class="col-sm-5">
-                                <dt>@Html.DisplayNameFor(model => model.debateTime)</dt>
-                            </div>
-                            <div class="col-sm-7">
-                                <dd>@Html.DisplayFor(model => debate.debateTime)</dd>
-                            </div>
-                        </dl>
-                        <a href="@Url.Action("DebateForm", "Debate")" class="btn btn-secondary btn-animate">قدم طلب للمناظرة</a>
-                    </div>
+                    <p class="card-text text-truncate">اليوم: @item.debateDate</p>
+                    <p class="card-text text-truncate">الوقت: @item.debateTime</p>
+                    <a href="@item.zoomLink" class="btn btn-primary">Zoom Link</a>
                 </div>
             </div>
         }

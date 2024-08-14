@@ -78,7 +78,7 @@ namespace project5_voting.Controllers
 
         public ActionResult UserDebate()
         {
-            var debateCards = db.Debates.Where(model => model.status == "1").ToList();
+            var debateCards = db.Debates.Where(model => model.status == "2").ToList();
 
             return View(debateCards);
         }

@@ -6,16 +6,22 @@
 
 <h2 style="text-align:center;">تفاصيل الناخب</h2>
 
-<div class="container mt-4">
-    <h4>معلومات المستخدم</h4>
+<div class="container mt-4" style="text-align:right; direction:rtl;">
     <hr />
-    <div class="mb-3">
+    <div class="mb-3" style="width:700px;">
         @using (Html.BeginForm("Search", "Home", FormMethod.Get, new { @class = "form-inline" }))
         {
-            <div class="input-group">
-                <input type="text" class="form-control" name="Search" placeholder="ابحث عن الرقم الوطني">
-                <div class="input-group-append">
-                    <input type="submit" value="بحث" class="btn btn-primary" />
+            <h6 style="margin-right:10px">
+                لمعرفة دائرتك الانتخابية ادخل الرقم الوطني في الخانة التالية
+            </h6>
+            <div class="container mt-3">
+                <div class="row">
+                    <div class="col d-flex">
+                        <div>
+                            <input type="submit" value="بحث" class="btn btn-primary" style="margin-left:3px" />
+                        </div>
+                        <input type="text" class="form-control" name="Search" placeholder="ابحث باستخدام الرقم الوطني">
+                    </div>
                 </div>
             </div>
         }
@@ -28,68 +34,74 @@
         }
     </div>
     <hr />
-    <dl class="row" >
-        <dt class="col-sm-3">
-            @Html.Label("الرقم الوطني ", htmlAttributes: new { @class = "control-label col-md-3" })
-        </dt>
-        <dd class="col-sm-9">
-            @Html.DisplayFor(model => model.nationalID)
-        </dd>
 
-        <dt class="col-sm-3">
-            @Html.Label("الاسم ", htmlAttributes: new { @class = "control-label col-md-3" })
-        </dt>
-        <dd class="col-sm-9">
-            @Html.DisplayFor(model => model.name)
-        </dd>
+    <div class="container">
+        <div class="row">
 
-        <dt class="col-sm-3">
-            @Html.Label("البريد الالكتروني ", htmlAttributes: new { @class = "control-label col-md-3" })
-        </dt>
-        <dd class="col-sm-9">
-            @Html.DisplayFor(model => model.email)
-        </dd>
+            <dl class="col-md-6">
+                <dt class="col-sm-9">
+                    @Html.Label("الرقم الوطني: ", htmlAttributes: new { @class = "control-label col-md-3 h5" })<br />
+                    @Html.DisplayFor(model => model.nationalID)
+                </dt>
+                <br />
 
-        <dt class="col-sm-3">
-            @Html.Label("الجنس ", htmlAttributes: new { @class = "control-label col-md-3" })
-        </dt>
-        <dd class="col-sm-9">
-            @Html.DisplayFor(model => model.gender)
-        </dd>
+                <dt class="col-sm-9">
+                    @Html.Label("الاسم: ", htmlAttributes: new { @class = "control-label col-md-3 h5" }) <br />
+                    @Html.DisplayFor(model => model.name)
+                </dt>
+                <br />
 
-        <dt class="col-sm-3">
-            @Html.Label("تاريخ الميلاد ", htmlAttributes: new { @class = "control-label col-md-3" })
-        </dt>
-        <dd class="col-sm-9">
-            @Html.DisplayFor(model => model.birthday)
-        </dd>
 
-        <dt class="col-sm-3">
-            @Html.Label("الديانة ", htmlAttributes: new { @class = "control-label col-md-3" })
-        </dt>
-        <dd class="col-sm-9">
-            @Html.DisplayFor(model => model.religion)
-        </dd>
+                <dt class="col-sm-9">
+                    @Html.Label("البريد الالكتروني: ", htmlAttributes: new { @class = "control-label col-md-3 h5" }) <br />
+                    @Html.DisplayFor(model => model.email)
 
-        <dt class="col-sm-3">
-            @Html.Label("المحافظة ", htmlAttributes: new { @class = "control-label col-md-3" })
-        </dt>
-        <dd class="col-sm-9">
-            @Html.DisplayFor(model => model.placeOfResidence)
-        </dd>
+                </dt>
+                <br />
 
-        <dt class="col-sm-3">
-            @Html.Label("الدائرة الانتخابية ", htmlAttributes: new { @class = "control-label col-md-3" })
-        </dt>
-        <dd class="col-sm-9">
-            @Html.DisplayFor(model => model.electionArea)
-        </dd>
 
-        <dt class="col-sm-3">
-            @Html.Label("موقع الانتخاب ", htmlAttributes: new { @class = "control-label col-md-3" })
-        </dt>
-        <dd class="col-sm-9">
-            @Html.DisplayFor(model => model.elctionLocation)
-        </dd>
-    </dl>
+                <dt class="col-sm-9">
+                    @Html.Label("الجنس: ", htmlAttributes: new { @class = "control-label col-md-3 h5" }) <br />
+                    @Html.DisplayFor(model => model.gender)
+                </dt>
+                <br />
+
+                <dt class="col-sm-9">
+                    @Html.Label("تاريخ الميلاد: ", htmlAttributes: new { @class = "control-label col-md-3 h5" }) <br />
+                    @Html.DisplayFor(model => model.birthday)
+                </dt>
+                <br />
+
+
+                <dt class="col-sm-9">
+                    @Html.Label("الديانة: ", htmlAttributes: new { @class = "control-label col-md-3 h5" }) <br />
+                    @Html.DisplayFor(model => model.religion)
+                </dt>
+                <br />
+
+
+                <dt class="col-sm-9">
+                    @Html.Label("المحافظة: ", htmlAttributes: new { @class = "control-label col-md-3 h5" }) <br />
+                    @Html.DisplayFor(model => model.placeOfResidence)
+                </dt>
+                <br />
+
+                <dt class="col-sm-9">
+                    @Html.Label("الدائرة الانتخابية: ", htmlAttributes: new { @class = "control-label col-md-3 h5" }) <br />
+                    @Html.DisplayFor(model => model.electionArea)
+                </dt>
+                <br />
+
+                <dt class="col-sm-9">
+                    @Html.Label("موقع الانتخاب: ", htmlAttributes: new { @class = "control-label col-md-3 h5" }) <br />
+                    @Html.DisplayFor(model => model.elctionLocation)
+                </dt>
+
+            </dl>
+
+            <div class="col-md-6">
+                <img src="https://kingabdullah.jo/sites/default/files/map-ar.png" alt="Alternate Text" width="600" height="600" />
+            </div>
+        </div>
+    </div>
 </div>

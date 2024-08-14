@@ -1,0 +1,90 @@
+﻿@model project5_voting.Models.PartyList
+
+@{
+    ViewBag.Title = "تأكيد حذف الحزب";
+    Layout = "~/Views/Shared/_LayoutPage1.cshtml";
+
+}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card border-danger">
+                <div class="card-header bg-danger text-white text-center">
+                    <h3 class="text-white">تأكيد حذف الحزب</h3>
+                </div>
+                <div class="card-body">
+                    <p class="text-center text-danger mb-4">
+                        هل أنت متأكد أنك تريد حذف هذا الحزب؟ هذا الإجراء لا يمكن التراجع عنه.
+                    </p>
+                    <div class="table-responsive">
+                        <table class="table table-bordered">
+                            <tbody>
+                                <tr>
+                                    <th scope="row">@Html.DisplayNameFor(model => model.partyName)</th>
+                                    <td>@Html.DisplayFor(model => model.partyName)</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">الصوره</th>
+                                    <td>
+                                        <img src="../../Image1/@Url.Content(Model.partyImage)" alt="Party Image" class="img-fluid rounded-circle" style="height: 50px; width: 50px; object-fit: cover;">
+                                    </td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+
+                    @using (Html.BeginForm("DeleteAdmin", "Party", FormMethod.Post, new { id = "deleteForm" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        <div class="text-center mt-4">
+                            <button type="button" class="btn btn-danger btn-lg px-5" id="deleteButton">حذف</button>
+                            @Html.ActionLink("العودة إلى القائمة", "AdminView", null, new { @class = "btn btn-secondary btn-lg px-5 ml-3" })
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <!-- إضافة مكتبة SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script type="text/javascript">
+        document.addEventListener("DOMContentLoaded", function () {
+            document.getElementById("deleteButton").addEventListener("click", function (e) {
+                e.preventDefault(); // منع الإرسال الافتراضي للنموذج
+
+                Swal.fire({
+                    title: 'هل أنت متأكد؟',
+                    text: 'هذا الإجراء لا يمكن التراجع عنه!',
+                    input: 'text',
+                    inputPlaceholder: 'اكتب "متأكد" للتأكيد',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#d33',
+                    cancelButtonColor: '#3085d6',
+                    confirmButtonText: 'نعم، احذف الحزب',
+                    cancelButtonText: 'إلغاء'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        if (result.value === 'متأكد' || result.value === 'متاكد') {
+                            document.getElementById("deleteForm").submit(); // إرسال النموذج إذا تم التأكيد
+                        } else {
+                            Swal.fire({
+                                title: 'الإجراء لم يتم!',
+                                text: 'يجب كتابة "متأكد" للتأكيد',
+                                icon: 'error',
+                                confirmButtonColor: '#3085d6',
+                                confirmButtonText: 'حسنًا'
+                            });
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+}

@@ -1,7 +1,7 @@
 ﻿@model project5_voting.Models.PartyList
 
 @{
-        ViewBag.Title = "إنشاء قائمة الحزب";
+    ViewBag.Title = "إنشاء قائمة الحزب";
 }
 
 <div class="container mt-5">
@@ -10,7 +10,7 @@
     <div class="row">
         <!-- عمود النموذج -->
         <div class="col-md-6 order-md-1 order-2">
-            @using (Html.BeginForm())
+            @using (Html.BeginForm("Createuser", "party", FormMethod.Post, new { enctype = "multipart/form-data" }))
             {
                 @Html.AntiForgeryToken()
 
@@ -25,8 +25,14 @@
                         @Html.ValidationMessageFor(model => model.partyName, "", new { @class = "text-danger" })
                     </div>
 
+                    <div class="form-group mb-3">
+                        @Html.LabelFor(model => model.partyImage, "اختر صورة الحزب", htmlAttributes: new { @class = "form-label" })
+                        <input type="file" name="PartyImage" class="form-control" />
+                        @Html.ValidationMessageFor(model => model.partyImage, "", new { @class = "text-danger" })
+                    </div>
+
                     <div class="form-group text-center">
-                        <input type="submit" value="إنشاء" class="btn btn-primary btn-animate w-50" />
+                        <input type="submit" value="إنشاء" class="btn btn-success btn-animate w-50" />
                     </div>
                 </div>
             }
@@ -44,14 +50,11 @@
 }
 
 <style>
-    body {
-        background-color: #f8f9fa; /* خلفية فاتحة */
-        font-family: 'Arial', sans-serif;
-    }
+
 
     h2 {
         font-weight: bold;
-        color: #003366; /* كحلي داكن */
+        color: green;
     }
 
     .form-horizontal {
@@ -63,17 +66,17 @@
 
     .form-label {
         font-weight: bold;
-        color: #002244; /* كحلي أغمق */
+        color: forestgreen;
     }
 
     .btn-primary {
-        background-color: #004080; /* كحلي */
-        border-color: #003366; /* كحلي داكن */
+        background-color: forestgreen;
+        border-color: green;
     }
 
         .btn-primary:hover {
-            background-color: #003366; /* كحلي داكن */
-            border-color: #002244; /* كحلي أغمق */
+            background-color: forestgreen;
+            border-color: green;
         }
 
     .btn-animate {
@@ -90,4 +93,3 @@
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     }
 </style>
-

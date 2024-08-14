@@ -11,9 +11,9 @@
 <!-- SweetAlert JS -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
 
-<<div class="card" dir="rtl" style="width: 800px; margin: 20px auto;">
+<div class="card" dir="rtl" style="width: 1100px; margin: 20px auto;" style="direction: rtl">
     <div class="card-body">
-        <h4 class="card-title">المناظرة</h4>
+        <h2 class="card-title text-center mb-4">تفاصيل الطلب</h2>
         <hr />
         @using (Html.BeginForm())
         {
@@ -22,79 +22,103 @@
             @Html.HiddenFor(model => model.id)
 
             <div class="form-group row">
-                @Html.LabelFor(model => model.electionArea, htmlAttributes: new { @class = "col-md-2 col-form-label" })
+                @Html.Label("الدائرة الانتخابية", htmlAttributes: new { @class = "col-md-2 col-form-label" })
                 <div class="col-md-10">
-                    @Html.EditorFor(model => model.electionArea, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.EditorFor(model => model.electionArea, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
                     @Html.ValidationMessageFor(model => model.electionArea, "", new { @class = "text-danger" })
                 </div>
             </div>
-
+            <hr />
             <div class="form-group row">
-                @Html.LabelFor(model => model.firstCandidateID, htmlAttributes: new { @class = "col-md-2 col-form-label" })
+                @Html.Label("الرقم الوطني للمرشح الاول", htmlAttributes: new { @class = "col-md-2 col-form-label" })
                 <div class="col-md-10">
-                    @Html.EditorFor(model => model.firstCandidateID, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.EditorFor(model => model.firstCandidateID, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
                     @Html.ValidationMessageFor(model => model.firstCandidateID, "", new { @class = "text-danger" })
                 </div>
             </div>
 
             <div class="form-group row">
-                @Html.LabelFor(model => model.firstCandidateName, htmlAttributes: new { @class = "col-md-2 col-form-label" })
+                @Html.Label("اسم المرشح الاول", htmlAttributes: new { @class = "col-md-2 col-form-label" })
                 <div class="col-md-10">
-                    @Html.EditorFor(model => model.firstCandidateName, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.EditorFor(model => model.firstCandidateName, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
                     @Html.ValidationMessageFor(model => model.firstCandidateName, "", new { @class = "text-danger" })
                 </div>
             </div>
 
             <div class="form-group row">
-                @Html.LabelFor(model => model.firstCandidateList, htmlAttributes: new { @class = "col-md-2 col-form-label" })
+                @Html.Label("القائمة الخاصة بالمرشح الاول", htmlAttributes: new { @class = "col-md-2 col-form-label" })
                 <div class="col-md-10">
-                    @Html.EditorFor(model => model.firstCandidateList, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.EditorFor(model => model.firstCandidateList, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
                     @Html.ValidationMessageFor(model => model.firstCandidateList, "", new { @class = "text-danger" })
                 </div>
             </div>
+            <hr />
 
             <div class="form-group row">
-                @Html.LabelFor(model => model.secondCandidateID, htmlAttributes: new { @class = "col-md-2 col-form-label" })
+                @Html.Label("الرقم الوطني للمرشح الثاني", htmlAttributes: new { @class = "col-md-2 col-form-label" })
                 <div class="col-md-10">
-                    @Html.EditorFor(model => model.secondCandidateID, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.EditorFor(model => model.secondCandidateID, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
                     @Html.ValidationMessageFor(model => model.secondCandidateID, "", new { @class = "text-danger" })
                 </div>
             </div>
 
             <div class="form-group row">
-                @Html.LabelFor(model => model.secondCandidateName, htmlAttributes: new { @class = "col-md-2 col-form-label" })
+                @Html.Label("اسم المرشح الثاني", htmlAttributes: new { @class = "col-md-2 col-form-label" })
                 <div class="col-md-10">
-                    @Html.EditorFor(model => model.secondCandidateName, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.EditorFor(model => model.secondCandidateName, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
                     @Html.ValidationMessageFor(model => model.secondCandidateName, "", new { @class = "text-danger" })
                 </div>
             </div>
 
             <div class="form-group row">
-                @Html.LabelFor(model => model.secondCandidateList, htmlAttributes: new { @class = "col-md-2 col-form-label" })
+                @Html.Label("القائمة الخاصة بالمرشح الثاني", htmlAttributes: new { @class = "col-md-2 col-form-label" })
                 <div class="col-md-10">
-                    @Html.EditorFor(model => model.secondCandidateList, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.EditorFor(model => model.secondCandidateList, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
                     @Html.ValidationMessageFor(model => model.secondCandidateList, "", new { @class = "text-danger" })
                 </div>
             </div>
+            <hr />
 
             <div class="form-group row">
-                @Html.LabelFor(model => model.debateSubject, htmlAttributes: new { @class = "col-md-2 col-form-label" })
+                @Html.Label("موضوع المناظرة", htmlAttributes: new { @class = "col-md-2 col-form-label" })
                 <div class="col-md-10">
-                    @Html.EditorFor(model => model.debateSubject, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.EditorFor(model => model.debateSubject, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
                     @Html.ValidationMessageFor(model => model.debateSubject, "", new { @class = "text-danger" })
                 </div>
             </div>
 
             <div class="form-group row">
-                @Html.LabelFor(model => model.debateMessage, htmlAttributes: new { @class = "col-md-2 col-form-label" })
+                @Html.Label("الوصف", htmlAttributes: new { @class = "col-md-2 col-form-label" })
                 <div class="col-md-10">
-                    @Html.EditorFor(model => model.debateMessage, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.TextAreaFor(model => model.debateMessage, new { @class = "form-control", @style = "height: 100px;", @readonly = "readonly" })
                     @Html.ValidationMessageFor(model => model.debateMessage, "", new { @class = "text-danger" })
                 </div>
             </div>
+            <hr />
 
             <div class="form-group row">
-                @Html.LabelFor(model => model.zoomLink, htmlAttributes: new { @class = "col-md-2 col-form-label" })
+                @Html.Label(":حالة الطلب", htmlAttributes: new { @class = "col-md-2 col-form-label" })
+                <div class="col-md-10" style="text-align:right">
+                    <div class="form-check form-check-inline">
+                        @Html.RadioButtonFor(model => model.status, "2", new { @class = "form-check-input ml-2", id = "status_accept" })
+                        @Html.Label("قبول", htmlAttributes: new { @class = "form-check-label text-success" })
+                    </div>
+                    <div class="form-check form-check-inline">
+                        @Html.RadioButtonFor(model => model.status, "1", new { @class = "form-check-input ml-2 ", id = "status_pending" })
+                        @Html.Label("قيد الدراسة", htmlAttributes: new { @class = "form-check-label text-warning" })
+                    </div>
+                    <div class="form-check form-check-inline">
+                        @Html.RadioButtonFor(model => model.status, "0", new { @class = "form-check-input ml-2 ", id = "status_rejected" })
+                        @Html.Label("رفض", htmlAttributes: new { @class = "form-check-label text-danger" })
+                    </div>
+                    @Html.ValidationMessageFor(model => model.status, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <hr />
+
+            <div class="form-group row">
+                @Html.Label("Zoom Link", htmlAttributes: new { @class = "col-md-2 col-form-label" })
                 <div class="col-md-10">
                     @Html.EditorFor(model => model.zoomLink, new { htmlAttributes = new { @class = "form-control" } })
                     @Html.ValidationMessageFor(model => model.zoomLink, "", new { @class = "text-danger" })
@@ -102,33 +126,28 @@
             </div>
 
             <div class="form-group row">
-                @Html.LabelFor(model => model.status, htmlAttributes: new { @class = "col-md-2 col-form-label" })
+                @Html.Label("تاريخ بدء المناظرة", htmlAttributes: new { @class = "col-md-2 col-form-label" })
                 <div class="col-md-10">
-                    @Html.EditorFor(model => model.status, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.status, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-            <div class="form-group row">
-                @Html.LabelFor(model => model.debateDate, htmlAttributes: new { @class = "col-md-2 col-form-label" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.debateDate, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.EditorFor(model => model.debateDate, new { htmlAttributes = new { @class = "form-control", type = "date" } })
                     @Html.ValidationMessageFor(model => model.debateDate, "", new { @class = "text-danger" })
                 </div>
             </div>
 
             <div class="form-group row">
-                @Html.LabelFor(model => model.debateTime, htmlAttributes: new { @class = "col-md-2 col-form-label" })
+                @Html.Label("وقت بدء المناظرة", htmlAttributes: new { @class = "col-md-2 col-form-label" })
                 <div class="col-md-10">
-                    @Html.EditorFor(model => model.debateTime, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.EditorFor(model => model.debateTime, new { htmlAttributes = new { @class = "form-control", type = "time" } })
                     @Html.ValidationMessageFor(model => model.debateTime, "", new { @class = "text-danger" })
                 </div>
             </div>
-
-            <div class="form-group row">
-                <div class="col-md-offset-2 col-md-10">
-                    <input type="submit" value="حفظ" class="btn btn-primary" />
-                    <button type="button" class="btn btn-info" onclick="displayAlert()">التحقق</button>
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-md-6 text-center">
+                        <div class="form-group">
+                            <input type="submit" value="حفظ" class="btn btn-info mx-2" />
+                            <button type="button" class="btn btn-warning mx-2" onclick="displayAlert()">التحقق</button>
+                        </div>
+                    </div>
                 </div>
             </div>
         }
@@ -184,5 +203,3 @@ else if (ViewBag.ElectionAreia == true && ViewBag.CheckID == true)
         }
     </script>
 }
-
-

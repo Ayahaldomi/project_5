@@ -7,10 +7,10 @@
 
 
 
-<div class="card" dir="rtl" style="width: 1000px; margin: 20px auto;">
+<div class="card" dir="rtl" style="width: 1000px; margin:120px auto">
     <div class="card-body">
-        <h4 class="card-title text-center mb-4">تحديد التاريخ والوقت</h4>
-<hr />
+        <h2 class="card-title text-center mb-4">طلبات المناظرات</h2>
+        <hr />
         <table class="table table-striped">
             <thead>
                 <tr>
@@ -23,6 +23,7 @@
                     <th></th>
                 </tr>
             </thead>
+
             <tbody>
                 @foreach (var item in Model)
                 {
@@ -32,9 +33,9 @@
                         <td>@Html.DisplayFor(modelItem => item.firstCandidateName)</td>
                         <td>@Html.DisplayFor(modelItem => item.secondCandidateName)</td>
                         <td>@Html.DisplayFor(modelItem => item.debateSubject)</td>
-                        @if (item.status == null)
+                        @if (item.status == "1")
                         {
-                            <td class="text-warning">قيد الانتظار</td>
+                            <td class="text-warning">قيد الدراسة</td>
                         }
                         else if (item.status == "0")
                         {

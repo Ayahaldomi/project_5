@@ -22,7 +22,7 @@ namespace project5_voting.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DebateForm(Debate path)
         {
-            path.status = null;
+            path.status = "1";
 
             db.Debates.Add(path);
             db.SaveChanges();

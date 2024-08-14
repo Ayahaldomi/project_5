@@ -1,0 +1,125 @@
+﻿@model project5_voting.Models.PartyCandidate
+
+@{
+    ViewBag.Title = "تأكيد حذف مرشح الحزب";
+    Layout = "~/Views/Shared/_LayoutPage1.cshtml";
+}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-10">
+            <div class="card border-danger">
+                <div class="card-header bg-danger text-white text-center">
+                    <h3>تأكيد حذف مرشح الحزب</h3>
+                </div>
+                <div class="card-body">
+                    <p class="text-center text-danger mb-4">
+                        هل أنت متأكد أنك تريد حذف هذا المرشح؟ هذا الإجراء لا يمكن التراجع عنه.
+                    </p>
+                    <div class="table-responsive">
+                        <table class="table table-bordered">
+                            <tbody>
+                                <tr>
+                                    <th scope="row">@Html.DisplayNameFor(model => model.nastionalID)</th>
+                                    <td>@Html.DisplayFor(model => model.nastionalID)</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">@Html.DisplayNameFor(model => model.name)</th>
+                                    <td>@Html.DisplayFor(model => model.name)</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">@Html.DisplayNameFor(model => model.email)</th>
+                                    <td>@Html.DisplayFor(model => model.email)</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">@Html.DisplayNameFor(model => model.typeOfChair)</th>
+                                    <td>@Html.DisplayFor(model => model.typeOfChair)</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">@Html.DisplayNameFor(model => model.religion)</th>
+                                    <td>@Html.DisplayFor(model => model.religion)</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">@Html.DisplayNameFor(model => model.gender)</th>
+                                    <td>@Html.DisplayFor(model => model.gender)</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">@Html.DisplayNameFor(model => model.birthday)</th>
+                                    <td>
+                                        @if (Model.birthday.HasValue)
+                                        {
+                                            @Model.birthday.Value.ToString("yyyy-MM-dd")
+                                        }
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">@Html.DisplayNameFor(model => model.electoralDistrict)</th>
+                                    <td>@Html.DisplayFor(model => model.electoralDistrict)</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">@Html.DisplayNameFor(model => model.PartyList.partyName)</th>
+                                    <td>@Html.DisplayFor(model => model.PartyList.partyName)</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">الصوره</th>
+                                    <td>
+                                        <img src="../../Image1/@Url.Content(Model.candidateImage)" alt="candidateImage Image" class="img-fluid rounded-circle" style="height: 50px; width: 50px; object-fit: cover;">
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    @using (Html.BeginForm("DeletePartyCandidates", "party", FormMethod.Post, new { id = "deleteForm" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        <div class="text-center mt-4">
+                            <button type="button" class="btn btn-danger btn-lg px-5" id="deleteButton">حذف</button>
+                            @Html.ActionLink("العودة إلى القائمة", "IndexView", null, new { @class = "btn btn-secondary btn-lg px-5 ml-3" })
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <!-- إضافة مكتبة SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script type="text/javascript">
+        document.addEventListener("DOMContentLoaded", function() {
+            document.getElementById("deleteButton").addEventListener("click", function (e) {
+                e.preventDefault(); // منع الإرسال الافتراضي للنموذج
+
+                Swal.fire({
+                    title: 'هل أنت متأكد؟',
+                    text: 'هذا الإجراء لا يمكن التراجع عنه!',
+                    input: 'text',
+                    inputPlaceholder: 'اكتب "متأكد" للتأكيد',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#d33',
+                    cancelButtonColor: '#3085d6',
+                    confirmButtonText: 'نعم، احذف المرشح',
+                    cancelButtonText: 'إلغاء'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        if (result.value === 'متأكد' || result.value === 'متاكد') {
+                            document.getElementById("deleteForm").submit(); // إرسال النموذج إذا تم التأكيد
+                        } else {
+                            Swal.fire({
+                                title: 'الإجراء لم يتم!',
+                                text: 'يجب كتابة "متأكد" للتأكيد',
+                                icon: 'error',
+                                confirmButtonColor: '#3085d6',
+                                confirmButtonText: 'حسنًا'
+                            });
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+}
