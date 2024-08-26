@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="ElectionModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="ElectionModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Ad">
           <Key>
             <PropertyRef Name="id" />
@@ -203,10 +203,26 @@
             <End Role="PartyCandidates" EntitySet="PartyCandidates" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="ElectionModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Ad">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="nationalId" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="campaignSlagan" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="listName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="partyName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="areaName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="image" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="status" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
         <EntityType Name="Admin">
           <Key>
             <PropertyRef Name="id" />
@@ -242,6 +258,25 @@
           <Property Name="endDate" Type="DateTime" Precision="0" />
           <Property Name="startTime" Type="Time" Precision="3" />
           <Property Name="endTime" Type="Time" Precision="3" />
+        </EntityType>
+        <EntityType Name="Debate">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="electionArea" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="firstCandidateName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="firstCandidateID" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="firstCandidateList" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="secondCandidateName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="secondCandidateID" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="secondCandidateList" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="debateSubject" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="debateMessage" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="debateDate" Type="DateTime" Precision="0" />
+          <Property Name="debateTime" Type="Time" Precision="3" />
+          <Property Name="zoomLink" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="status" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="ElectionArea">
           <Key>
@@ -354,10 +389,12 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="ElectionEntities" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="ElectionEntities1" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Ads" EntityType="Self.Ad" />
           <EntitySet Name="Admins" EntityType="Self.Admin" />
           <EntitySet Name="Contacts" EntityType="Self.Contact" />
           <EntitySet Name="Dates" EntityType="Self.Date" />
+          <EntitySet Name="Debates" EntityType="Self.Debate" />
           <EntitySet Name="ElectionAreas" EntityType="Self.ElectionArea" />
           <EntitySet Name="localCandidates" EntityType="Self.localCandidate" />
           <EntitySet Name="localLists" EntityType="Self.localList" />
@@ -372,49 +409,29 @@
             <End Role="PartyList" EntitySet="PartyLists" />
             <End Role="PartyCandidates" EntitySet="PartyCandidates" />
           </AssociationSet>
-          <EntitySet Name="Ads" EntityType="ElectionModel.Ad" />
-          <EntitySet Name="Debates" EntityType="ElectionModel.Debate" />
         </EntityContainer>
-        <EntityType Name="Ad">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="nationalId" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="campaignSlagan" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="listName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="partyName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="areaName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="image" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="status" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-        </EntityType>
-        <EntityType Name="Debate">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="electionArea" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="firstCandidateName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="firstCandidateID" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="firstCandidateList" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="secondCandidateName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="secondCandidateID" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="secondCandidateList" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="debateSubject" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="debateMessage" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="debateDate" Type="DateTime" Precision="0" />
-          <Property Name="debateTime" Type="Time" Precision="3" />
-          <Property Name="zoomLink" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="status" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="ElectionModelStoreContainer" CdmEntityContainer="ElectionEntities">
+        <EntityContainerMapping StorageEntityContainer="ElectionModelStoreContainer" CdmEntityContainer="ElectionEntities1">
+          <EntitySetMapping Name="Ads">
+            <EntityTypeMapping TypeName="ElectionModel.Ad">
+              <MappingFragment StoreEntitySet="Ad">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="nationalId" ColumnName="nationalId" />
+                <ScalarProperty Name="campaignSlagan" ColumnName="campaignSlagan" />
+                <ScalarProperty Name="listName" ColumnName="listName" />
+                <ScalarProperty Name="partyName" ColumnName="partyName" />
+                <ScalarProperty Name="areaName" ColumnName="areaName" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="image" ColumnName="image" />
+                <ScalarProperty Name="status" ColumnName="status" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Admins">
             <EntityTypeMapping TypeName="ElectionModel.Admin">
               <MappingFragment StoreEntitySet="Admin">
@@ -451,6 +468,26 @@
                 <ScalarProperty Name="endDate" ColumnName="endDate" />
                 <ScalarProperty Name="startTime" ColumnName="startTime" />
                 <ScalarProperty Name="endTime" ColumnName="endTime" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Debates">
+            <EntityTypeMapping TypeName="ElectionModel.Debate">
+              <MappingFragment StoreEntitySet="Debates">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="electionArea" ColumnName="electionArea" />
+                <ScalarProperty Name="firstCandidateName" ColumnName="firstCandidateName" />
+                <ScalarProperty Name="firstCandidateID" ColumnName="firstCandidateID" />
+                <ScalarProperty Name="firstCandidateList" ColumnName="firstCandidateList" />
+                <ScalarProperty Name="secondCandidateName" ColumnName="secondCandidateName" />
+                <ScalarProperty Name="secondCandidateID" ColumnName="secondCandidateID" />
+                <ScalarProperty Name="secondCandidateList" ColumnName="secondCandidateList" />
+                <ScalarProperty Name="debateSubject" ColumnName="debateSubject" />
+                <ScalarProperty Name="debateMessage" ColumnName="debateMessage" />
+                <ScalarProperty Name="debateDate" ColumnName="debateDate" />
+                <ScalarProperty Name="debateTime" ColumnName="debateTime" />
+                <ScalarProperty Name="zoomLink" ColumnName="zoomLink" />
+                <ScalarProperty Name="status" ColumnName="status" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -540,42 +577,6 @@
                 <ScalarProperty Name="partyVote" ColumnName="partyVote" />
                 <ScalarProperty Name="whiteLocalVote" ColumnName="whiteLocalVote" />
                 <ScalarProperty Name="whitePartyVote" ColumnName="whitePartyVote" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Ads">
-            <EntityTypeMapping TypeName="ElectionModel.Ad">
-              <MappingFragment StoreEntitySet="Ad">
-                <ScalarProperty Name="status" ColumnName="status" />
-                <ScalarProperty Name="image" ColumnName="image" />
-                <ScalarProperty Name="description" ColumnName="description" />
-                <ScalarProperty Name="areaName" ColumnName="areaName" />
-                <ScalarProperty Name="partyName" ColumnName="partyName" />
-                <ScalarProperty Name="listName" ColumnName="listName" />
-                <ScalarProperty Name="campaignSlagan" ColumnName="campaignSlagan" />
-                <ScalarProperty Name="nationalId" ColumnName="nationalId" />
-                <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="id" ColumnName="id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Debates">
-            <EntityTypeMapping TypeName="ElectionModel.Debate">
-              <MappingFragment StoreEntitySet="Debates">
-                <ScalarProperty Name="status" ColumnName="status" />
-                <ScalarProperty Name="zoomLink" ColumnName="zoomLink" />
-                <ScalarProperty Name="debateTime" ColumnName="debateTime" />
-                <ScalarProperty Name="debateDate" ColumnName="debateDate" />
-                <ScalarProperty Name="debateMessage" ColumnName="debateMessage" />
-                <ScalarProperty Name="debateSubject" ColumnName="debateSubject" />
-                <ScalarProperty Name="secondCandidateList" ColumnName="secondCandidateList" />
-                <ScalarProperty Name="secondCandidateID" ColumnName="secondCandidateID" />
-                <ScalarProperty Name="secondCandidateName" ColumnName="secondCandidateName" />
-                <ScalarProperty Name="firstCandidateList" ColumnName="firstCandidateList" />
-                <ScalarProperty Name="firstCandidateID" ColumnName="firstCandidateID" />
-                <ScalarProperty Name="firstCandidateName" ColumnName="firstCandidateName" />
-                <ScalarProperty Name="electionArea" ColumnName="electionArea" />
-                <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

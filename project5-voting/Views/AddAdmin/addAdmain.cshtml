@@ -12,26 +12,26 @@
 
 
 
-    <main class="container border p-5 mt-5 rounded shadow-sm bg-light">
-        <h1 class="text-center mb-4">Add New Admin</h1>
+    <main class="container border p-5 mt-5 rounded shadow-sm bg-light" style="direction: rtl;">
+        <h1 class="text-center mb-4">إضافة مسؤول جديد</h1>
         <div class="row justify-content-center">
             <div class="col-md-6">
                 <form>
                     <div class="form-group mb-3">
-                        <label for="adminName" class="form-label">Admin Name</label>
-                        @Html.EditorFor(model => model.name, new { htmlAttributes = new { @class = "form-control ", @id = "adminName", @placeholder = "Enter admin name" } })
+                        <label for="adminName" class="form-label" style="text-align: right; display: block;">اسم المسؤول</label>
+                        @Html.EditorFor(model => model.name, new { htmlAttributes = new { @class = "form-control ", @id = "adminName", @placeholder = "أدخل اسم المسؤول", style = "text-align: right;" } })
                     </div>
                     <div class="form-group mb-3">
-                        <label for="adminEmail" class="form-label">Email Address</label>
-                        @Html.EditorFor(model => model.email, new { htmlAttributes = new { @class = "form-control ", @id = "adminEmail", @placeholder = "Enter admin email" } })
+                        <label for="adminEmail" class="form-label" style="text-align: right; display: block;">البريد الالكتروني</label>
+                        @Html.EditorFor(model => model.email, new { htmlAttributes = new { @class = "form-control ", @id = "adminEmail", @placeholder = "أدخل البريد الإلكتروني ", style = "text-align: right;" } })
                     </div>
                     <div class="form-group mb-4">
-                        <label for="adminPassword" class="form-label">Set Password</label>
-                        @Html.EditorFor(model => model.password, new { htmlAttributes = new { @class = "form-control ", @id = "adminPassword", @placeholder = "Enter password" } })
+                        <label for="adminPassword" class="form-label" style="text-align: right; display: block;">تعيين كلمة المرور</label>
+                        @Html.EditorFor(model => model.password, new { htmlAttributes = new { @class = "form-control ", @id = "adminPassword", @placeholder = "أدخل كلمة المرور", style = "text-align: right;" } })
                     </div>
                     <div class="d-flex  align-items-center">
-                        <input type="submit" value="Add New Admin" class="btn m-lg-1"  style="color:white;  background-color:#004080"/>
-                        @Html.ActionLink("Show All Admins", "showAdmin", null, new { @class = "btn text-decoration-none", style = "background-color:antiquewhite; color:black" } )
+                        <input type="submit" value="إضافة مسؤول جديد" class="btn m-lg-1" style="color:white;  background-color:#004080" />
+                        @Html.ActionLink("إظهار جميع المسؤولين", "showAdmin", null, new { @class = "btn text-decoration-none", style = "background-color:antiquewhite; color:black" })
                     </div>
                 </form>
             </div>
@@ -45,7 +45,7 @@
             background-color: #f8f9fa;
         }
 
-       
+
 
         .form-label {
             font-weight: bold;
@@ -66,7 +66,6 @@
             text-decoration: none;
         }
     </style>
-
 
 
 }

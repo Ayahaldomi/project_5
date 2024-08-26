@@ -1,9 +1,38 @@
-﻿    @model project5_voting.Models.Admin
+﻿@model project5_voting.Models.Admin
 
 @{
     ViewBag.Title = "تسجيل دخول المسؤول";
-}
+    Layout = null;
 
+}
+<meta charset="utf-8">
+<title>@ViewBag.Title</title>
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<meta content="" name="keywords">
+<meta content="" name="description">
+
+<!-- Favicon -->
+<link href="~/img/favicon.ico" rel="icon">
+
+<!-- Google Web Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@700&family=Open+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+
+<!-- Icon Font Stylesheet -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+<!-- Libraries Stylesheet -->
+<link href="~/lib/animate/animate.min.css" rel="stylesheet">
+<link href="~/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+<link href="~/lib/lightbox/css/lightbox.min.css" rel="stylesheet">
+
+<!-- Customized Bootstrap Stylesheet -->
+<link href="~/css/bootstrap.min.css" rel="stylesheet">
+
+<!-- Template Stylesheet -->
+<link href="~/css/style.css" rel="stylesheet">
 
 @using (Html.BeginForm("LoginAdmin", "Login", FormMethod.Post))
 {
@@ -14,7 +43,7 @@
             <div class="col-md-6">
                 <div class="card">
                     <div class="card-header text-center bg-primary text-white">
-                        <h4>تسجيل دخول المسؤول</h4>
+                        <h4 class="text-light">تسجيل دخول المسؤول</h4>
                     </div>
                     <div class="card-body">
                         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
@@ -30,7 +59,7 @@
                             @Html.EditorFor(model => model.password, new { htmlAttributes = new { @class = "form-control" } })
                             @Html.ValidationMessageFor(model => model.password, "", new { @class = "text-danger" })
                         </div>
-
+                        <br />
                         <div class="form-group text-center">
                             <input type="submit" value="تسجيل الدخول" class="btn btn-primary" />
                         </div>

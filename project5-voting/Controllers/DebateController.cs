@@ -11,7 +11,7 @@ namespace project5_voting.Controllers
 {
     public class DebateController : Controller
     {
-        ElectionEntities db = new ElectionEntities();
+        ElectionEntities1 db = new ElectionEntities1();
 
         public ActionResult DebateForm()
         {

@@ -1,13 +1,8 @@
-﻿﻿@{
+﻿@{
     ViewBag.Title = "سياسات الانتخابات";
 }
 
-@*<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-<link href="https://cdn.jsdelivr.net/npm/sweetalert2@10/dist/sweetalert2.min.css" rel="stylesheet">*@
-
 <style>
-   
-
     .container {
         max-width: 800px;
     }
@@ -68,6 +63,13 @@
 <div class="container">
     <h1 class="text-center mb-4">سياسات الانتخابات في الأردن</h1>
 
+    <!-- Button to open the file -->
+    <div class="text-center mt-4">
+        <button class="btn btn-primary" id="openFileButton">قانون الانتخاب لمجلس النواب وتعديله </button>
+    </div>
+
+    <br />
+    <!-- Sections for the policies -->
     <div class="policy-section">
         <h2>
             قانون الانتخابات العامة
@@ -137,6 +139,8 @@
             <p>تعلن النتائج بشكل شفاف، وتُنشر تقارير دورية لضمان الشفافية والمساءلة.</p>
         </div>
     </div>
+
+
 </div>
 
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
@@ -145,10 +149,12 @@
 
 <script>
     $(document).ready(function () {
+        // Toggle the policy sections
         $('.policy-section h2').click(function () {
             $(this).parent().toggleClass('show');
         });
 
+        // Show error message if any
         var errorMessage = '@TempData["LoginError"]';
         if (errorMessage) {
             Swal.fire({
@@ -157,5 +163,9 @@
                 text: errorMessage
             });
         }
+
+        $('#openFileButton').click(function () {
+            window.open('https://drive.google.com/file/d/1x9faf0bOLPVx_gfad65ykLzJ0ryf2GDd/view?usp=sharing', '_blank');
+        });
     });
 </script>

@@ -16,7 +16,7 @@ namespace project5_voting.Controllers
     public class AdsController : Controller
     {
            
-        private ElectionEntities db = new ElectionEntities();
+        private ElectionEntities1 db = new ElectionEntities1();
 
         private readonly string PayPalBaseUrl = "https://api.sandbox.paypal.com/";
         private readonly string ClientId = "ARPUvF-CVZ4yA8o3ZTmyxU_9aw2AJZYjW8pDJ09OXyPNPy9aZYNPxSdc-ZCBpF8YT64dnwh6EEfXEZo5";

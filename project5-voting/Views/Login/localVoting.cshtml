@@ -1,5 +1,4 @@
 ﻿
-
 @model IEnumerable<project5_voting.Models.LocalCandidatesGroupedViewModel>
 
 <style>
@@ -166,7 +165,7 @@
                                                name="selectedCandidates" value="@candidate.id" disabled style="transform: scale(1.5);">
                                     </div>
                                     <div class="candidate-image">
-                                        <img src="../../imgs/@candidate.img" alt="Candidate 1"> <!-- Placeholder for the candidate image -->
+                                        <img src="~/Image1/@candidate.img" alt="Candidate 1"> <!-- Placeholder for the candidate image -->
                                     </div>
                                     <div class="candidate-name">@candidate.candidateName</div>
                                     <div class="candidate-number">@candCaunter</div>
@@ -183,7 +182,7 @@
         }
     </div>
     <div class="form-group text-center">
-        <button type="submit" class="btn btn-primary btn-lg" id="deleteButton" >تصويت</button>
+        <button type="submit" class="btn btn-primary btn-lg" id="deleteButton">تصويت</button>
     </div>
 }
 
@@ -219,4 +218,49 @@
             }
         });
     }
+</script>
+<script>
+    document.getElementById('deleteButton').addEventListener('click', function (event) {
+        // Prevent form submission
+        event.preventDefault();
+
+        // Check if any radio button is selected
+        var selectedList = document.querySelector('input[name="selectedList"]:checked');
+
+        if (!selectedList) {
+            // Show SweetAlert warning if no radio button is selected
+            Swal.fire({
+                title: 'لم تقم بالتصويت لاي قائمة',
+                text: 'سيتم احتساب صوتك كورقة بيضاء',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'حسنا',
+                cancelButtonText: 'إلغاء'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // If the user confirms, submit the form
+                    event.target.closest('form').submit();
+                }
+            });
+        } else {
+            // If a radio button is selected, show SweetAlert confirmation
+            Swal.fire({
+                title: 'هل انت متأكد؟',
+                text: 'لا يمكنك التراجع عن التصويت',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'نعم، قم بالتصويت',
+                cancelButtonText: 'إلغاء'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // If the user confirms, submit the form
+                    event.target.closest('form').submit();
+                }
+            });
+        }
+    });
 </script>

@@ -7,6 +7,12 @@
 }
 
 <style>
+    .card {
+        width: 700px;
+        margin: 20px auto;
+        border: 2px solid #004080;
+        box-shadow: 0px 4px 8px rgba(0, 64, 128, 0.3); / ظل الكارد باللون الأزرق /
+    }
     .col-12 {
         -ms-flex: 0 0 100%;
         flex: 0 0 100%;
@@ -22,59 +28,75 @@
     .form-label {
         font-weight: bold;
     }
-
-
+    input.btn.btn-info {
+        background-color: #004080;
+    }
+    .form-control {
+        display: block;
+        width: 100%;
+        height: calc(1.5em + .75rem + 2px);
+        padding: .375rem .75rem;
+        font-size: 1rem;
+        font-weight: 400;
+        line-height: 1.5;
+        color: #495057;
+        background-color: #eef6ff;
+        background-clip: padding-box;
+        border: 1px solid #004080;
+        border-radius: .25rem;
+        transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+    }
 
     #date-time-details {
         position: absolute;
         right: 395px;
         top: 476px;
-        width: 536px; /* adjust the width as needed */
-        padding: 20px; /* adjust the padding as needed */
-        background-color: #f9f9f9; /* change the background color if desired */
-        border: 1px solid #ccc; /* adjust the border as needed */
-        border-radius: 5px; /* adjust the border radius as needed */
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* adjust the shadow as needed */
-        text-align: right; /* align the text to the right for better readability in Arabic */
+        width: 536px;
+        padding: 20px;
+        background-color: #0b85ff12;
+        border: 1px solid #004080;
+        border-radius: 5px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        text-align: right;
     }
 
         #date-time-details h1, #date-time-details h4 {
-            margin: 10px 0; /* adjust the margin as needed */
-        }
+            margin: 10px 0; / adjust the margin as needed */
+    }
 </style>
 
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
 
-    <div class="card" dir="rtl" style="width: 700px; margin: 20px auto;">
+    <div class="card" dir="rtl" style="width: 700px; margin: 20px auto; ">
         <div class="card-body">
-            <h4 class="card-title text-center mb-4">تحديد التاريخ والوقت</h4>
+            <h4 class="card-title text-center mb-4">تحديد تاريخ و وقت السماح بالانتخاب </h4>
             <hr />
             <div class="row g-3">
 
                 <div class="col-12">
-                    <label for="StartDate" class="form-label">تحديد تاريخ البداية</label>
-                    <input type="date" class="form-control" id="startDate" name="StartDate" />
-                    @Html.ValidationMessageFor(model => model.startDate, "", new { @class = "text-danger" })
+                    <label for="StartDate" class="form-label" style="text-align: right; display: block;"> تاريخ البداية</label>
+                    <input type="date" class="form-control" id="startDate" name="StartDate" dir="rtl" />
+                    @Html.ValidationMessageFor(model => model.startDate, "", new { @class = "text-danger", style = "text-align: right; display: block;" })
                 </div>
 
                 <div class="col-12">
-                    <label for="EndDate" class="form-label">تحديد تاريخ النهاية</label>
-                    <input type="date" class="form-control" id="endDate" name="EndDate" />
-                    @Html.ValidationMessageFor(model => model.endDate, "", new { @class = "text-danger" })
+                    <label for="EndDate" class="form-label" style="text-align: right; display: block;"> تاريخ النهاية</label>
+                    <input type="date" class="form-control" id="endDate" name="EndDate" dir="rtl" />
+                    @Html.ValidationMessageFor(model => model.endDate, "", new { @class = "text-danger", style = "text-align: right; display: block;" })
                 </div>
 
                 <div class="col-12">
-                    <label for="startTime" class="form-label">تحديد وقت البداية </label>
-                    <input type="time" class="form-control" id="startTime" name="StartTime" />
-                    @Html.ValidationMessageFor(model => model.startTime, "", new { @class = "text-danger" })
+                    <label for="startTime" class="form-label" style="text-align: right; display: block;"> وقت البداية </label>
+                    <input type="time" class="form-control" id="startTime" name="StartTime" dir="rtl" />
+                    @Html.ValidationMessageFor(model => model.startTime, "", new { @class = "text-danger", style = "text-align: right; display: block;" })
                 </div>
 
                 <div class="col-12">
-                    <label for="EndTime" class="form-label">تحديد وقت النهاية</label>
-                    <input type="time" class="form-control" id="endTime" name="EndTime" />
-                    @Html.ValidationMessageFor(model => model.endTime, "", new { @class = "text-danger" })
+                    <label for="EndTime" class="form-label" style="text-align: right; display: block;"> وقت النهاية</label>
+                    <input type="time" class="form-control" id="endTime" name="EndTime" dir="rtl" />
+                    @Html.ValidationMessageFor(model => model.endTime, "", new { @class = "text-danger", style = "text-align: right; display: block;" })
                 </div>
 
                 <div class="col-12 text-center mt-4">

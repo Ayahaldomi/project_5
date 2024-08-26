@@ -13,7 +13,7 @@
     .custom-card {
         border-radius: 15px;
         transition: transform 0.3s ease, box-shadow 0.3s ease;
-        overflow: hidden; /* لضمان عدم تجاوز الصورة لحدود الكارد */
+        overflow: hidden; 
     }
 
         .custom-card:hover {
@@ -23,29 +23,25 @@
 
     .card-img-top {
         width: 100%;
-        height: auto; /* لضمان الحفاظ على نسبة العرض إلى الارتفاع */
+        height: auto; 
     }
-
     .row {
         --bs-gutter-x: 6.5rem;
         --bs-gutter-y: 0;
         display: flex;
         flex-wrap: wrap;
-        margin-top: calc(var(--bs-gutter-y)* -1);
+        margin-top: calc(var(--bs-gutter-y) -1);
         margin-right: calc(var(--bs-gutter-x) / -2);
         margin-left: calc(var(--bs-gutter-x) / -2);
     }
-
     h2 {
         font-size: 66px;
         margin-bottom: 39px;
     }
-
     h5, .h5 {
         font-size: 2.25rem;
         text-align: center;
     }
-
     main {
         background-color: #f9fdf896;
     }

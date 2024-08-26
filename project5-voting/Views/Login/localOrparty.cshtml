@@ -1,6 +1,4 @@
-﻿
-
-@model IEnumerable<project5_voting.Models.USER>
+﻿@model IEnumerable<project5_voting.Models.USER>
 
 
 <style>
@@ -398,6 +396,7 @@
         display: inline-block;
         background-color: #00b97d;
     }
+
         #deleteButton:hover {
             background-color: #00a36c; /* Darker green on hover */
         }
@@ -406,11 +405,30 @@
         text-align: center; /* Center the button within the container */
     }
 
+
+    /* No-hover class to disable hover effects */
+    .no-hover .card {
+        pointer-events: none;
+    }
+
+        .no-hover .card:hover {
+            box-shadow: none; /* Disable the hover shadow effect */
+            width: 20rem; /* Maintain the original width on hover */
+        }
+
+    .no-hover .flip-card__container {
+        transform: none !important; /* Disable the flipping transform */
+        cursor: not-allowed; /* Change cursor to indicate no flipping */
+    }
 </style>
 
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+@{
+    bool showAlert = false;
+}
+
 
 
 <div class="center-wrapper">
@@ -429,13 +447,18 @@
         if (item.nationalID == logedInUser)
         {
             var ifVoted = item;
+            if ((ifVoted.partyVote == 1 || ifVoted.whitePartyVote == 1) &&
+            (ifVoted.localVote == 1 || ifVoted.whiteLocalVote == 1))
+            {
+                showAlert = true;
+            }
 
             <main class="main">
                 <section class="card-area">
                     @if (ifVoted.partyVote == 1 || ifVoted.whitePartyVote == 1)
                     {
                         <!-- Card: Beach -->
-                        <section class="card-section">
+                        <section class="card-section no-hover">
                             <div class="card">
                                 <div class="flip-card">
                                     <div class="flip-card__container">
@@ -502,7 +525,7 @@
                     @if (ifVoted.localVote == 1 || ifVoted.whiteLocalVote == 1)
                     {
                         <!-- Card: Camping -->
-                        <section class="card-section">
+                        <section class="card-section no-hover">
                             <div class="card">
                                 <div class="flip-card">
                                     <div class="flip-card__container">
@@ -612,15 +635,59 @@
                     }
                 </section>
             </main>
+
         }
     }
     <div class="form-group text-center">
-        <button type="submit" class="btn btn-primary btn-lg" id="deleteButton" onclick="myForm" name="hi">انهاء التصويت</button>
+        <button type="button" class="btn btn-primary btn-lg" id="deleteButton">انهاء التصويت</button>
     </div>
 
 }
 
+@if (showAlert)
+{
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            Swal.fire({
+                title: 'لا يمكنك التصويت مرة اخرى',
+                text: 'لقد قمت بالتصويت لورقتي الاقتراع المتاحة.',
+                icon: 'error',
+                confirmButtonColor: '#3085d6',
+                confirmButtonText: 'حسنا'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = '@Url.Action("LogoutUser", "Login")'; // Redirect to the homepage
+                }
+            });
+        });
+    </script>
+}
+
+
+
+
 <script>
+
+    document.getElementById('deleteButton').addEventListener('click', function (event) {
+        event.preventDefault(); // Prevent the default form submission
+
+        Swal.fire({
+            title: 'هل انت متأكد؟',
+            text: 'لا يمكنك التراجع عن هذا اذا قمت بالتصويت سيتم احساب صوتك كورقه بيضاء',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'نعم، قم بالتصويت',
+            cancelButtonText: 'إلغاء'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // If confirmed, submit the form
+                event.target.closest('form').submit();
+            }
+        });
+    });
+
     // Handle the click event for all buttons with IDs 'voteDoneButton1', 'voteDoneButton2', 'voteDoneButton3', 'voteDoneButton4'
     document.querySelectorAll('[id^="voteDoneButton"]').forEach(function (button) {
         button.addEventListener('click', function (event) {
@@ -656,4 +723,3 @@
         }, 2000); // 2000ms = 2 seconds
     });
 </script>
-

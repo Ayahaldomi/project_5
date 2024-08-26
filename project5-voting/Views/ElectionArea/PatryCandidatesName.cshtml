@@ -40,13 +40,11 @@
             background-color: #218838; /* Darker green on hover */
         }
 
-    .btn-secondary {
-        background-color: #3a7d34; /* Darker green for secondary button */
-    }
 
-        .btn-secondary:hover {
-            background-color: #2c6b2f; /* Even darker green on hover */
-        }
+
+    .btn-secondary:hover {
+        background-color: #2c6b2f; /* Even darker green on hover */
+    }
 
     /* Table Styling */
     .styled-table {
@@ -60,10 +58,10 @@
     }
 
         .styled-table thead th {
-            background-color: #28a745; /* Green header */
+            background-color: #5b8c51; /* Green header */
             color: #fff;
             padding: 12px 15px;
-            text-align: left;
+            text-align: right;
         }
 
         .styled-table tbody tr:nth-child(even) {
@@ -80,42 +78,43 @@
         }
 
         .styled-table th, .styled-table td {
-            text-align: left;
+            text-align: right;
             font-size: 24px;
         }
+
+    .btn-secondary {
+        padding: 5px;
+        border-radius: 7px;
+        background-color: #5b8c51;
+    }
 </style>
 
+
 <body>
-    <div class="containerPartyCandidate">
+    <div class="containerPartyCandidate" style="text-align: center;">
         <h1>أسماء المترشحين في هذه القائمة</h1>
 
         <table class="styled-table">
             <thead>
                 <tr>
-                    <th>@Html.DisplayNameFor(model => model.email)</th>
-                    <th>@Html.DisplayNameFor(model => model.name)</th>
-                    <th>@Html.DisplayNameFor(model => model.gender)</th>
-                    <th>@Html.DisplayNameFor(model => model.birthday)</th>
-                    <th>@Html.DisplayNameFor(model => model.typeOfChair)</th>
-                    @*<th>@Html.DisplayNameFor(model => model.religion)</th>*@
-                    @*<th>@Html.DisplayNameFor(model => model.partyList.partyName)</th>*@
-                    <th>Actions</th>
+                    <th>صورة المترشح</th>
+                    <th>البريد الالكتروني</th>
+                    <th>تاريخ الميلاد</th>
+                    <th>الجنس</th>
+                    <th>نوع الكرسي</th>
+                    <th>الاسم</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach (var item in Model)
                 {
                     <tr>
+                        <td style="text-align:center;" ><img src="~/Image1/@item.candidateImage" alt="Alternate Text" height="75" /></td>
                         <td>@Html.DisplayFor(modelItem => item.email)</td>
-                        <td>@Html.DisplayFor(modelItem => item.name)</td>
+                        <td>@(item.birthday.HasValue ? item.birthday.Value.ToString("yyyy-MM-dd") : "غير محدد")</td>
                         <td>@Html.DisplayFor(modelItem => item.gender)</td>
-                        <td>@Html.DisplayFor(modelItem => item.birthday)</td>
                         <td>@Html.DisplayFor(modelItem => item.typeOfChair)</td>
-                        @*<td>@Html.DisplayFor(modelItem => item.religion)</td>*@
-                        @*<td>@Html.DisplayFor(modelItem => item.partyListID.partyName)</td>*@
-                        <td>
-                            <!-- Add action links or buttons here if needed -->
-                        </td>
+                        <td>@Html.DisplayFor(modelItem => item.name)</td>
                     </tr>
                 }
             </tbody>

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -12,7 +13,8 @@ namespace project5_voting.Controllers
 {
     public class localCandidatesController : Controller
     {
-        private ElectionEntities db = new ElectionEntities();
+        private ElectionEntities1 db = new ElectionEntities1();
+
         public ActionResult localList()
         {
             return View();
@@ -36,16 +38,24 @@ namespace project5_voting.Controllers
 
         public ActionResult ClearSessionAndRedirect()
         {
-            // Clear session data
+            long listId = Convert.ToInt64(Session["listId"]);
+            var localCandidates = db.localCandidates.Where(c => c.listKey == listId).ToList();
+
+            if (!CheckListCriteria(localCandidates))
+            {
+                TempData["wrongId"] = "الشروط غير متحققة. يرجى مراجعة الشروط المطلوبة.";
+                return RedirectToAction("localCandidate");
+            }
+            //to cleare the data
             Session["listName"] = null;
             Session["listId"] = null;
             Session["electionArea"] = null;
 
-            // Redirect to the Index action of the Home controller
+
             return RedirectToAction("Index", "Home");
         }
 
-        // GET: localCandidates
+
         public ActionResult localCandidate()
         {
             Session["wrongId"] = "";
@@ -56,15 +66,45 @@ namespace project5_voting.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult localCandidate(localCandidate localCandidate)
+        public ActionResult localCandidate(localCandidate localCandidate, HttpPostedFileBase candidateImage)
         {
+            long listId = Convert.ToInt64(Session["listId"]);
+
+            // Validate the candidate's existence
             var candidate = db.USERS.FirstOrDefault(u => u.nationalID == localCandidate.national_id);
             if (candidate == null)
             {
-                Session["wrongId"] = "You entered a wrong national ID.";
+                TempData["wrongId"] = "لقد أدخلت رقم وطني خاطئ.";
                 return RedirectToAction("localCandidate");
             }
 
+            // Check if the candidate's national ID or name is already in the list
+            bool alreadyInList = db.localCandidates.Any(c => c.listKey == listId &&
+                                                             (c.national_id == localCandidate.national_id ||
+                                                              c.candidateName == localCandidate.candidateName));
+            if (alreadyInList)
+            {
+                TempData["wrongId"] = "لا يمكن إدخال نفس الاسم أو الرقم الوطني مرتين في القائمة.";
+                return RedirectToAction("localCandidate");
+            }
+
+            // Save the uploaded image if provided
+            if (candidateImage != null && candidateImage.ContentLength > 0)
+            {
+                string uploadsFolder = Server.MapPath("~/Uploads/");
+                if (!Directory.Exists(uploadsFolder))
+                {
+                    Directory.CreateDirectory(uploadsFolder);
+                }
+
+                string fileName = Path.GetFileName(candidateImage.FileName);
+                string path = Path.Combine(uploadsFolder, fileName);
+                candidateImage.SaveAs(path);
+
+                localCandidate.img = "/Uploads/" + fileName; // Save the image path
+            }
+
+            // Set additional properties
             localCandidate.listName = Session["listName"].ToString();
             localCandidate.candidateName = candidate.name;
             localCandidate.election_area = Session["electionArea"].ToString();
@@ -73,84 +113,128 @@ namespace project5_voting.Controllers
             localCandidate.birth_day = candidate.birthday;
             localCandidate.religion = candidate.religion;
             localCandidate.counter = 0;
-            localCandidate.listKey = Convert.ToInt64(Session["listId"]);
+            localCandidate.listKey = listId;
+
             db.localCandidates.Add(localCandidate);
             db.SaveChanges();
+
             return RedirectToAction("localCandidate");
         }
-
         public ActionResult locaListAdmin()
         {
-            return View(db.localLists.ToList());
+            var lists = db.localLists.ToList();
+            return View(lists);
         }
-       
-        public ActionResult localCandidateAdmin(long? id)
+
+        public ActionResult localCandidateAdmin(int? id)
         {
-            Session["listIdAdmin"] = id;
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
             var selectedList = db.localLists.FirstOrDefault(u => u.id == id);
             if (selectedList == null)
             {
                 return HttpNotFound();
             }
 
-            string electionArea = selectedList.electionDistrict;
             var localCandidates = db.localCandidates
                 .Where(c => c.listKey == id)
                 .ToList();
 
+            if (!CheckListCriteria(localCandidates))
+            {
+                ViewBag.AlertMessage = "الشروط غير متحققة. يرجى مراجعة الشروط المطلوبة.";
+                return View(localCandidates);
+            }
+
+            selectedList.status = "1";
+            db.Entry(selectedList).State = EntityState.Modified;
+            db.SaveChanges();
+
+            return View(localCandidates);
+        }
+     
+       public bool CheckListCriteria(List<localCandidate> candidates)
+        {
+            // Check that all candidates are over 25 years old
+            bool allOver25 = candidates.All(c =>
+                c.birth_day.HasValue && (DateTime.Now.Year - c.birth_day.Value.Year) > 25);
+
+            if (!allOver25)
+            {
+                TempData["wrongId"] = "يجب أن يكون عمر جميع المتقدمين أكبر من 25 عاماً.";
+                return false;
+            }
+
+            // Retrieve election area from session
+            string electionArea = Session["electionArea"] as string;
+            if (string.IsNullOrEmpty(electionArea))
+            {
+                TempData["wrongId"] = "لم يتم تحديد الدائرة الانتخابية. يرجى المحاولة مرة أخرى.";
+                return false;
+            }
+
+            bool hasAtLeastOneFemale = candidates.Any(c => c.gender == "انثى");
+            bool hasAtLeastOneChristian = candidates.Any(c => c.religion == "مسيحي");
+            int candidateCount = candidates.Count;
+
             if (electionArea == "اربد الاولى")
             {
-                bool allOver25 = localCandidates.All(c =>
-                    c.birth_day.HasValue && (DateTime.Now.Year - c.birth_day.Value.Year) > 25);
-
-                bool hasType1Chair = localCandidates.Any(c => c.typeOfChair == "كوتا");
-                bool hasAtLeast8Candidates = localCandidates.Count >= 8;
-
-                if (allOver25 && hasType1Chair && hasAtLeast8Candidates)
+                if (!hasAtLeastOneFemale || !hasAtLeastOneChristian)
                 {
-                    selectedList.status = "1";
-                    db.Entry(selectedList).State = EntityState.Modified;
-                    db.SaveChanges();
+                    TempData["wrongId"] = "يجب أن يكون هناك على الأقل أنثى واحدة ومسيحي واحد في القائمة.";
+                    return false;
+                }
+                if (candidateCount > 8)
+                {
+                    TempData["wrongId"] = "يجب أن يكون عدد المتقدمين 8 كحد أقصى.";
+                    return false;
                 }
             }
-
-            if (electionArea == "اربد الثانية")
+            else if (electionArea == "اربد الثانية")
             {
-                bool allOver25 = localCandidates.All(c =>
-                    c.birth_day.HasValue && (DateTime.Now.Year - c.birth_day.Value.Year) > 25);
-
-                bool hasType1ChairWoman = localCandidates.Any(c => c.typeOfChair == "كوتا");
-                bool hasType1Chairchristian = localCandidates.Any(c => c.typeOfChair == "مسيحي");
-                bool hasAtLeast8Candidates = localCandidates.Count >= 7;
-
-                if (allOver25 && hasType1ChairWoman && hasAtLeast8Candidates && hasType1Chairchristian)
+                if (!hasAtLeastOneFemale)
                 {
-                    selectedList.status = "1";
-                    db.Entry(selectedList).State = EntityState.Modified;
-                    db.SaveChanges();
+                    TempData["wrongId"] = "يجب أن يكون هناك على الأقل أنثى واحدة في القائمة.";
+                    return false;
+                }
+                if (candidateCount > 7)
+                {
+                    TempData["wrongId"] = "يجب أن يكون عدد المتقدمين 7 كحد أقصى.";
+                    return false;
                 }
             }
-
-            if (electionArea == "mafraq")
+            else if (electionArea == "mafraq")
             {
-                bool allOver25 = localCandidates.All(c =>
-                    c.birth_day.HasValue && (DateTime.Now.Year - c.birth_day.Value.Year) > 25);
-
-                bool hasType1ChairWoman = localCandidates.Any(c => c.typeOfChair == "كوتا");
-                bool hasAtLeast8Candidates = localCandidates.Count >= 4;
-
-                if (allOver25 && hasType1ChairWoman && hasAtLeast8Candidates)
+                if (!hasAtLeastOneFemale)
                 {
-                    selectedList.status = "1";
-                    db.Entry(selectedList).State = EntityState.Modified;
-                    db.SaveChanges();
+                    TempData["wrongId"] = "يجب أن يكون هناك على الأقل أنثى واحدة في القائمة.";
+                    return false;
+                }
+                if (candidateCount > 5)
+                {
+                    TempData["wrongId"] = "يجب أن يكون عدد المتقدمين 4 كحد أقصى.";
+                    return false;
+                }
+            }
+            else
+            {
+                // General competitive rule
+                if (!hasAtLeastOneFemale || !hasAtLeastOneChristian)
+                {
+                    TempData["wrongId"] = "يجب أن يكون هناك على الأقل أنثى واحدة ومسيحي واحد في القائمة.";
+                    return false;
+                }
+                if (candidateCount > 8)
+                {
+                    TempData["wrongId"] = "يجب أن يكون عدد المتقدمين 8 كحد أقصى.";
+                    return false;
                 }
             }
 
-            Session["selectedList"] = selectedList.status;
-
-            var localCandidate = db.localCandidates.ToList();
-            return View(localCandidate);
+            return true; // All criteria are met
         }
 
         // GET: localCandidates/Details/5
@@ -223,18 +307,24 @@ namespace project5_voting.Controllers
         }
 
         // GET: localCandidates/Delete/5
-        public ActionResult Delete(long? id)
+
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult UpdateStatus(long id, string status)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            localList localList = db.localLists.Find(id);
-            if (localList == null)
+            var list = db.localLists.Find(id);
+            if (list == null)
             {
                 return HttpNotFound();
             }
-            return View(localList);
+
+            list.status = status; // Update the status
+            db.Entry(list).State = EntityState.Modified;
+            db.SaveChanges();
+
+            return RedirectToAction("locaListAdmin");
         }
 
         // POST: localCandidates/Delete/5
@@ -242,13 +332,31 @@ namespace project5_voting.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(long id)
         {
-            localList localList = db.localLists.Find(id);
-            if (localList != null)
+            var localCandidate = db.localCandidates.Find(id);
+            if (localCandidate != null)
             {
-                db.localLists.Remove(localList);
+                db.localCandidates.Remove(localCandidate);
                 db.SaveChanges();
             }
             return RedirectToAction("locaListAdmin");
         }
+
+        [HttpPost]
+        public ActionResult Deletelist(int id)
+        {
+            var locallist = db.localLists.Find(id);
+            var localCandidate = db.localCandidates.Where(l => l.listKey == id).ToList();
+            foreach (var candidate in localCandidate)
+            {
+
+                db.localCandidates.Remove(candidate);
+                db.SaveChanges();
+
+            }
+            db.localLists.Remove(locallist);
+            db.SaveChanges();
+            return RedirectToAction("locaListAdmin");
+        }
+
     }
 }

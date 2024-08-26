@@ -7,14 +7,14 @@
 
 <style>
     /* Container Styling */
-    .container {
+    /*.container {
         width: 80%;
         margin: 0 auto;
         padding: 20px;
         background-color: #ffffff;
         border-radius: 8px;
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    }
+    }*/
 
     h1 {
         color: #333;
@@ -61,10 +61,9 @@
     }
 
         .styled-table thead th {
-            background-color: #28a745; /* Green header */
+            background-color: #5b8c51; /* Green header */
             color: #fff;
             padding: 12px 15px;
-            text-align: left;
         }
 
         .styled-table tbody tr:nth-child(even) {
@@ -81,35 +80,37 @@
         }
 
         .styled-table th, .styled-table td {
-            text-align: left;
             font-size: 24px;
         }
 </style>
 
 
-<div class="container">
+<div class="container" , style="text-align: center;">
     <h2>اسماء المرشحين المحليين</h2>
 
 
 
-    <table class="styled-table">
-        <thead>
+    <table class="styled-table" style="text-align: right; ">
+        <thead style="text-align: right;">
             <tr>
-                <th>@Html.DisplayNameFor(model => model.candidateName)</th>
-                <th>@Html.DisplayNameFor(model => model.typeOfChair)</th>
-                <th>@Html.DisplayNameFor(model => model.listName)</th>
+
+
+                <th style="text-align:center;">صورة المترشح</th>
+                <th>نوع الكرسي</th>
+                <th>اسم القائمة</th>
+                <th>اسم المرشح</th>
+
             </tr>
         </thead>
-        <tbody>
+        <tbody style=" text-align: right; ">
             @foreach (var item in Model)
             {
                 <tr>
-                    <td>@Html.DisplayFor(modelItem => item.candidateName)</td>
+                    <td style="text-align:center;"><img src="~/image1/@item.img" alt="Alternate Text" style="width:70px;"/></td>
                     <td>@Html.DisplayFor(modelItem => item.typeOfChair)</td>
                     <td>@Html.DisplayFor(modelItem => item.listName)</td>
-                    <td>
-                        <!-- Add action links or buttons here if needed -->
-                    </td>
+                    <td>@Html.DisplayFor(modelItem => item.candidateName)</td>
+
                 </tr>
             }
         </tbody>

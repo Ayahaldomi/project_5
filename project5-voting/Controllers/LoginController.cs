@@ -16,7 +16,7 @@ namespace project5_voting.Controllers
 {
     public class LoginController : Controller
     {
-        ElectionEntities db = new ElectionEntities();
+        ElectionEntities1 db = new ElectionEntities1();
 
 
         public ActionResult firststeplogin()
@@ -106,24 +106,43 @@ namespace project5_voting.Controllers
                 Session["electionArea"] = logged_user.electionArea;
                 Session["name"] = logged_user.name;
 
-
                 //HttpCookie startDateTime = Request.Cookies["startDateTime"];
 
-                //var startdate = Request.Cookies["startDateTime"].Value;
-                //var endate = Request.Cookies["endDateTime"].Value;
+                var startdate = db.Dates.Find(1).startDate.Value.ToString("dd/MM/yyyy");
+                var enddate = db.Dates.Find(1).endDate.Value.ToString("dd/MM/yyyy");
+
+                var startTime = db.Dates.Find(1).startTime.ToString();
+                var endTime = db.Dates.Find(1).endTime.ToString();
+
+                var currentDate = DateTime.Now.ToString("dd-MM-yyyy");
+                var currentTime = DateTime.Now.ToString("HH:mm:ss");
 
 
-                //var date = DateTime.Now.ToString();
+                int dateResult1 = string.Compare(startdate, currentDate);
+                int dateResult2 = string.Compare(enddate, currentDate);
 
-                //int result1 = string.Compare(startdate, date);
-                //int result2 = string.Compare(endate, date);
+                int timeResult1 = string.Compare(startTime, currentTime);
+                int timeResult2 = string.Compare(endTime, currentTime);
 
-                //if (result1 < 0 && result2 > 0)
-                //{
-                //    return RedirectToAction("electionArea");
-                //}
-                //return RedirectToAction("Index", "Home");
-                return RedirectToAction("electionArea");
+                if (dateResult1 < 0 && dateResult2 > 0)
+                {
+                    if (timeResult1 < 0 && timeResult2 > 0)
+                    {
+                        return RedirectToAction("electionArea");
+                    }
+                    else
+                    {
+                        return RedirectToAction("Index", "Home");
+
+                    }
+
+                }
+                else
+                {
+                    return RedirectToAction("Index", "Home");
+
+                }
+
             }
             else
             {
@@ -191,25 +210,40 @@ namespace project5_voting.Controllers
             // Set success message
             ViewBag.Message = "Password has been successfully reset.";
 
-            //HttpCookie startDateTime = Request.Cookies["startDateTime"];
+            var startdate = db.Dates.Find(1).startDate.Value.ToString("dd/MM/yyyy");
+            var enddate = db.Dates.Find(1).endDate.Value.ToString("dd/MM/yyyy");
 
-            //var startdate = Request.Cookies["startDateTime"].Value;
-            //var endate = Request.Cookies["endDateTime"].Value;
+            var startTime = db.Dates.Find(1).startTime.ToString();
+            var endTime = db.Dates.Find(1).endTime.ToString();
 
-            ////var end = Session["EndDateTime"].ToString();
+            var currentDate = DateTime.Now.ToString("dd-MM-yyyy");
+            var currentTime = DateTime.Now.ToString("HH:mm:ss");
 
-            //var date = DateTime.Now.ToString();
 
-            //int result1 = string.Compare(startdate, date);
-            //int result2 = string.Compare(endate, date);
+            int dateResult1 = string.Compare(startdate, currentDate);
+            int dateResult2 = string.Compare(enddate, currentDate);
 
-            //if (result1 < 0 && result2 > 0)
-            //{
-            //    return RedirectToAction("electionArea");
-            //}
-            //return RedirectToAction("Index", "Home");
+            int timeResult1 = string.Compare(startTime, currentTime);
+            int timeResult2 = string.Compare(endTime, currentTime);
 
-            return RedirectToAction("electionArea");
+            if (dateResult1 < 0 && dateResult2 > 0)
+            {
+                if (timeResult1 < 0 && timeResult2 > 0)
+                {
+                    return RedirectToAction("electionArea");
+                }
+                else
+                {
+                    return RedirectToAction("Index", "Home");
+
+                }
+
+            }
+            else
+            {
+                return RedirectToAction("Index", "Home");
+
+            }
         }
 
         //////////////////////////////////////////////////////////////////////

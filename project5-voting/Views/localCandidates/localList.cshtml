@@ -1,92 +1,135 @@
 ﻿@model project5_voting.Models.localList
 
 
+@{
+    ViewBag.Title = "localList";
+}
 
-<h2 class="text-right mb-4">طلب الترشح للقوائم المحلية</h2>
+<div class="container mt-5">
+    @*<h2 class="text-center mb-4">طلب الترشح للقوائم المحلية</h2>*@
 
-@Html.AntiForgeryToken()
-@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
-    <div class="container mt-5">
-        <div class="card border-dark shadow-lg">
-            <div class="card-body">
-                <h4 class="card-title text-right text-dark mb-4">تعبئة طلب الترشح</h4>
-                <hr />
-                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="row">
+        <!-- عمود الصورة -->
+        <div class="col-md-6 order-md-2 order-1 mb-4 mb-md-0">
+            <img src="~/images/img1.jpg" class="img-fluid rounded shadow-sm" alt="صورة تعبيرية" />
+        </div>
 
-                <div class="form-horizontal">
-                    <div class="form-group row mb-3">
-                        <label class="col-md-2 col-form-label text-dark text-right">اسم القائمة</label>
-                        <div class="col-md-10">
-                            @Html.EditorFor(model => model.listName, new { htmlAttributes = new { @class = "form-control", placeholder = "الرجاء ادخال اسم القائمة", style = "color: #495057;" } })
-                            @Html.ValidationMessageFor(model => model.listName, "", new { @class = "text-danger" })
-                        </div>
+        <!-- عمود النموذج -->
+        <div class="col-md-6 order-md-1 order-2">
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+
+                <div class="form-horizontal p-5 rounded shadow-sm bg-white" dir="rtl">
+                    <h4 class="mb-3 text-primary text-right">تعبئة طلب الترشح</h4>
+                    <hr />
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger text-right" })
+
+                    <div class="form-group mb-3">
+                        @Html.LabelFor(model => model.listName, "اسم القائمة", htmlAttributes: new { @class = "form-label" })
+                        @Html.EditorFor(model => model.listName, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.listName, "", new { @class = "text-danger" })
                     </div>
 
-                    <div class="form-group row mb-3">
-                        <label class="col-md-2 col-form-label text-dark text-right">اسم الدائرة</label>
-                        <div class="col-md-10">
-                            @Html.DropDownListFor(
-                                model => model.electionDistrict,
-                                new SelectList(
-                                    new List<SelectListItem>
-                                    {
-                                        new SelectListItem { Value = "", Text = "اختر دائرة" },
-                                        new SelectListItem { Value = "Circle 1", Text = "اربد الاولى" },
-                                        new SelectListItem { Value = "Circle 2", Text = "اربد الثانية" },
-                                        new SelectListItem { Value = "Circle 3", Text = "المفرق" }
-                                    },
-                                    "Value",
-                                    "Text"),
-                                new { @class = "form-control", required = "required" }
-                            )
-                            @Html.ValidationMessageFor(model => model.electionDistrict, "", new { @class = "text-danger" })
-                        </div>
+                    <div class="form-group mb-3">
+                        @Html.LabelFor(model => model.electionDistrict, "اسم الدائرة", htmlAttributes: new { @class = "form-label" })
+                        @Html.DropDownListFor(
+                                 model => model.electionDistrict,
+                                 new SelectList(
+                                     new List<SelectListItem>
+                                     {
+                                    new SelectListItem { Value = "", Text = "اختر دائرة" },
+                                    new SelectListItem { Value = "اربد الاولى", Text = "اربد الاولى" },
+                                    new SelectListItem { Value = "اربد الثانية", Text = "اربد الثانية" },
+                                    new SelectListItem { Value = "المفرق", Text = "المفرق" }
+                             },
+                                     "Value",
+                                     "Text"),
+                                 new { @class = "form-control", required = "required" }
+                             )
+                        @Html.ValidationMessageFor(model => model.electionDistrict, "", new { @class = "text-danger" })
                     </div>
 
-                    <div class="form-group row">
-                        <div class="col-md-10 offset-md-2">
-                            <button type="submit" style="background-color:black " class="btn btn-primary btn-lg">تقديم</button>
-                        </div>
+                    <div class="form-group text-center">
+                        <input type="submit" value="تقديم" class="btn btn-success btn-animate w-50" />
                     </div>
                 </div>
-            </div>
+            }
         </div>
     </div>
-
-    <div class="container mt-3">
-        @Html.ActionLink("Back to List", "Index", new { @class = "btn btn-secondary" })
-    </div>
-}
+</div>
 
 @{
     @Scripts.Render("~/bundles/jqueryval")
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        // Add SweetAlert for validation messages or confirmation dialogs
+        @if (ViewBag.AlertMessage != null)
+        {
+            <text>
+                Swal.fire({
+                    icon: 'error',
+                    title: 'خطأ في التقديم',
+                    text: '@ViewBag.AlertMessage',
+                    confirmButtonText: 'موافق'
+                });
+            </text>
+        }
+    </script>
 }
 
 <style>
     body {
+        background-color: #f8f9fa; /* خلفية فاتحة */
+        font-family: 'Arial', sans-serif;
         direction: rtl;
     }
 
-    .text-right {
-        text-align: right;
+    h2 {
+        font-weight: bold;
+        color: green; /* أخضر */
     }
 
-    .text-left {
-        text-align: left;
+    .form-horizontal {
+        background-color: #ffffff; /* خلفية بيضاء */
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     }
 
-    .form-horizontal .form-group {
-        text-align: right;
+    .form-label {
+        font-weight: bold;
+        color: forestgreen; /* أخضر غامق */
     }
 
-    .form-group.row {
-        direction: rtl;
+    .form-control {
+        border: 2px solid forestgreen;
+        padding: 15px;
+        font-size: 1.1rem;
+        color: #495057;
     }
 
-    .card {
-        border-width: 2px; /* Makes the border thicker for better visibility */
+    .btn-success {
+        background-color: forestgreen;
+        border-color: green;
+    }
+
+        .btn-success:hover {
+            background-color: forestgreen;
+            border-color: green;
+        }
+
+    .btn-animate {
+        transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+        .btn-animate:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+    .img-fluid {
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     }
 </style>
-

@@ -17,7 +17,7 @@ namespace project5_voting.Controllers
 {
     public class partyController : Controller
     {
-        ElectionEntities db = new ElectionEntities();
+        ElectionEntities1 db = new ElectionEntities1();
 
         public ActionResult Createuser()
         {
@@ -54,6 +54,11 @@ namespace project5_voting.Controllers
                         // Set the image path in the model
                         partyList.partyImage = fileName;
                     }
+                    else {
+                        partyList.partyImage = " ";
+                    }
+                    partyList.counter = 0;
+                    partyList.status = "0";
 
                     // Add new party to the database
                     db.PartyLists.Add(partyList);
@@ -368,73 +373,117 @@ namespace project5_voting.Controllers
         // GET: partyCandidates/Create
         public ActionResult Create()
         {
-            //ViewBag.partyId = new SelectList(db.PartyLists, "id", "partyName");
+            // الحصول على partyId من الجلسة وتخزينه في ViewBag
             ViewBag.partyId = Session["PartyId"].ToString();
             return View();
         }
 
-        // POST: partyCandidates/Create
-
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "id,partyId,nastionalID,name,email,typeOfChair,religion,gender,birthday,candidateImage,status,electoralDistrict")] PartyCandidate partyCandidate, HttpPostedFileBase candidateImage)
+        public ActionResult Create([Bind(Include = "id,partyId,email,name,nastionalID,gender,birthday,typeOfChair,religion,electoralDistrict")] PartyCandidate partyCandidate, HttpPostedFileBase PartyImage)
         {
-            //if (candidateImageFile != null && candidateImageFile.ContentLength > 0)
-            //{
-            //    try
-            //    {
-            //        // توليد اسم فريد للصورة باستخدام GUID
-            //        string uniqueFileName = Guid.NewGuid().ToString() + "_" + Path.GetFileName(candidateImageFile.FileName);
-            //        string path = Path.Combine(Server.MapPath("~/Image1/Candidates/"), uniqueFileName);
-
-            //        // حفظ الصورة في المسار المحدد
-            //        candidateImageFile.SaveAs(path);
-
-            //        // تخزين المسار النسبي للصورة في قاعدة البيانات
-            //        partyCandidate.candidateImage = "~/Image1/Candidates/" + uniqueFileName;
-            //    }
-            //    catch (Exception ex)
-            //    {
-            //        ModelState.AddModelError("", "حدث خطأ أثناء رفع الصورة. حاول مرة أخرى.");
-            //    }
-            //}
-
-            //if (ModelState.IsValid)
-            //{
-            //    partyCandidate.partyListID =Convert.ToInt32(Session["PartyId"].ToString());
-
-            //    db.PartyCandidates.Add(partyCandidate);
-            //    db.SaveChanges();
-            //    return RedirectToAction("Index");
-            //}
-            if (candidateImage != null && candidateImage.ContentLength > 0)
+            // الحصول على اسم الحزب من الجلسة
+            var partyName = Session["partyName"];
+            if (partyName == null)
             {
-                // Generate a unique filename
-                var fileName = Path.GetFileName(candidateImage.FileName);
-                var path = Path.Combine(Server.MapPath("~/Image1/"), fileName);
-
-                // Save the file
-                candidateImage.SaveAs(path);
-
-                // Set the image path in the model
-                partyCandidate.candidateImage = fileName;
+                // إذا كان اسم الحزب غير موجود في الجلسة، عرض رسالة خطأ
+                ViewBag.Errors = "Party name not found in session";
+                return View(partyCandidate);
             }
-            partyCandidate.partyListID = Convert.ToInt32(Session["PartyId"].ToString());
 
-            // Add new party to the database
-            db.PartyCandidates.Add(partyCandidate);
-            db.SaveChanges();
+            // البحث عن الحزب في قاعدة البيانات باستخدام اسم الحزب
+            var party = db.PartyLists.FirstOrDefault(p => p.partyName == partyName.ToString());
+            if (party == null)
+            {
+                // إذا لم يتم العثور على الحزب، عرض رسالة خطأ
+                ModelState.AddModelError("", "الحزب غير موجود.");
+            }
+            else
+            {
+                // تعيين معرف قائمة الحزب للحزب المرشح
+                partyCandidate.partyListID = party.id;
 
-            return RedirectToAction("Index");
+                // التحقق من عدد المرشحين الحاليين للحزب
+                var candidateCount = db.PartyCandidates.Count(p => p.partyListID == party.id);
+                if (candidateCount >= 3)
+                {
+                    // إذا كان هناك بالفعل 3 مرشحين، عرض رسالة خطأ
+                    ModelState.AddModelError("", "الحزب يحتوي بالفعل على 3 مرشحين. لا يمكن إضافة مرشحين آخرين.");
+                }
+
+                // التحقق من عمر المرشح
+                if (partyCandidate.birthday.HasValue && (DateTime.Now.Year - partyCandidate.birthday.Value.Year) < 25)
+                {
+                    // إذا كان عمر المرشح أقل من 25 عامًا، عرض رسالة خطأ
+                    ModelState.AddModelError("birthday", "يجب أن يكون عمر المرشح أكبر من 25 عامًا.");
+                }
+
+                // التحقق من صحة الرقم الوطني
+                if (!IsValidNationalId(partyCandidate.nastionalID))
+                {
+                    // إذا كان الرقم الوطني غير صالح، عرض رسالة خطأ
+                    ModelState.AddModelError("nastionalID", "الرقم الوطني يجب أن يتكون من 10 أرقام.");
+                }
+
+                // التحقق من صحة البريد الإلكتروني
+                if (!partyCandidate.email.EndsWith("@gmail.com", StringComparison.OrdinalIgnoreCase))
+                {
+                    // إذا كان البريد الإلكتروني ليس من Gmail، عرض رسالة خطأ
+                    ModelState.AddModelError("email", "البريد الإلكتروني يجب أن يكون عنوان Gmail.");
+                }
+
+                // التحقق من عدم وجود مرشح آخر بنفس البريد الإلكتروني أو الرقم الوطني
+                if (db.PartyCandidates.Any(p => p.email == partyCandidate.email || p.nastionalID == partyCandidate.nastionalID))
+                {
+                    // إذا كان هناك مرشح آخر بنفس البريد الإلكتروني أو الرقم الوطني، عرض رسالة خطأ
+                    ModelState.AddModelError("", "يوجد مرشح بنفس البريد الإلكتروني أو الرقم الوطني.");
+                }
+
+                // التعامل مع رفع الصورة
+                if (PartyImage != null && PartyImage.ContentLength > 0)
+                {
+                    // إنشاء اسم ملف فريد
+                    var fileName = Path.GetFileName(PartyImage.FileName);
+                    var path = Path.Combine(Server.MapPath("~/Images/"), fileName);
+
+                    // حفظ الملف
+                    PartyImage.SaveAs(path);
+
+                    // تعيين اسم الصورة في النموذج
+                    partyCandidate.candidateImage = fileName;
+                }
+                else
+                {
+                    partyCandidate.candidateImage = "default.jpg"; // تعيين قيمة افتراضية أو معالجة كما يلزم
+                }
+
+                // التحقق من صحة النموذج
+                if (ModelState.IsValid)
+                {
+                    // إذا كانت البيانات صحيحة، إضافة المرشح إلى قاعدة البيانات
+                    db.PartyCandidates.Add(partyCandidate);
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    // إذا كانت هناك أخطاء، جمع جميع رسائل الأخطاء لعرضها في رسالة واحدة
+                    ViewBag.Errors = string.Join("\n", ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage));
+                }
+            }
+
+            // إعادة عرض الصفحة مع البيانات المدخلة في حالة وجود أخطاء
+            ViewBag.partyId = new SelectList(db.PartyLists, "id", "partyName", partyCandidate.partyListID);
+            return View(partyCandidate);
         }
 
 
-        // Helper function to validate the national ID
+        // دالة للتحقق من صحة الرقم الوطني
         private bool IsValidNationalId(string nationalId)
         {
+            // التحقق من أن الرقم الوطني يتكون من 10 أرقام فقط
             return nationalId.Length == 10 && nationalId.All(char.IsDigit);
         }
-
 
 
 
@@ -476,6 +525,7 @@ namespace project5_voting.Controllers
         public ActionResult DeleteConfirmedPartyCandidates(long id)
         {
             var partyCandidate = db.PartyCandidates.Find(id);
+
 
             if (partyCandidate == null)
             {

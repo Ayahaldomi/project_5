@@ -35,4 +35,5 @@ namespace project5_voting.Models
         public string ListName { get; set; }
         public List<localCandidate> Candidates { get; set; }
     }
+
 }

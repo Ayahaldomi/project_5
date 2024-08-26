@@ -1,9 +1,11 @@
-﻿
-﻿
+﻿﻿
 @{
     ViewBag.Title = "الصفحة الرئيسية";
 }
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+<script src="~/mapdata.js"></script>
+<script src="~/countrymap.js"></script>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
 
 <!-- Carousel Start -->
 <div class="container-fluid px-0 mb-5">
@@ -17,7 +19,7 @@
                             <div class="col-lg-8 text-start">
                                 <p class="fs-4 text-white">مرحباً بكم في موقع انتخابات الأردن</p>
                                 <h1 class="display-1 text-white mb-5 animated slideInRight">الانتخابات الأردنية</h1>
-                                <a href="" class="btn btn-secondary rounded-pill py-3 px-5 animated slideInRight">استكشاف المزيد</a>
+                                @*<a href="" class="btn btn-secondary rounded-pill py-3 px-5 animated slideInRight">استكشاف المزيد</a>*@
                             </div>
                         </div>
                     </div>
@@ -31,7 +33,7 @@
                             <div class="col-lg-8 text-end">
                                 <p class="fs-4 text-white">مرحباً بكم في موقع انتخابات الأردن</p>
                                 <h1 class="display-1 text-white mb-5 animated slideInRight">أفضل الانتخابات النزيهة والشفافة</h1>
-                                <a href="" class="btn btn-secondary rounded-pill py-3 px-5 animated slideInLeft">استكشاف المزيد</a>
+                                @*<a href="" class="btn btn-secondary rounded-pill py-3 px-5 animated slideInLeft">استكشاف المزيد</a>*@
                             </div>
                         </div>
                     </div>
@@ -92,7 +94,7 @@
                         <span>نوفر لكم عملية انتخابية موثوقة ونزيهة لضمان نزاهة الانتخابات وجودتها.</span>
                     </div>
                 </div>
-                <a class="btn btn-secondary rounded-pill py-3 px-5" href="">استكشاف المزيد</a>
+                @*<a class="btn btn-secondary rounded-pill py-3 px-5" href="">استكشاف المزيد</a>*@
             </div>
 
 
@@ -111,7 +113,7 @@
                 <p><i class="fa fa-check text-primary me-3"></i>تجربة انتخابية نزيهة</p>
                 <p><i class="fa fa-check text-primary me-3"></i>إجراءات سهلة وفعالة</p>
                 <p><i class="fa fa-check text-primary me-3"></i>مراقبة دقيقة لضمان النزاهة</p>
-                <a class="btn btn-secondary rounded-pill py-3 px-5 mt-3" href="">استكشاف المزيد</a>
+                @*<a class="btn btn-secondary rounded-pill py-3 px-5 mt-3" href="">استكشاف المزيد</a>*@
             </div>
             <div class="col-lg-6">
                 <div class="rounded overflow-hidden">
@@ -133,7 +135,7 @@
                         <div class="col-sm-6 wow fadeIn" data-wow-delay="0.5s">
                             <div class="text-center py-5 px-4" style="background-color:black;">
                                 <img class="img-fluid mb-4" src="~/img/award.png" alt="">
-                                <h1 class="display-6" data-toggle="counter-up">97</h1>
+                                <h1 class="display-6 text-light" data-toggle="counter-up">97</h1>
                                 <span class="fs-5 fw-semi-bold text-primary">عدد المقاعد المحلية</span>
                             </div>
                         </div>
@@ -150,4 +152,94 @@
         </div>
     </div>
 </div>
+
 <!-- Features End -->
+
+
+<hr />
+<br />
+
+
+
+<div class="container text-center">
+    <h2>تقسيم الدوائر الانتخابية في المملكة الأردنية الهاشمية 2023</h2>
+</div>
+<div class="container row-cols-2"> <div id="map"></div></div>
+
+
+<style>
+    .flip-card-container {
+        display: flex;
+        justify-content: space-around;
+        flex-wrap: wrap;
+    }
+
+    .flip-card {
+        background-color: transparent;
+        width: 300px;
+        height: 250px;
+        perspective: 1000px;
+        margin: 20px;
+    }
+
+    .flip-card-inner {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        text-align: center;
+        transition: transform 0.6s;
+        transform-style: preserve-3d;
+    }
+
+    .flip-card:hover .flip-card-inner {
+        transform: rotateY(180deg);
+    }
+
+    .flip-card-front, .flip-card-back {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        backface-visibility: hidden;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+    }
+
+    .flip-card-front {
+        background-color: darkgreen;
+        color: aliceblue;
+    }
+
+    .flip-card-back {
+        background-color: #000000;
+        color: white;
+        transform: rotateY(180deg);
+    }
+
+    .flip-card-front img {
+        margin-bottom: 10px;
+        border-bottom: 2px solid #ddd;
+    }
+
+    .btn {
+        padding: 10px 20px;
+        border-radius: 5px;
+        text-decoration: none;
+        font-size: 14px;
+        color: darkseagreen;
+    }
+
+    .btn-primary {
+        background-color: #007bff;
+        border: none;
+    }
+
+    .btn-light {
+        background-color: #f8f9fa;
+        color: black;
+        border: none;
+    }
+</style>
+
+

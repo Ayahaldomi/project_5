@@ -1,114 +1,112 @@
-﻿@model IEnumerable < project5_voting.Models.localCandidate>
+﻿@model IEnumerable<project5_voting.Models.localCandidate>
 
 @{
     ViewBag.Title = "localCandidateAdmin";
+    Layout = "~/Views/Shared/_LayoutPage1.cshtml";
 }
 
-<h2>localCandidateAdmin</h2>
-@if (Session["selectedList"] == "1")
-{
-    <button id="approve" class="btn btn-primary">Check</button>
-}
-else
-{
-    <button id="showAlert" class="btn btn-primary">Check</button>
-}
-
-
-
-<table class="table">
-    <thead>
-        <tr>
-            <th>Counter</th>
-            <th>
-اسم المرشح            </th>
-            <th>
-الدائرة الانتخابية            </th>
-            <th>
-البريد الالكتروني            </th>
-            <th>
-الرقم الوطني            </th>
-            <th>
-الجنس            </th>
-            <th>
-                Birth Day
-            </th>
-            <th>
-الديانة            </th>
-            <th>
-المقعد الانتخابي            </th>
-            <th>
-اسم القائمة            </th>
-
-
-        </tr>
-    </thead>
-    <tbody>
-        @if (Model != null)
-        {
-            int counter = 1;
-            foreach (var item in Model)
-            {
-                if (Convert.ToInt64(Session["listIdAdmin"]) == item.listKey)
+<div class="container mt-4">
+    <div class="table-responsive">
+        <table class="table table-bordered table-hover text-center">
+            <thead class="thead-dark">
+                <tr>
+                    <th>رقم</th>
+                    <th>اسم المرشح</th>
+                    <th>الدائرة الانتخابية</th>
+                    <th>البريد الإلكتروني</th>
+                    <th>الرقم الوطني</th>
+                    <th>الجنس</th>
+                    <th>تاريخ الميلاد</th>
+                    <th>الديانة</th>
+                    <th>المقعد الانتخابي</th>
+                    <th>اسم القائمة</th>
+                    <th>إجراءات</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model != null)
                 {
-                    <tr>
-                        <td>
-                            @counter
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.candidateName)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.election_area)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.email)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.national_id)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.gender)
-                        </td>
-                        <td>
-                            @item.birth_day.Value.ToString("yyyy-MM-dd")
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.religion)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.typeOfChair)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.listName)
-                        </td>
-                    </tr>
-                    counter++;
+                    int counter = 1;
+                    foreach (var item in Model)
+                    {
+                        
+                            <tr>
+                                <td>@counter</td>
+                                <td>@Html.DisplayFor(modelItem => item.candidateName)</td>
+                                <td>@Html.DisplayFor(modelItem => item.election_area)</td>
+                                <td>@Html.DisplayFor(modelItem => item.email)</td>
+                                <td>@Html.DisplayFor(modelItem => item.national_id)</td>
+                                <td>@Html.DisplayFor(modelItem => item.gender)</td>
+                                <td>@item.birth_day.Value.ToString("yyyy-MM-dd")</td>
+                                <td>@Html.DisplayFor(modelItem => item.religion)</td>
+                                <td>@Html.DisplayFor(modelItem => item.typeOfChair)</td>
+                                <td>@Html.DisplayFor(modelItem => item.listName)</td>
+                                <td>
+                                    <button class="btn btn-success btn-sm approve-btn" data-id="@item.id">قبول</button>
+                                    <button class="btn btn-danger btn-sm deny-btn" data-id="@item.id">رفض</button>
+                                </td>
+                            </tr>
+                            counter++;
+                    }
                 }
-            }
-        }
-    </tbody>
-</table>
+            </tbody>
+        </table>
+
+        <div class="text-center">
+            @Html.ActionLink("رجوع", "locaListAdmin", "localCandidates", null, new { @class = "btn btn-info btn-sm rounded-pill shadow" })
+        </div>
+    </div>
+</div>
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
-    document.getElementById('showAlert').addEventListener('click', function () {
-        Swal.fire({
-            icon: 'error',
-            title: 'Denied',
-            text: 'Something went wrong!',
-
+    document.querySelectorAll('.approve-btn').forEach(function (button) {
+        button.addEventListener('click', function () {
+            var candidateId = this.getAttribute('data-id');
+            Swal.fire({
+                icon: 'success',
+                title: 'تم القبول',
+                text: 'تمت الموافقة على الطلب!',
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: '@Url.Action("ApproveCandidate", "localCandidates")',
+                        type: 'POST',
+                        data: { id: candidateId },
+                        success: function () {
+                            location.reload();
+                        },
+                        error: function () {
+                            Swal.fire('خطأ', 'حدث خطأ أثناء الموافقة على الطلب.', 'error');
+                        }
+                    });
+                }
+            });
         });
     });
-    document.getElementById('approve').addEventListener('click', function () {
-        Swal.fire({
-            icon: 'success',
-            title: 'Approved',
-            text: 'All Good!',
 
+    document.querySelectorAll('.deny-btn').forEach(function (button) {
+        button.addEventListener('click', function () {
+            var candidateId = this.getAttribute('data-id');
+            Swal.fire({
+                icon: 'error',
+                title: 'تم الرفض',
+                text: 'تم رفض الطلب!',
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: '@Url.Action("DenyCandidate", "localCandidates")',
+                        type: 'POST',
+                        data: { id: candidateId },
+                        success: function () {
+                            location.reload();
+                        },
+                        error: function () {
+                            Swal.fire('خطأ', 'حدث خطأ أثناء رفض الطلب.', 'error');
+                        }
+                    });
+                }
+            });
         });
     });
 </script>
-
-
-

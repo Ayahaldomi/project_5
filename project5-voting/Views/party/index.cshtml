@@ -6,7 +6,8 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
 
 <main>
-    <div class="container mt-5">
+  <div class="container mt-5" style="direction: rtl; text-align: right;">
+
         <!-- Title Section -->
         <div class="text-center mb-5">
             <h2 class="text-primary border-bottom border-primary pb-3">قائمة المرشحين</h2>
@@ -17,7 +18,7 @@
             <div class="mt-3">
                 @if (!string.IsNullOrEmpty(ViewBag.PartyImage))
                 {
-                    <img src="@Url.Content(ViewBag.PartyImage)" alt="صورة الحزب" class="img-fluid rounded" style="max-width: 80%; height: 259px;" />
+                    <img src="~/Image1/@ViewBag.PartyImage" alt="صورة الحزب" class="img-fluid rounded" style="max-width: 80%; height: 259px;" />
                 }
                 else
                 {
@@ -28,9 +29,9 @@
 
         <!-- Action Buttons -->
         <div class="text-center mb-4">
-            @if (Model.Count() == 41)
+            @if (Model.Count() == 3)
             {
-                <button id="goToNextPage" class="btn btn-primary btn-lg">اذهب إلى الصفحة التالية</button>
+                <a  href="@Url.Action("success", "party")" class="btn btn-primary btn-lg">اذهب إلى الصفحة التالية</a>
             }
             else
             {
@@ -106,7 +107,7 @@
         });
         <script type="text/javascript">
             document.getElementById("goToNextPage").onclick = function () {
-                window.location.href = '@Url.Action("success", "partyCandidates")';
+                window.location.href = '@Url.Action("success", "party")';
             };
         </script>
     }

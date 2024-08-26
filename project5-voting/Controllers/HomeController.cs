@@ -10,7 +10,7 @@ namespace project5_voting.Controllers
     public class HomeController : Controller
     {
 
-        ElectionEntities db = new ElectionEntities();
+        ElectionEntities1 db = new ElectionEntities1();
 
         public ActionResult Index()
         {
@@ -103,6 +103,7 @@ namespace project5_voting.Controllers
         {
             return View();
         }
-
+        
+        
     }
 }

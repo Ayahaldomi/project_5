@@ -10,7 +10,7 @@ namespace project5_voting.Controllers
 {
     public class ElectionAreaController : Controller
     {
-        ElectionEntities db = new ElectionEntities();
+        ElectionEntities1 db = new ElectionEntities1();
 
         public ActionResult localANDparty()
         {
@@ -30,14 +30,14 @@ namespace project5_voting.Controllers
                     return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
                 }
 
-                var localList = db.localLists.Where(x => x.electionDistrict == id).ToList();
+                var localList = db.localLists.Where(x => x.electionDistrict == id && x.status != "0").ToList();
 
                 return View(localList);
             }
 
         public ActionResult CandidatesName(int? id)
         {
-            var CandidatesNames = db.localCandidates.Where(x => x.listKey == id).ToList();
+            var CandidatesNames = db.localCandidates.Where(x => x.listKey == id ).ToList();
 
             return View(CandidatesNames);
         }
@@ -46,13 +46,14 @@ namespace project5_voting.Controllers
 
         public ActionResult partyName()
         {
-            return View(db.PartyLists.ToList());
+            var check = db.PartyLists.Where(model => model.status != "0").ToList();
+            return View(check);
         }
 
 
         public ActionResult PatryCandidatesName(int? id)
         {
-            var PartyCandidatesNames = db.PartyCandidates.Where(x => x.partyListID == id).ToList();
+            var PartyCandidatesNames = db.PartyCandidates.Where(x => x.partyListID == id && x.status != "0").ToList();
 
             return View(PartyCandidatesNames);
         }

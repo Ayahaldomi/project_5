@@ -81,7 +81,10 @@
             </div>
             <ul class="nav flex-column mt-3">
                 <li class="nav-item">
-                    @Html.ActionLink("طلبات الترشح", "IndexAdmin", "party", new { area = "" }, new { @class = "nav-link" })
+                    @Html.ActionLink("طلبات الترشح الحزبي", "IndexAdmin", "party", new { area = "" }, new { @class = "nav-link" })
+                </li>
+                <li class="nav-item">
+                    @Html.ActionLink("طلبات الترشح المحلي", "locaListAdmin", "localCandidates", new { area = "" }, new { @class = "nav-link" })
                 </li>
                 <li class="nav-item">
                     @Html.ActionLink("طلبات المناظره", "ShowDebates", "Debate", new { area = "" }, new { @class = "nav-link" })
@@ -91,16 +94,13 @@
                 </li>
                 <li class="nav-item">
                     @Html.ActionLink("تواصل", "AdminContact", "Contacts", new { area = "" }, new { @class = "nav-link" })
-                </li>
-                <li class="nav-item">
-                    @Html.ActionLink("معلومات الناخب", "", "", new { area = "" }, new { @class = "nav-link" })
-                </li>
+                </li>                
                 <li class="nav-item">
                     @Html.ActionLink("تاريخ البدايه والنهاية", "AddDateAndTime", "DateAndTimes", new { area = "" }, new { @class = "nav-link" })
                 </li>
-                <li class="nav-item">
+                @*<li class="nav-item">
                     @Html.ActionLink("نتائج الانتخابات", "", "", new { area = "" }, new { @class = "nav-link" })
-                </li>
+                </li>*@
                 <li class="nav-item">
                     @Html.ActionLink("اضافة ادمن", "addAdmain", "AddAdmin", new { area = "" }, new { @class = "nav-link" })
                 </li>

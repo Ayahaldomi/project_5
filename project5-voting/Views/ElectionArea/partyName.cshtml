@@ -8,7 +8,7 @@
 <style>
 
     /* Container Styling */
-    .containerpartyName {
+    .containerpartyNam {
         width: 80%;
         margin: 0 auto;
         padding: 20px;
@@ -43,7 +43,9 @@
         }
 
     .btn-secondary {
-        background-color: #3a7d34; /* Darker green for secondary button */
+        padding: 5px;
+        border-radius: 7px;
+        background-color: #5b8c51;
     }
 
         .btn-secondary:hover {
@@ -62,10 +64,10 @@
     }
 
         .styled-table thead th {
-            background-color: #28a745; /* Green header */
+            background-color: #5b8c51; /* Green header */
             color: #fff;
             padding: 12px 15px;
-            text-align: left;
+            text-align: right;
         }
 
         .styled-table tbody tr:nth-child(even) {
@@ -82,13 +84,12 @@
         }
 
         .styled-table th, .styled-table td {
-            text-align: left;
+            text-align: right;
             font-size: 24px;
         }
 </style>
-
 <body>
-    <div class="containerpartyName">
+    <div class="containerpartyNam" style="text-align: center;">
         <h1>اسماء القوائم الحزبية المترشحة</h1>
 
 
@@ -97,22 +98,25 @@
         <table class="styled-table">
             <thead>
                 <tr>
-                    <th>@Html.DisplayNameFor(model => model.partyName)</th>
-                    <th>Image</th>
-                    <th>.</th>
+                    <th>المترشحين</th>
+
+                    <th>الصورة</th>
+
+                    <th>اسم الحزب</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach (var item in Model)
                 {
                     <tr>
-                        <td>@Html.DisplayFor(modelItem => item.partyName)</td>
+                        <td>
+                            @Html.ActionLink("اسماء المرشحين", "PatryCandidatesName", new { id = item.id }, new { @class = "btn-secondary" })
+                        </td>
+
                         <td>
                             <img src="~/image1/@Url.Content(item.partyImage)" alt="@item.partyImage" style="width:100px; height:auto;" />
                         </td>
-                        <td>
-                            @Html.ActionLink("اسماء المرشحين", "PatryCandidatesName", new { id = item.id }, new { @class = "btn btn-secondary" })
-                        </td>
+                        <td>@Html.DisplayFor(modelItem => item.partyName)</td>
                     </tr>
                 }
             </tbody>

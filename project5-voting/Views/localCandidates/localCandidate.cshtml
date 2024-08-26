@@ -1,74 +1,58 @@
 ﻿@model IEnumerable<project5_voting.Models.localCandidate>
 
 
-<style>
-    body {
-        direction: rtl;
-    }
-
-    .text-right {
-        text-align: right;
-    }
-
-    .text-left {
-        text-align: left;
-    }
-
-    .form-horizontal .form-group {
-        text-align: right;
-    }
-
-    .form-group.row {
-        direction: rtl;
-    }
-
-    .card {
-        border-width: 2px; /* Makes the border thicker for better visibility */
-    }
-</style>
-
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "localCandidate";
 }
 
-<h2 class="text-right">تقدم طلب أسماء المترشحين</h2>
-
-
-@using (Html.BeginForm())
+<h2 class="text-right mb-4 text-center">تقدم طلب أسماء المترشحين</h2>
+@using (Html.BeginForm(null, null, FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
 
-    <div class="container mt-4">
-        <div class="card border-dark shadow-sm">
+    <div class="container mt-5">
+        <div class="card border-0 shadow-lg">
             <div class="card-body">
-                <h4 class="card-title text-right text-dark">تعبئة أسماء المترشحين في القائمة</h4>
+                <h4 class="card-title text-right mb-4" style="color: forestgreen;">تعبئة أسماء المترشحين في القائمة</h4>
                 <hr />
-                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                @Html.ValidationSummary(true, "", new { @class = "text-danger text-right" })
 
-                <div class="form-group row">
-                    <label class="control-label col-md-2 text-right">الرقم الوطني</label>
-                    <div class="col-md-10">
-                        <input name="national_id" class="form-control" />
-                        <span class="text-danger">@ViewBag.error</span>
+                @if (TempData["wrongId"] != null)
+                {
+                    <div class="alert alert-danger text-right">
+                        @TempData["wrongId"]
                     </div>
-                </div>
+                }
 
-                <div class="form-group row">
-                    <label class="control-label col-md-2 text-right">نوع المقعد</label>
-                    <div class="col-md-10">
-                        <select name="typeOfChair">
-                            <option value="">اختر  نوع مقعد الترشح</option>
-                            <option value="تنافس">تنافس</option>
-                            <option value="كوتا">كوتا</option>
-                            <option value="مسيحي">مسيحي</option>
-
-                        </select>
+                <div class="form-horizontal">
+                    <div class="form-group row mb-3">
+                        <label class="col-md-2 col-form-label text-right" style="color: forestgreen;">الرقم الوطني</label>
+                        <div class="col-md-10">
+                            <input name="national_id" class="form-control form-control-lg" placeholder="الرجاء إدخال الرقم الوطني" style="border: 2px solid forestgreen;" />
+                        </div>
                     </div>
-                </div>
 
-                <div class="form-group row">
-                    <div class="col-md-10 offset-md-2">
-                        <input type="submit" value="إنشاء" class="btn btn-dark" />
+                    <div class="form-group row mb-3">
+                        <label class="col-md-2 col-form-label text-right" style="color: forestgreen;">نوع المقعد</label>
+                        <div class="col-md-10">
+                            <select name="typeOfChair" class="form-control form-control-lg" style="border: 2px solid forestgreen;">
+                                <option value="">اختر نوع مقعد الترشح</option>
+                                <option value="تنافس">تنافس</option>
+                                <option value="كوتا">كوتا</option>
+                                <option value="مسيحي">مسيحي</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group row mb-3">
+                        <label class="col-md-2 col-form-label text-right" style="color: forestgreen;">تحميل صورة المرشح</label>
+                        <div class="col-md-10">
+                            <input type="file" name="candidateImage" class="form-control form-control-lg" style="border: 2px solid forestgreen;" />
+                        </div>
+                    </div>
+
+                    <div class="form-group text-center">
+                        <button type="submit" class="btn btn-success btn-animate w-50">إنشاء</button>
                     </div>
                 </div>
             </div>
@@ -76,82 +60,226 @@
     </div>
 }
 
-<div class="container mt-4">
-    <div class="card border-dark shadow-sm">
+<div class="container mt-5">
+    <div class="card border-0 shadow-lg">
         <div class="card-body">
-            <table class="table table-bordered table-striped text-right">
-                <thead>
-                    <tr>
-                        <th>الرقم</th>
-                        <th>@Html.DisplayNameFor(model => model.FirstOrDefault().candidateName)</th>
-                        <th>@Html.DisplayNameFor(model => model.FirstOrDefault().election_area)</th>
-                        <th>@Html.DisplayNameFor(model => model.FirstOrDefault().email)</th>
-                        <th>@Html.DisplayNameFor(model => model.FirstOrDefault().national_id)</th>
-                        <th>@Html.DisplayNameFor(model => model.FirstOrDefault().gender)</th>
-                        <th>تاريخ الميلاد</th>
-                        <th>@Html.DisplayNameFor(model => model.FirstOrDefault().religion)</th>
-                        <th>@Html.DisplayNameFor(model => model.FirstOrDefault().typeOfChair)</th>
-                        <th>@Html.DisplayNameFor(model => model.FirstOrDefault().listName)</th>
-                        <th>@Html.DisplayNameFor(model => model.FirstOrDefault().localList.listName)</th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @if (Model != null)
-                    {
-                        int counter = 1;
-                        foreach (var item in Model)
+            <div class="table-responsive">
+                <table class="table table-bordered table-striped text-right">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th>الرقم</th>
+                            <th>الصورة</th>
+                            <th>اسم المرشح</th>
+                            <th>اسم الدائرة</th>
+                            <th>البريد الالكتروني</th>
+                            <th>الرقم الوطني</th>
+                            <th>الجنس</th>
+                            <th>تاريخ الميلاد</th>
+                            <th>الديانة</th>
+                            <th>نوع المقعد</th>
+                            <th>اسم القائمة</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model != null)
                         {
-                            if (Convert.ToInt64(Session["listId"]) == item.listKey)
+                            int counter = 1;
+                            foreach (var item in Model)
                             {
-                                <tr>
-                                    <td>@counter</td>
-                                    <td>@Html.DisplayFor(modelItem => item.candidateName)</td>
-                                    <td>@Html.DisplayFor(modelItem => item.election_area)</td>
-                                    <td>@Html.DisplayFor(modelItem => item.email)</td>
-                                    <td>@Html.DisplayFor(modelItem => item.national_id)</td>
-                                    <td>@Html.DisplayFor(modelItem => item.gender)</td>
-                                    <td>@item.birth_day.Value.ToString("yyyy-MM-dd")</td>
-                                    <td>@Html.DisplayFor(modelItem => item.religion)</td>
-                                    <td>@Html.DisplayFor(modelItem => item.typeOfChair)</td>
-                                    <td>@Html.DisplayFor(modelItem => item.listName)</td>
-                                    <td>@Html.DisplayFor(modelItem => item.localList.listName)</td>
-                                    <td>@Html.ActionLink("حذف", "Delete", new { id = item.id }, new { @class = "btn btn-danger btn-sm" })</td>
-                                </tr>
-                                counter++;
+                                if (Convert.ToInt64(Session["listId"]) == item.listKey)
+                                {
+                                    <tr>
+                                        <td>@counter</td>
+                                        <td>
+                                            @if (!string.IsNullOrEmpty(item.img))
+                                            {
+                                                <img src="@Url.Content(item.img)" alt="Candidate Image" style="width: 100px; height: auto; border-radius: 10px;" />
+                                            }
+                                            else
+                                            {
+                                                <span>لا يوجد صورة</span>
+                                            }
+                                        </td>
+                                        <td>@Html.DisplayFor(modelItem => item.candidateName)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.election_area)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.email)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.national_id)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.gender)</td>
+                                        <td>@item.birth_day.Value.ToString("yyyy-MM-dd")</td>
+                                        <td>@Html.DisplayFor(modelItem => item.religion)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.typeOfChair)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.listName)</td>
+
+                                        <td>
+                                            @using (Html.BeginForm("Delete", "localCandidates", FormMethod.Post, new { id = item.id }))
+                                            {
+                                                @Html.AntiForgeryToken()
+                                                <button type="submit" class="btn btn-danger btn-sm rounded-pill shadow-sm" onclick="return confirm('هل أنت متأكد أنك تريد حذف هذا العنصر؟')">حذف</button>
+                                                @Html.Hidden("id", item.id)
+                                            }
+                                        </td>
+                                    </tr>
+                                    counter++;
+                                }
                             }
                         }
-                    }
-                </tbody>
-            </table>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 </div>
-
-<div class="container mt-4">
-    <a href="javascript:void(0);" class="btn btn-secondary" onclick="confirmBackToHome()">تقديم الطلب</a>
-</div>
+<form action="@Url.Action("ClearSessionAndRedirect", "localCandidates")" method="post" class="text-center">
+    @Html.AntiForgeryToken()
+    <button type="submit" class="btn btn-secondary btn-lg rounded-pill shadow mt-4">تقديم الطلب</button>
+</form>
 
 @{
     @Scripts.Render("~/bundles/jqueryval")
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script>
-        function confirmBackToHome() {
-            Swal.fire({
-                title: 'هل أنت متأكد من تقديم الطلب؟',
-
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'نعم، انتقل!',
-                cancelButtonText: 'لا، ابقى هنا'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    window.location.href = '@Url.Action("ClearSessionAndRedirect", "localCandidates")';
-                }
-            });
-        }
-    </script>
 }
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    // Display SweetAlert for validation messages or confirmation dialogs
+    function confirmBackToHome() {
+        return Swal.fire({
+            title: 'هل أنت متأكد من تقديم الطلب؟',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'نعم، انتقل!',
+            cancelButtonText: 'لا، ابقى هنا'
+        }).then((result) => {
+            return result.isConfirmed;
+        });
+    }
+    @if (TempData["wrongId"] != null)
+    {
+        <text>
+        Swal.fire({
+            icon: 'error',
+            title: 'خطأ في التقديم',
+            text: '@TempData["wrongId"]',
+            confirmButtonText: 'موافق'
+        });
+        </text>
+    }
 
+    @if (ViewBag.AlertMessage != null)
+    {
+        <text>
+        Swal.fire({
+            icon: 'error',
+            title: 'خطأ في التقديم',
+            text: '@ViewBag.AlertMessage',
+            confirmButtonText: 'موافق'
+        });
+        </text>
+    }
+</script>
+
+<style>
+    body {
+        direction: rtl;
+        background-color: #f8f9fa; /* خلفية فاتحة */
+        font-family: 'Cairo', sans-serif;
+    }
+
+    h2 {
+        font-weight: bold;
+        color: green; /* أخضر */
+    }
+
+    .text-right {
+        text-align: right;
+    }
+
+    .form-horizontal {
+        background-color: #ffffff; /* خلفية بيضاء */
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .form-control-lg {
+        border: 2px solid forestgreen;
+        padding: 15px;
+        font-size: 1.1rem;
+        color: #495057;
+    }
+
+    .btn-success {
+        background-color: forestgreen;
+        border-color: green;
+    }
+
+        .btn-success:hover {
+            background-color: forestgreen;
+            border-color: green;
+        }
+
+    .btn-animate {
+        transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+        .btn-animate:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+    .btn-secondary {
+        background-color: #6c757d;
+        color: white;
+    }
+
+        .btn-secondary:hover {
+            background-color: #5a6268;
+        }
+
+    .table-responsive {
+        overflow-x: auto;
+    }
+
+    .table {
+        margin-bottom: 0;
+        direction: rtl;
+        text-align: right;
+    }
+
+        .table th, .table td {
+            text-align: right;
+            vertical-align: middle;
+        }
+
+    .img-fluid {
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .alert-danger {
+        background-color: #f8d7da;
+        color: #721c24;
+        border-color: #f5c6cb;
+    }
+
+    .card {
+        border-radius: 15px;
+        background: #ffffff;
+        padding: 30px;
+        box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .btn-gradient {
+        background: linear-gradient(90deg, #fb2345 0%, #198754 100%);
+        color: white;
+        border: none;
+        padding: 10px 30px;
+        font-size: 1.1rem;
+        transition: all 0.3s ease;
+    }
+
+        .btn-gradient:hover {
+            background: linear-gradient(90deg, #198754 0%, #fb2345 100%);
+            transform: scale(1.05);
+        }
+</style>

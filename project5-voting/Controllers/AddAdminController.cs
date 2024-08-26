@@ -10,7 +10,7 @@ namespace project5_voting.Controllers
     public class AddAdminController : Controller
     {
         // GET: AddAdmin
-        private ElectionEntities db = new ElectionEntities();
+        private ElectionEntities1 db = new ElectionEntities1();
 
 
         public ActionResult addAdmain()
@@ -36,7 +36,17 @@ namespace project5_voting.Controllers
 
             return View(admin);
         }
+        public ActionResult DeleteAdmin(int id)
+        {
+            var admin = db.Admins.Find(id);
+            if (admin != null)
+            {
+                db.Admins.Remove(admin);
+                db.SaveChanges();
+            }
 
+            return RedirectToAction("showAdmin", "AddAdmin");
+        }
 
     }
 }

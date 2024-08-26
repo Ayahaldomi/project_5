@@ -7,19 +7,19 @@
 
 <div class="container mt-5">
     <h2 class="text-center mb-4">الحملات الانتخابية</h2>
-    <div class="row">
+    <div class="row" style="align-content:center;">
         @foreach (var ad in Model)
         {
             if (ad.status == "تم نشر الاعلان")
             {
                 <div class="col-md-4 mb-4">
-                    <div class="card h-100" style="animation: fadeInRight 0.5s ease-in-out;">
+                    <div class="card h-100 card-effect" style="animation: fadeInRight 0.5s ease-in-out;">
                         <div class="row no-gutters">
                             <div class="col-md-12">
-                                <img src="~/images/@ad.image" class="card-img-top" alt="Image Description">
+                                <img src="~/images/@ad.image" class="card-img-top" style="height: 400px; object-fit: cover;" alt="Image Description">
                             </div>
                             <div class="col-md-12">
-                                <div class="card-body text-right">
+                                <div class="card-body text-right" style="text-align:right;">
                                     <h5 class="card-title">@ad.name</h5>
                                     <p class="card-text">@ad.areaName</p>
                                     <p class="card-text">@ad.campaignSlagan</p>
@@ -33,3 +33,20 @@
         }
     </div>
 </div>
+
+<!-- Add this CSS for the effect -->
+<style>
+        .card-effect {
+            transition: transform 0.3s ease, box-shadow 0.3s ease; 
+    }
+
+    .card-effect:hover {
+        transform: scale(1.05); 
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    .card-effect:active {
+        transform: scale(0.98); 
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+</style>

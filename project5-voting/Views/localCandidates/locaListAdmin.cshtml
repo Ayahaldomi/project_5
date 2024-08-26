@@ -1,62 +1,143 @@
 ﻿@model IEnumerable<project5_voting.Models.localList>
 
-
 @{
-    ViewBag.Title = "locaListAdmin";
+    ViewBag.Title = "قائمة الطلبات الإدارية";
     Layout = "~/Views/Shared/_LayoutPage1.cshtml";
-
 }
 
-<h2 class="text-center">طلبات الترشح للقوائم المحلية</h2>
+<h2 class="text-center mb-4">طلبات الترشح للقوائم المحلية</h2>
 
-
-
-<div class="card" dir="rtl" style="margin: 20px auto; text-align:right">
-    <div class="card-body">
-        <table class="table table-bordered table-striped">
-            <thead class="thead-dark">
-                <tr>
-                    <th>@Html.DisplayNameFor(model => model.listName)</th>
-                    <th>@Html.DisplayNameFor(model => model.electionDistrict)</th>
-                    <th>@Html.DisplayNameFor(model => model.status)</th>
-                    <th>الإجراءات</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var item in Model)
-                {
+<div class="container mt-5" dir="rtl">
+    <div class="card border-0 shadow-lg">
+        <div class="card-body">
+            <table class="table table-hover table-striped text-right">
+                <thead class="thead-dark">
                     <tr>
-                        <td>@Html.DisplayFor(modelItem => item.listName)</td>
-                        <td>@Html.DisplayFor(modelItem => item.electionDistrict)</td>
-                        <td>
-                            @if (item.status == null)
+                        <th class="text-primary" style="color: forestgreen !important;">اسم القائمة</th>
+                        <th class="text-primary" style="color: forestgreen !important;">اسم الدائرة</th>
+                        <th class="text-primary" style="color: forestgreen !important;">حالة الطلب</th>
+                        <th class="text-primary" style="color: forestgreen !important;">الإجراءات</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@Html.DisplayFor(modelItem => item.listName)</td>
+                            <td>@Html.DisplayFor(modelItem => item.electionDistrict)</td>
+                            @if (item.status.ToString() == "0")
                             {
-                                <span class="badge badge-warning">معلق</span>
-                            }
-                            else if (item.status == "0")
-                            {
-                                <span class="badge badge-danger">مرفوض</span>
+
+
+                                <td class="text-bg-danger">
+                                    مرفوض
+                                </td>
                             }
                             else
                             {
-                                <span class="badge badge-success">مقبول</span>
+                                <td class="text-bg-success">
+                                    مقبول
+                                </td>
                             }
-                        </td>
-                        <td>
-                            @Html.ActionLink("التفاصيل", "localCandidateAdmin", new { id = item.id }, new { @class = "btn btn-info btn-sm" })
-                            @using (Html.BeginForm("Delete", "localLists", FormMethod.Post, new { id = "delete-form-" + item.id }))
-                            {
-                                @Html.AntiForgeryToken()
-                                <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('هل أنت متأكد أنك تريد حذف هذا العنصر؟')">حذف</button>
-                                @Html.Hidden("id", item.id)
-                            }
-                        </td>
-                    </tr>
-                }
-            </tbody>
-        </table>
+                            <td>
+                                <div class="d-flex align-items-center">
+                                    @Html.ActionLink("التفاصيل", "localCandidateAdmin", new { id = item.id }, new { @class = "btn btn-info btn-sm rounded-pill shadow me-2" })
+
+                                    @using (Html.BeginForm("Deletelist", "localCandidates", FormMethod.Post, new { id = "delete-form-" + item.id }))
+                                    {
+                                        @Html.AntiForgeryToken()
+                                        @Html.Hidden("id", item.id)
+                                        <button type="submit" class="btn btn-danger btn-sm rounded-pill shadow mr-2" onclick="return confirm('هل أنت متأكد أنك تريد حذف هذا العنصر؟')">حذف</button>
+                                    }
+                                </div>
+                            </td>
+
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
 
+<style>
+    .container {
+        max-width: 1200px;
+    }
 
+    h2 {
+        font-weight: bold;
+        color: green; /* Green color for consistency */
+    }
 
+    .text-primary {
+        color: forestgreen !important; /* Forest green color for consistency */
+    }
+
+    .card {
+        border-radius: 15px;
+        background: #ffffff;
+        padding: 30px;
+        box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .table th {
+        font-weight: 600;
+        background-color: #f8f9fa;
+    }
+
+    .table-hover tbody tr:hover {
+        background-color: #f1f3f5;
+    }
+
+    .form-control-sm {
+        border: 2px solid forestgreen; /* Consistent border color */
+        padding: 10px;
+        font-size: 1rem;
+        color: #495057;
+    }
+
+    .btn-success {
+        background-color: forestgreen; /* Consistent button color */
+        border-color: green;
+    }
+
+        .btn-success:hover {
+            background-color: forestgreen; /* Consistent hover state */
+            border-color: green;
+        }
+
+    .btn-info {
+        background-color: #17a2b8;
+        color: white;
+        border: none;
+        transition: all 0.3s ease;
+    }
+
+        .btn-info:hover {
+            background-color: #138496;
+        }
+
+    .btn-danger {
+        background-color: #dc3545;
+        color: white;
+        border: none;
+        transition: all 0.3s ease;
+    }
+
+        .btn-danger:hover {
+            background-color: #c82333;
+        }
+
+    .rounded-pill {
+        border-radius: 50px !important;
+    }
+
+    .shadow-lg {
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15) !important;
+    }
+
+    .text-right {
+        text-align: right;
+    }
+</style>

@@ -9,7 +9,7 @@ namespace project5_voting.Controllers
 {
     public class ResultController : Controller
     {
-        private ElectionEntities db = new ElectionEntities();
+        private ElectionEntities1 db = new ElectionEntities1();
 
 
         public ActionResult Result()
@@ -67,7 +67,7 @@ namespace project5_voting.Controllers
         {
             long countUsers = 0;
 
-            var allUsers = db.USERS.ToList();
+            var allUsers = db.ElectionAreas.ToList();
 
             foreach (var row in allUsers)
             {
@@ -76,11 +76,30 @@ namespace project5_voting.Controllers
             return countUsers;
         }
 
+        public long localUsersNumber(string d)
+        {
+            long countUsers = 0;
+
+            var allUsers = db.USERS.ToList();
+
+            foreach (var row in allUsers)
+            {
+                if (row.electionArea == d)
+                {
+                    countUsers++;
+                }
+            }
+            return countUsers;
+        }
+
 
         public double localPercentage(string d)
         {
-            double percentage = (double)localVotersCount(d) / (double)usersNumber();
+            double percentage = (double)localVotersCount(d) / (double)localUsersNumber(d);
 
+            Session["localPercentIrbid1"] = Math.Round(((double)localVotersCount("اربد الاولى") / (double)localUsersNumber("اربد الاولى")), 2) * 100;
+            Session["localPercentIrbid2"] = Math.Round(((double)localVotersCount("اربد الثانية") / (double)localUsersNumber("اربد الثانية")), 2) * 100;
+            Session["localPercentMafraq"] = Math.Round(((double)localVotersCount("المفرق") / (double)localUsersNumber("المفرق")), 2) * 100;
 
             return (Math.Round(percentage, 2)) * 100;
         }
@@ -90,11 +109,12 @@ namespace project5_voting.Controllers
         {
             double percentage = (double)partyVotersCount() / (double)usersNumber();
 
+            Session["partyPercent"] = Math.Round(percentage, 2) * 100;
 
             return (Math.Round(percentage, 2)) * 100;
         }
 
-       
+
 
         //عشان اجيب عدد اصوات المحليين في حسب الدائرة
         public long localVotersCount(string d)
@@ -177,7 +197,7 @@ namespace project5_voting.Controllers
                 case "اربد الثانية":
                     seatsAvailable = 5;
                     break;
-                case "االمفرق":
+                case "المفرق":
                     seatsAvailable = 3;
                     break;
             }
@@ -267,7 +287,7 @@ namespace project5_voting.Controllers
 
                 long listsSeats = long.Parse(listsArray.Last());
 
-                string listName = listsArray[1];
+                string listName = listsArray[1].Trim();
 
                 long seatsCount = 0;
 
@@ -278,9 +298,9 @@ namespace project5_voting.Controllers
                     var canRowsList = string.Join(", ", canRow);
                     string[] canArray = canRowsList.Split(',');
 
-                    if (canArray[2] == listName && canArray[3].Trim() == "عام")
+                    if (canArray[2].Trim() == listName && canArray[3].Trim() == "تنافس")
                     {
-                        string canditateNameAndId = $"{listsArray[0]}, {listsArray[1]}, {d}, {canArray[0]}, {canArray[1]}";
+                        string canditateNameAndId = $"{listsArray[0]}, {listsArray[1]}, {listsArray[3]}, {d}, {canArray[0]}, {canArray[1]}, {canArray[3]}, {canArray[4]}";
 
                         localWinners.Add(canditateNameAndId);
 
@@ -299,13 +319,13 @@ namespace project5_voting.Controllers
         }
 
         //للكوتا
-        public string localWomanSeat(string d)
+        public List<string> localWomanSeat(string d)
         {
             var localCanditate = localListsCanditates(d).ToList();
 
             List<string> localWomen = new List<string>();
 
-            string winningWoman = "";
+            List<string> winningWoman = new List<string>();
 
             foreach (var row in localCanditate)
             {
@@ -313,7 +333,7 @@ namespace project5_voting.Controllers
                 var canLists = string.Join(",", canRow);
                 string[] canArray = canLists.Split(',');
 
-                if (canArray[3].Trim() == "امرأة")
+                if (canArray[3].Trim() == "كوتا")
                 {
                     string womanCan = $"{canArray[0]}, {canArray[1]}, {canArray[2]}, {d}, {canArray[4]}";
                     localWomen.Add(womanCan);
@@ -323,7 +343,7 @@ namespace project5_voting.Controllers
 
             localWomen = localWomen.OrderByDescending(can => long.Parse(can.Split(',').Last().Trim())).ToList();
 
-            winningWoman = localWomen[0];
+            winningWoman.Add(localWomen[0]);
 
             return winningWoman;
         }
@@ -548,5 +568,6 @@ namespace project5_voting.Controllers
             }
             return partyWinners;
         }
+
     }
 }

@@ -244,6 +244,7 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\bootstrap.rtl.css" />
     <Content Include="Content\bootstrap.rtl.min.css" />
+    <Content Include="countrymap.js" />
     <Content Include="css\bootstrap.min.css" />
     <Content Include="css\style.css" />
     <Content Include="favicon.ico" />
@@ -252,6 +253,48 @@
     <Content Include="Image1\ALhade.jpg" />
     <Content Include="Image1\alhoueh.jpg" />
     <Content Include="Image1\almostacbal.jpg" />
+    <Content Include="Image1\eshtraki.png" />
+    <Content Include="Image1\img1.jpg" />
+    <Content Include="Image1\img10.jpg" />
+    <Content Include="Image1\img11.jpg" />
+    <Content Include="Image1\img12.jpg" />
+    <Content Include="Image1\img13.jpg" />
+    <Content Include="Image1\img14.jpg" />
+    <Content Include="Image1\img15.jpg" />
+    <Content Include="Image1\img16.jpg" />
+    <Content Include="Image1\img17.jpg" />
+    <Content Include="Image1\img18.jpg" />
+    <Content Include="Image1\img19.jpg" />
+    <Content Include="Image1\img2.jpg" />
+    <Content Include="Image1\img20.jpg" />
+    <Content Include="Image1\img21.jpg" />
+    <Content Include="Image1\img22.jpg" />
+    <Content Include="Image1\img23.jpg" />
+    <Content Include="Image1\img24.jpg" />
+    <Content Include="Image1\img25.jpg" />
+    <Content Include="Image1\img26.jpg" />
+    <Content Include="Image1\img27.jpg" />
+    <Content Include="Image1\img28.jpg" />
+    <Content Include="Image1\img29.jpg" />
+    <Content Include="Image1\img3.jpg" />
+    <Content Include="Image1\img30.jpg" />
+    <Content Include="Image1\img31.jpg" />
+    <Content Include="Image1\img32.jpg" />
+    <Content Include="Image1\img33.jpg" />
+    <Content Include="Image1\img34.jpg" />
+    <Content Include="Image1\img35.jpg" />
+    <Content Include="Image1\img36.jpg" />
+    <Content Include="Image1\img37.jpg" />
+    <Content Include="Image1\img38.jpg" />
+    <Content Include="Image1\img39.jpg" />
+    <Content Include="Image1\img4.jpg" />
+    <Content Include="Image1\img40.jpg" />
+    <Content Include="Image1\img41.jpg" />
+    <Content Include="Image1\img5.jpg" />
+    <Content Include="Image1\img6.jpg" />
+    <Content Include="Image1\img7.jpg" />
+    <Content Include="Image1\img8.jpg" />
+    <Content Include="Image1\img9.jpg" />
     <Content Include="Image1\Leadership.jpg" />
     <Content Include="Image1\test.jpeg" />
     <Content Include="images\1حزبي.png" />
@@ -264,6 +307,7 @@
     <Content Include="images\flag-uk.png" />
     <Content Include="images\images %283%29.jpg" />
     <Content Include="images\img1.jpg" />
+    <Content Include="images\imgAD1.jpg" />
     <Content Include="images\input-location.png" />
     <Content Include="images\input-price.png" />
     <Content Include="images\input-property.png" />
@@ -296,6 +340,8 @@
     <Content Include="images\النقابات العمالية.jpg" />
     <Content Include="images\تم الموافقه على طلب.png" />
     <Content Include="images\طلب قيد دراسة.png" />
+    <Content Include="images\فارس محمد نور الصمادي.jpg" />
+    <Content Include="images\محاميه دينا بشير.jpg" />
     <Content Include="images\محلي.png" />
     <Content Include="image\1.jpg" />
     <Content Include="image\10.jpg" />
@@ -315,8 +361,13 @@
     <Content Include="image\7.jpg" />
     <Content Include="image\8.jpg" />
     <Content Include="image\9.jpg" />
+    <Content Include="image\logo 1.png" />
     <Content Include="image\voting.jpg" />
     <Content Include="image\voting2.jpg" />
+    <Content Include="image\اسبوع.png" />
+    <Content Include="image\الاحزاب.jpg" />
+    <Content Include="image\ثلاثة ايامم.png" />
+    <Content Include="image\شهر.png" />
     <Content Include="imgs\eceecf31-2d75-48c5-bba2-d7965514578d.png" />
     <Content Include="imgs\howToVote.mp4" />
     <Content Include="imgs\logoelection.png" />
@@ -351,6 +402,7 @@
     <Content Include="lib\waypoints\waypoints.min.js" />
     <Content Include="lib\wow\wow.js" />
     <Content Include="lib\wow\wow.min.js" />
+    <Content Include="mapdata.js" />
     <Content Include="Models\Model1.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>Model1.edmx</DependentUpon>
@@ -539,6 +591,7 @@
     <Content Include="Views\Home\UserDebate.cshtml" />
     <Content Include="Views\party\DeleteAdmin.cshtml" />
     <Content Include="Views\party\DeletePartyCandidates.cshtml" />
+    <Content Include="Views\Home\test.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

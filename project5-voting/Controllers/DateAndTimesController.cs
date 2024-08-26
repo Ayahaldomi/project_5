@@ -10,7 +10,7 @@ namespace project5_voting.Controllers
 {
     public class DateAndTimesController : Controller
     {
-        private ElectionEntities db = new ElectionEntities();
+        private ElectionEntities1 db = new ElectionEntities1();
 
 
         // GET: DateAndTimes/AddDateAndTime
@@ -23,6 +23,38 @@ namespace project5_voting.Controllers
                 ViewBag.EndDate = dateDefault.endDate.ToString().Split(' ')[0];
                 ViewBag.StartTime = dateDefault.startTime;
                 ViewBag.EndTime = dateDefault.endTime;
+            }
+
+            var startdate = db.Dates.Find(1).startDate.Value.ToString("dd/MM/yyyy");
+            var enddate = db.Dates.Find(1).endDate.Value.ToString("dd/MM/yyyy");
+
+            var startTime = db.Dates.Find(1).startTime.ToString();
+            var endTime = db.Dates.Find(1).endTime.ToString();
+
+            var currentDate = DateTime.Now.ToString("dd-MM-yyyy");
+            var currentTime = DateTime.Now.ToString("HH:mm:ss");
+
+
+            int dateResult1 = string.Compare(startdate, currentDate);
+            int dateResult2 = string.Compare(enddate, currentDate);
+
+            int timeResult1 = string.Compare(startTime, currentTime);
+            int timeResult2 = string.Compare(endTime, currentTime);
+
+            if (dateResult1 < 0 && dateResult2 > 0)
+            {
+                if (timeResult1 < 0 && timeResult2 > 0)
+                {
+                    Session["inTime"] = true;
+                }
+                else
+                {
+                    Session["inTime"] = false;
+                }
+            }
+            else
+            {
+                Session["inTime"] = false;
             }
             return View(dateDefault);
         }
@@ -54,6 +86,9 @@ namespace project5_voting.Controllers
 
                 db.Entry(dateDefault).State = EntityState.Modified;
             }
+
+
+
 
             db.SaveChanges();
             return RedirectToAction("AddDateAndTime");

@@ -13,10 +13,10 @@ namespace project5_voting.Models
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class ElectionEntities : DbContext
+    public partial class ElectionEntities1 : DbContext
     {
-        public ElectionEntities()
-            : base("name=ElectionEntities")
+        public ElectionEntities1()
+            : base("name=ElectionEntities1")
         {
         }
     
@@ -25,16 +25,16 @@ namespace project5_voting.Models
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<Ad> Ads { get; set; }
         public virtual DbSet<Admin> Admins { get; set; }
         public virtual DbSet<Contact> Contacts { get; set; }
         public virtual DbSet<Date> Dates { get; set; }
+        public virtual DbSet<Debate> Debates { get; set; }
         public virtual DbSet<ElectionArea> ElectionAreas { get; set; }
         public virtual DbSet<localCandidate> localCandidates { get; set; }
         public virtual DbSet<localList> localLists { get; set; }
         public virtual DbSet<PartyCandidate> PartyCandidates { get; set; }
         public virtual DbSet<PartyList> PartyLists { get; set; }
         public virtual DbSet<USER> USERS { get; set; }
-        public virtual DbSet<Ad> Ads { get; set; }
-        public virtual DbSet<Debate> Debates { get; set; }
     }
 }
